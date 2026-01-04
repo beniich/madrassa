@@ -1,0 +1,115 @@
+{
+    "name": "SchoolGenius",
+    "short_name": "SchoolGenius",
+    "description": "Plateforme de gestion scolaire intelligente avec IA - Fonctionne hors ligne",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0f172a",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/icons/icon-72x72.png",
+            "sizes": "72x72",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-96x96.png",
+            "sizes": "96x96",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-128x128.png",
+            "sizes": "128x128",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-144x144.png",
+            "sizes": "144x144",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-152x152.png",
+            "sizes": "152x152",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-384x384.png",
+            "sizes": "384x384",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/icons/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        }
+    ],
+    "categories": [
+        "education",
+        "productivity",
+        "utilities"
+    ],
+    "lang": "fr",
+    "dir": "ltr",
+    "screenshots": [
+        {
+            "src": "/screenshots/dashboard.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "label": "Tableau de bord principal"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Marquer présence",
+            "short_name": "Présence",
+            "description": "Accéder rapidement à la page de présence",
+            "url": "/dashboard/attendance",
+            "icons": [
+                {
+                    "src": "/icons/attendance.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Ajouter note",
+            "short_name": "Notes",
+            "description": "Saisir une nouvelle note",
+            "url": "/dashboard/exams",
+            "icons": [
+                {
+                    "src": "/icons/grades.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Assistant IA",
+            "short_name": "IA",
+            "description": "Consulter l'assistant IA",
+            "url": "/dashboard/ai-assistant",
+            "icons": [
+                {
+                    "src": "/icons/ai.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}
