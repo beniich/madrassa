@@ -1,0 +1,45 @@
+{
+    "common": {
+        "appName": "SchoolGenius",
+        "dashboard": "لوحة القيادة",
+        "students": "الطلاب",
+        "teachers": "المعلمون",
+        "classes": "الفصول",
+        "attendance": "الحضور",
+        "grades": "الدرجات",
+        "exams": "الامتحانات",
+        "timetable": "الجدول الزمني",
+        "communication": "التواصل",
+        "documents": "المستندات",
+        "finance": "المالية",
+        "settings": "الإعدادات",
+        "profile": "الملف الشخصي",
+        "logout": "تسجيل الخروج",
+        "search": "بحث...",
+        "save": "حفظ",
+        "cancel": "إلغاء",
+        "delete": "حذف",
+        "edit": "تعديل",
+        "add": "إضافة",
+        "loading": "جار التحميل...",
+        "error": "خطأ",
+        "success": "نجاح",
+        "online": "متصل",
+        "offline": "غير متصل",
+        "notifications": "الإشعارات",
+        "language": "اللغة"
+    },
+    "sidebar": {
+        "collapse": "طي",
+        "expand": "توسيع"
+    },
+    "dashboard": {
+        "welcome": "أهلاً بك",
+        "totalStudents": "إجمالي الطلاب",
+        "totalTeachers": "إجمالي المعلمين",
+        "attendanceRate": "معدل الحضور",
+        "averageGrade": "متوسط الدرجات",
+        "recentActivity": "النشاط الحديث",
+        "quickActions": "إجراءات سريعة"
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "common": {
+        "appName": "SchoolGenius",
+        "dashboard": "Panel de control",
+        "students": "Estudiantes",
+        "teachers": "Profesores",
+        "classes": "Clases",
+        "attendance": "Asistencia",
+        "grades": "Calificaciones",
+        "exams": "Exámenes",
+        "timetable": "Horario",
+        "communication": "Comunicación",
+        "documents": "Documentos",
+        "finance": "Finanzas",
+        "settings": "Configuración",
+        "profile": "Perfil",
+        "logout": "Cerrar sesión",
+        "search": "Buscar...",
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "add": "Añadir",
+        "loading": "Cargando...",
+        "error": "Error",
+        "success": "Éxito",
+        "online": "En línea",
+        "offline": "Sin conexión",
+        "notifications": "Notificaciones",
+        "language": "Idioma"
+    },
+    "sidebar": {
+        "collapse": "Contraer",
+        "expand": "Expandir"
+    },
+    "dashboard": {
+        "welcome": "Bienvenido",
+        "totalStudents": "Total de Estudiantes",
+        "totalTeachers": "Total de Profesores",
+        "attendanceRate": "Tasa de Asistencia",
+        "averageGrade": "Promedio General",
+        "recentActivity": "Actividad Reciente",
+        "quickActions": "Acciones Rápidas"
+    }
+}

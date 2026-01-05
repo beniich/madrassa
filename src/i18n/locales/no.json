@@ -1,0 +1,45 @@
+{
+    "common": {
+        "appName": "SchoolGenius",
+        "dashboard": "Dashbord",
+        "students": "Studenter",
+        "teachers": "Lærere",
+        "classes": "Klasser",
+        "attendance": "Oppmøte",
+        "grades": "Karakterer",
+        "exams": "Eksamener",
+        "timetable": "Timeplan",
+        "communication": "Kommunikasjon",
+        "documents": "Dokumenter",
+        "finance": "Økonomi",
+        "settings": "Innstillinger",
+        "profile": "Profil",
+        "logout": "Logg ut",
+        "search": "Søk...",
+        "save": "Lagre",
+        "cancel": "Avbryt",
+        "delete": "Slett",
+        "edit": "Rediger",
+        "add": "Legg til",
+        "loading": "Laster...",
+        "error": "Feil",
+        "success": "Suksess",
+        "online": "Tilkoblet",
+        "offline": "Frakoblet",
+        "notifications": "Varslinger",
+        "language": "Språk"
+    },
+    "sidebar": {
+        "collapse": "Slå sammen",
+        "expand": "Utvid"
+    },
+    "dashboard": {
+        "welcome": "Velkommen",
+        "totalStudents": "Totalt antall studenter",
+        "totalTeachers": "Totalt antall lærere",
+        "attendanceRate": "Oppmøteprosent",
+        "averageGrade": "Gjennomsnittskarakter",
+        "recentActivity": "Nylig aktivitet",
+        "quickActions": "Hurtighandlinger"
+    }
+}

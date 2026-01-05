@@ -1,0 +1,45 @@
+{
+    "common": {
+        "appName": "SchoolGenius",
+        "dashboard": "ダッシュボード",
+        "students": "学生",
+        "teachers": "先生",
+        "classes": "クラス",
+        "attendance": "出席",
+        "grades": "成績",
+        "exams": "試験",
+        "timetable": "時間割",
+        "communication": "連絡",
+        "documents": "書類",
+        "finance": "財務",
+        "settings": "設定",
+        "profile": "プロフィール",
+        "logout": "ログアウト",
+        "search": "検索...",
+        "save": "保存",
+        "cancel": "キャンセル",
+        "delete": "削除",
+        "edit": "編集",
+        "add": "追加",
+        "loading": "読み込み中...",
+        "error": "エラー",
+        "success": "成功",
+        "online": "オンライン",
+        "offline": "オフライン",
+        "notifications": "通知",
+        "language": "言語"
+    },
+    "sidebar": {
+        "collapse": "折りたたむ",
+        "expand": "展開"
+    },
+    "dashboard": {
+        "welcome": "ようこそ",
+        "totalStudents": "総学生数",
+        "totalTeachers": "総教師数",
+        "attendanceRate": "出席率",
+        "averageGrade": "平均成績",
+        "recentActivity": "最近の活動",
+        "quickActions": "クイックアクション"
+    }
+}
