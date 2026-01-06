@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
+import { useConfig } from '@/contexts/ConfigContext';
 import {
   LayoutDashboard,
   Users,
@@ -121,6 +122,7 @@ const BOTTOM_ITEMS: SidebarItem[] = [
 
 export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
   const { t } = useTranslation();
+  const { schoolProfile } = useConfig();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
@@ -147,6 +149,9 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
     }
   };
 
+  const schoolName = schoolProfile?.name || t('common.appName');
+  const schoolLogo = schoolProfile?.logo;
+
   return (
     <>
       {/* Mobile Overlay */}
@@ -170,18 +175,34 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           {!collapsed && (
             <Link to="/dashboard" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-white" />
-              </div>
-              <span className="font-bold text-xl text-gray-900">{t('common.appName')}</span>
+              {schoolLogo ? (
+                <img
+                  src={schoolLogo}
+                  alt="School Logo"
+                  className="w-8 h-8 object-contain rounded-lg"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5 text-white" />
+                </div>
+              )}
+              <span className="font-bold text-xl text-gray-900">{schoolName}</span>
             </Link>
           )}
 
           {collapsed && (
             <Link to="/dashboard" className="w-full flex justify-center">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                <GraduationCap className="w-5 h-5 text-white" />
-              </div>
+              {schoolLogo ? (
+                <img
+                  src={schoolLogo}
+                  alt="School Logo"
+                  className="w-8 h-8 object-contain rounded-lg"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                  <GraduationCap className="w-5 h-5 text-white" />
+                </div>
+              )}
             </Link>
           )}
         </div>

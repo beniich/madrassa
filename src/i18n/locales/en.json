@@ -57,5 +57,30 @@
         "localAction": "To handle locally",
         "scanAnomalies": "Scan Anomalies",
         "overview": "Overview of your institution"
+    },
+    "settings": {
+        "description": "Manage your institution's settings",
+        "schoolInfo": "School Information",
+        "schoolInfoDesc": "Customize your school's name and logo",
+        "schoolLogo": "School Logo",
+        "schoolName": "School Name",
+        "schoolNamePlaceholder": "Enter your school name",
+        "logoHint": "Accepted formats: JPG, PNG, SVG. Maximum size: 2MB.",
+        "uploadLogo": "Upload Logo",
+        "removeLogo": "Remove Logo",
+        "uploading": "Uploading...",
+        "saving": "Saving...",
+        "save": "Save",
+        "success": "Success",
+        "error": "Error",
+        "logoUpdated": "Logo updated successfully",
+        "logoRemoved": "Logo removed successfully",
+        "nameUpdated": "Name updated successfully",
+        "uploadFailed": "Error uploading logo",
+        "removeFailed": "Error removing logo",
+        "saveFailed": "Error saving",
+        "language": "Language",
+        "languageDesc": "Choose your interface language",
+        "languageSwitcher": "Use the language switcher at the top right of the screen."
     }
 }

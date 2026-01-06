@@ -57,5 +57,30 @@
         "localAction": "À traiter localement",
         "scanAnomalies": "Scanner anomalies",
         "overview": "Vue d'ensemble de votre établissement"
+    },
+    "settings": {
+        "description": "Gérez les paramètres de votre établissement",
+        "schoolInfo": "Informations de l'établissement",
+        "schoolInfoDesc": "Personnalisez le nom et le logo de votre école",
+        "schoolLogo": "Logo de l'école",
+        "schoolName": "Nom de l'école",
+        "schoolNamePlaceholder": "Entrez le nom de votre école",
+        "logoHint": "Formats acceptés: JPG, PNG, SVG. Taille maximale : 2MB.",
+        "uploadLogo": "Télécharger un logo",
+        "removeLogo": "Supprimer le logo",
+        "uploading": "Téléchargement...",
+        "saving": "Enregistrement...",
+        "save": "Enregistrer",
+        "success": "Succès",
+        "error": "Erreur",
+        "logoUpdated": "Logo mis à jour avec succès",
+        "logoRemoved": "Logo supprimé avec succès",
+        "nameUpdated": "Nom mis à jour avec succès",
+        "uploadFailed": "Erreur lors du téléchargement du logo",
+        "removeFailed": "Erreur lors de la suppression du logo",
+        "saveFailed": "Erreur lors de l'enregistrement",
+        "language": "Langue",
+        "languageDesc": "Choisir la langue de l'interface",
+        "languageSwitcher": "Utilisez le sélecteur de langue en haut à droite de l'écran."
     }
 }
