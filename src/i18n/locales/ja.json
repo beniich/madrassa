@@ -36,10 +36,26 @@
     "dashboard": {
         "welcome": "ようこそ",
         "totalStudents": "総学生数",
-        "totalTeachers": "総教師数",
+        "totalTeachers": "総教員数",
         "attendanceRate": "出席率",
-        "averageGrade": "平均成績",
+        "averageGrade": "平均点",
         "recentActivity": "最近の活動",
-        "quickActions": "クイックアクション"
+        "quickActions": "クイックアクション",
+        "newStudent": "新しい学生",
+        "addGrade": "成績を追加",
+        "createSession": "セッション作成",
+        "sendAnnouncement": "お知らせを送信",
+        "askAI": "AIに質問",
+        "viewReports": "レポートを表示",
+        "presenceEvolution": "出席の推移",
+        "gradeDistribution": "成績分布",
+        "chartComingSoon": "チャートは間もなく利用可能",
+        "alertIA": "AIアラート",
+        "vsLastMonth": "対先月",
+        "today": "今日",
+        "currentTerm": "今学期",
+        "localAction": "現地で対応",
+        "scanAnomalies": "異常をスキャン",
+        "overview": "施設の概要"
     }
 }

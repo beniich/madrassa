@@ -35,11 +35,27 @@
     },
     "dashboard": {
         "welcome": "Willkommen",
-        "totalStudents": "Gesamtschüler",
-        "totalTeachers": "Gesamtlehrer",
-        "attendanceRate": "Anwesenheitsrate",
+        "totalStudents": "Anzahl Schüler",
+        "totalTeachers": "Anzahl Lehrer",
+        "attendanceRate": "Anwesenheitsquote",
         "averageGrade": "Durchschnittsnote",
-        "recentActivity": "Aktuelle Aktivität",
-        "quickActions": "Schnellaktionen"
+        "recentActivity": "Letzte Aktivität",
+        "quickActions": "Schnellaktionen",
+        "newStudent": "Neuer Schüler",
+        "addGrade": "Note hinzufügen",
+        "createSession": "Sitzung erstellen",
+        "sendAnnouncement": "Ankündigung senden",
+        "askAI": "KI fragen",
+        "viewReports": "Berichte anzeigen",
+        "presenceEvolution": "Anwesenheitsentwicklung",
+        "gradeDistribution": "Notenverteilung",
+        "chartComingSoon": "Diagramm folgt bald",
+        "alertIA": "KI-Warnungen",
+        "vsLastMonth": "vs Vormonat",
+        "today": "Heute",
+        "currentTerm": "Aktuelles Semester",
+        "localAction": "Lokal zu behandeln",
+        "scanAnomalies": "Anomalien scannen",
+        "overview": "Überblick über Ihre Einrichtung"
     }
 }

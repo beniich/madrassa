@@ -4,10 +4,10 @@
 // Fichier : src/pages/Dashboard.tsx
 // ============================================================================
 
-import { 
-  Users, 
-  TrendingUp, 
-  Award, 
+import {
+  Users,
+  TrendingUp,
+  Award,
   AlertTriangle,
   UserPlus,
   FileText,
@@ -18,6 +18,8 @@ import {
   ArrowUp,
   ArrowDown,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 // ============================================================================
 // COMPOSANTS DE CARTES STATISTIQUES
@@ -75,7 +77,7 @@ const StatCard = ({ title, value, subtitle, change, changeLabel, icon: Icon, col
           <Icon className={`w-6 h-6 ${colors.icon}`} />
         </div>
       </div>
-      
+
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">{subtitle}</p>
         <div className={`flex items-center gap-1 ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
@@ -124,65 +126,70 @@ const ActionCard = ({ title, icon: Icon, color, onClick }: ActionCardProps) => {
 // ============================================================================
 
 export const Dashboard = () => {
+  const { t, i18n } = useTranslation();
+
   return (
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Tableau de Bord</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('common.dashboard')}</h1>
           <p className="text-gray-600 mt-1">
-            Vue d'ensemble de votre établissement • {new Date().toLocaleDateString('fr-FR', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
+            {t('dashboard.overview')} • {new Date().toLocaleDateString(i18n.language, {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
             })}
           </p>
         </div>
-        <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-          <Bot className="w-5 h-5" />
-          <span className="font-medium">Scanner anomalies (IA Offline)</span>
-        </button>
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher />
+          <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+            <Bot className="w-5 h-5" />
+            <span className="font-medium">{t('dashboard.scanAnomalies')}</span>
+          </button>
+        </div>
       </div>
 
       {/* Statistics Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard
-          title="Total Élèves"
+          title={t('dashboard.totalStudents')}
           value="0"
           subtitle="Classes actives"
           change={12}
-          changeLabel="vs mois dernier"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={Users}
           color="purple"
         />
-        
+
         <StatCard
-          title="Taux de Présence"
+          title={t('dashboard.attendanceRate')}
           value="0%"
-          subtitle="Aujourd'hui"
+          subtitle={t('dashboard.today')}
           change={2.3}
-          changeLabel="vs mois dernier"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={TrendingUp}
           color="green"
         />
-        
+
         <StatCard
-          title="Moyenne Générale"
+          title={t('dashboard.averageGrade')}
           value="13.4/20"
-          subtitle="Trimestre en cours"
+          subtitle={t('dashboard.currentTerm')}
           change={0.8}
-          changeLabel="vs mois dernier"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={Award}
           color="yellow"
         />
-        
+
         <StatCard
-          title="Alertes IA"
+          title={t('dashboard.alertIA')}
           value="0"
-          subtitle="À traiter localement"
+          subtitle={t('dashboard.localAction')}
           change={0}
-          changeLabel="aucune nouvelle"
+          changeLabel={t('dashboard.vsLastMonth')}
           icon={AlertTriangle}
           color="red"
         />
@@ -190,35 +197,35 @@ export const Dashboard = () => {
 
       {/* Quick Actions Section */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Actions Rapides</h2>
+        <h2 className="text-xl font-bold text-gray-900 mb-4">{t('dashboard.quickActions')}</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           <ActionCard
-            title="Nouvel Élève"
+            title={t('dashboard.newStudent')}
             icon={UserPlus}
             color="bg-purple-50 text-purple-700 hover:bg-purple-100"
           />
           <ActionCard
-            title="Ajouter Note"
+            title={t('dashboard.addGrade')}
             icon={FileText}
             color="bg-green-50 text-green-700 hover:bg-green-100"
           />
           <ActionCard
-            title="Créer Séance"
+            title={t('dashboard.createSession')}
             icon={Calendar}
             color="bg-blue-50 text-blue-700 hover:bg-blue-100"
           />
           <ActionCard
-            title="Envoyer Annonce"
+            title={t('dashboard.sendAnnouncement')}
             icon={Send}
             color="bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
           />
           <ActionCard
-            title="Demander à l'IA"
+            title={t('dashboard.askAI')}
             icon={Bot}
             color="bg-orange-50 text-orange-700 hover:bg-orange-100"
           />
           <ActionCard
-            title="Voir Rapports"
+            title={t('dashboard.viewReports')}
             icon={BarChart3}
             color="bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
           />
@@ -229,24 +236,24 @@ export const Dashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Chart 1 */}
         <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Évolution de la Présence</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.presenceEvolution')}</h3>
           <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">Graphique à venir</p>
+            <p className="text-gray-400">{t('dashboard.chartComingSoon')}</p>
           </div>
         </div>
 
         {/* Chart 2 */}
         <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Répartition des Notes</h3>
+          <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.gradeDistribution')}</h3>
           <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">Graphique à venir</p>
+            <p className="text-gray-400">{t('dashboard.chartComingSoon')}</p>
           </div>
         </div>
       </div>
 
       {/* Recent Activity */}
       <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Activité Récente</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.recentActivity')}</h3>
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (
             <div key={i} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
@@ -255,8 +262,8 @@ export const Dashboard = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-gray-900">Action {i}</p>
-                <p className="text-sm text-gray-600">Description de l'activité</p>
-                <p className="text-xs text-gray-400 mt-1">Il y a {i * 15} minutes</p>
+                <p className="text-sm text-gray-600">Description</p>
+                <p className="text-xs text-gray-400 mt-1">{i * 15} min</p>
               </div>
             </div>
           ))}

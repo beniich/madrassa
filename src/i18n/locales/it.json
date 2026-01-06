@@ -38,8 +38,24 @@
         "totalStudents": "Totale Studenti",
         "totalTeachers": "Totale Insegnanti",
         "attendanceRate": "Tasso di Presenza",
-        "averageGrade": "Media Generale",
+        "averageGrade": "Voto Medio",
         "recentActivity": "Attività Recente",
-        "quickActions": "Azioni Rapide"
+        "quickActions": "Azioni Rapide",
+        "newStudent": "Nuovo Studente",
+        "addGrade": "Aggiungi Voto",
+        "createSession": "Crea Sessione",
+        "sendAnnouncement": "Invia Annuncio",
+        "askAI": "Chiedi ad AI",
+        "viewReports": "Visualizza Report",
+        "presenceEvolution": "Evoluzione Presenze",
+        "gradeDistribution": "Distribuzione Voti",
+        "chartComingSoon": "Grafico in arrivo",
+        "alertIA": "Avvisi AI",
+        "vsLastMonth": "vs mese scorso",
+        "today": "Oggi",
+        "currentTerm": "Trimestre corrente",
+        "localAction": "Da gestire localmente",
+        "scanAnomalies": "Scansiona Anomalie",
+        "overview": "Panoramica della tua istituzione"
     }
 }

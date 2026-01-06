@@ -1,7 +1,7 @@
 {
     "common": {
         "appName": "SchoolGenius",
-        "dashboard": "Panel de control",
+        "dashboard": "Panel de Control",
         "students": "Estudiantes",
         "teachers": "Profesores",
         "classes": "Clases",
@@ -20,12 +20,12 @@
         "cancel": "Cancelar",
         "delete": "Eliminar",
         "edit": "Editar",
-        "add": "Añadir",
+        "add": "Agregar",
         "loading": "Cargando...",
         "error": "Error",
         "success": "Éxito",
         "online": "En línea",
-        "offline": "Sin conexión",
+        "offline": "Desconectado",
         "notifications": "Notificaciones",
         "language": "Idioma"
     },
@@ -35,11 +35,27 @@
     },
     "dashboard": {
         "welcome": "Bienvenido",
-        "totalStudents": "Total de Estudiantes",
-        "totalTeachers": "Total de Profesores",
+        "totalStudents": "Total Estudiantes",
+        "totalTeachers": "Total Profesores",
         "attendanceRate": "Tasa de Asistencia",
-        "averageGrade": "Promedio General",
+        "averageGrade": "Nota Media",
         "recentActivity": "Actividad Reciente",
-        "quickActions": "Acciones Rápidas"
+        "quickActions": "Acciones Rápidas",
+        "newStudent": "Nuevo Estudiante",
+        "addGrade": "Agregar Nota",
+        "createSession": "Crear Sesión",
+        "sendAnnouncement": "Enviar Anuncio",
+        "askAI": "Preguntar a IA",
+        "viewReports": "Ver Informes",
+        "presenceEvolution": "Evolución de Asistencia",
+        "gradeDistribution": "Distribución de Notas",
+        "chartComingSoon": "Gráfico próximamente",
+        "alertIA": "Alertas IA",
+        "vsLastMonth": "vs mes anterior",
+        "today": "Hoy",
+        "currentTerm": "Trimestre actual",
+        "localAction": "Para manejar localmente",
+        "scanAnomalies": "Escanear anomalías",
+        "overview": "Descripción general de su institución"
     }
 }

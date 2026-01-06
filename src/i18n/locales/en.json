@@ -40,6 +40,22 @@
         "attendanceRate": "Attendance Rate",
         "averageGrade": "Average Grade",
         "recentActivity": "Recent Activity",
-        "quickActions": "Quick Actions"
+        "quickActions": "Quick Actions",
+        "newStudent": "New Student",
+        "addGrade": "Add Grade",
+        "createSession": "Create Session",
+        "sendAnnouncement": "Send Announcement",
+        "askAI": "Ask AI",
+        "viewReports": "View Reports",
+        "presenceEvolution": "Attendance Evolution",
+        "gradeDistribution": "Grade Distribution",
+        "chartComingSoon": "Chart coming soon",
+        "alertIA": "AI Alerts",
+        "vsLastMonth": "vs last month",
+        "today": "Today",
+        "currentTerm": "Current Term",
+        "localAction": "To handle locally",
+        "scanAnomalies": "Scan Anomalies",
+        "overview": "Overview of your institution"
     }
 }

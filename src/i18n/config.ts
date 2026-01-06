@@ -10,8 +10,10 @@ import commonIt from './locales/it.json';
 import commonPt from './locales/pt.json';
 import commonDe from './locales/de.json';
 import commonJa from './locales/ja.json';
-import commonNo from './locales/no.json';
+import commonNo from './locales/no.json'; // Keeping 'no' if it matches the file, but user asked for Danish (da), Dutch (nl). 'no' is Norwegian.
 import commonAr from './locales/ar.json';
+import commonNl from './locales/nl.json';
+import commonDa from './locales/da.json';
 
 // Configure standard resources
 const resources = {
@@ -24,6 +26,8 @@ const resources = {
     ja: { translation: commonJa },
     no: { translation: commonNo },
     ar: { translation: commonAr },
+    nl: { translation: commonNl },
+    da: { translation: commonDa },
 };
 
 i18n
@@ -36,15 +40,21 @@ i18n
     // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
         resources,
-        fallbackLng: 'en',
+        fallbackLng: 'en', // Default language to English
         debug: true,
 
         interpolation: {
             escapeValue: false, // not needed for react as it escapes by default
         },
 
-        // Check for Arabic for RTL support (can be extended)
-        lng: "en", // Default language
+        // Default to English if detection fails or matches nothing
+        lng: "en",
     });
+
+// Handle RTL for Arabic
+i18n.on('languageChanged', (lng) => {
+    document.dir = lng === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lng;
+});
 
 export default i18n;

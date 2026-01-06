@@ -17,8 +17,8 @@ import {
   RefreshCw,
   Wifi,
   WifiOff,
-  Globe,
 } from 'lucide-react';
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 interface HeaderProps {
   sidebarCollapsed: boolean;
@@ -26,26 +26,11 @@ interface HeaderProps {
 }
 
 export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [showLanguages, setShowLanguages] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isOnline, setIsOnline] = useState(true);
-
-  const handleLanguageChange = (lang: string) => {
-    i18n.changeLanguage(lang);
-    setShowLanguages(false);
-
-    // For Arabic, switch direction to RTL
-    if (lang === 'ar') {
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = 'ar';
-    } else {
-      document.documentElement.dir = 'ltr';
-      document.documentElement.lang = lang;
-    }
-  };
 
   // Données factices pour les notifications
   const notifications = [
@@ -109,48 +94,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
         {/* Right Section - Actions */}
         <div className="flex items-center gap-2">
           {/* Language Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setShowLanguages(!showLanguages)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative group flex items-center gap-2"
-              title={t('common.language')}
-            >
-              <Globe className="w-5 h-5 text-gray-600" />
-              <span className="text-sm uppercase font-medium text-gray-700 hidden sm:block">{i18n.language.split('-')[0]}</span>
-            </button>
-
-            {showLanguages && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setShowLanguages(false)}
-                />
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 z-50 py-2">
-                  {[
-                    { code: 'en', label: 'English', flag: '🇬🇧' },
-                    { code: 'fr', label: 'Français', flag: '🇫🇷' },
-                    { code: 'es', label: 'Español', flag: '🇪🇸' },
-                    { code: 'it', label: 'Italiano', flag: '🇮🇹' },
-                    { code: 'pt', label: 'Português', flag: '🇵🇹' },
-                    { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
-                    { code: 'ja', label: '日本語', flag: '🇯🇵' },
-                    { code: 'no', label: 'Norsk', flag: '🇳🇴' },
-                    { code: 'ar', label: 'العربية', flag: '🇸🇦' },
-                  ].map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => handleLanguageChange(lang.code)}
-                      className={`flex items-center gap-3 px-4 py-2 w-full hover:bg-gray-50 transition-colors text-left ${i18n.language.startsWith(lang.code) ? 'bg-purple-50 text-purple-700 font-medium' : 'text-gray-700'
-                        }`}
-                    >
-                      <span className="text-lg">{lang.flag}</span>
-                      <span className="text-sm">{lang.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
+          <LanguageSwitcher />
 
           {/* Sync Button */}
           <button

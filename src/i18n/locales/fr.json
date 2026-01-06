@@ -1,7 +1,7 @@
 {
     "common": {
         "appName": "SchoolGenius",
-        "dashboard": "Tableau de bord",
+        "dashboard": "Tableau de Bord",
         "students": "Élèves",
         "teachers": "Enseignants",
         "classes": "Classes",
@@ -40,6 +40,22 @@
         "attendanceRate": "Taux de Présence",
         "averageGrade": "Moyenne Générale",
         "recentActivity": "Activité Récente",
-        "quickActions": "Actions Rapides"
+        "quickActions": "Actions Rapides",
+        "newStudent": "Nouvel Élève",
+        "addGrade": "Ajouter Note",
+        "createSession": "Créer Séance",
+        "sendAnnouncement": "Envoyer Annonce",
+        "askAI": "Demander à l'IA",
+        "viewReports": "Voir Rapports",
+        "presenceEvolution": "Évolution de la Présence",
+        "gradeDistribution": "Répartition des Notes",
+        "chartComingSoon": "Graphique à venir",
+        "alertIA": "Alertes IA",
+        "vsLastMonth": "vs mois dernier",
+        "today": "Aujourd'hui",
+        "currentTerm": "Trimestre en cours",
+        "localAction": "À traiter localement",
+        "scanAnomalies": "Scanner anomalies",
+        "overview": "Vue d'ensemble de votre établissement"
     }
 }
