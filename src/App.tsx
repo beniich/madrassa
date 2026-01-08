@@ -14,7 +14,7 @@ import Students from '@/pages/Students';
 import Teachers from '@/pages/Teachers';
 import Analytics from '@/pages/Analytics';
 import Calendar from '@/pages/Calendar';
-import Documents from '@/pages/Documents';
+import AIDocuments from '@/pages/AIDocuments';
 import Schedule from '@/pages/Schedule';
 import Messages from '@/pages/Messages';
 import Settings from '@/pages/Settings';
@@ -39,7 +39,6 @@ function App() {
                   <Route path="/teachers" element={<Teachers />} />
                   <Route path="/analytics" element={<Analytics />} />
                   <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/documents" element={<Documents />} />
                   <Route path="/schedule" element={<Schedule />} />
                   <Route path="/messages" element={<Messages />} />
                   <Route path="/settings" element={<Settings />} />

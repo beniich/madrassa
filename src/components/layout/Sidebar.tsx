@@ -86,12 +86,6 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     badgeColor: 'blue',
   },
   {
-    id: 'documents',
-    label: 'common.documents',
-    icon: FileText,
-    path: '/documents',
-  },
-  {
     id: 'schedule',
     label: 'common.timetable',
     icon: Clock,

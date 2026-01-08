@@ -222,8 +222,15 @@ export interface SchoolProfile {
     localId: string;
     name: string;
     address?: string;
+    city?: string;
+    postalCode?: string;
+    country?: string;
     phone?: string;
     email?: string;
+    website?: string;
+    academicYear?: string;
+    principalName?: string;
+    principalEmail?: string;
     logo?: string;
     updatedAt: string;
 }

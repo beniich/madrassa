@@ -1,9 +1,7 @@
-// ============================================================================
-// TABLEAU DE BORD AMÉLIORÉ - SchoolGenius
-// ============================================================================
-// Fichier : src/pages/Dashboard.tsx
-// ============================================================================
 
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   Users,
   TrendingUp,
@@ -18,12 +16,10 @@ import {
   ArrowUp,
   ArrowDown,
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
-
-// ============================================================================
-// COMPOSANTS DE CARTES STATISTIQUES
-// ============================================================================
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TimetableView } from '@/components/timetable/TimetableView';
+import AIDocuments from '@/pages/AIDocuments';
 
 interface StatCardProps {
   title: string;
@@ -37,30 +33,10 @@ interface StatCardProps {
 
 const StatCard = ({ title, value, subtitle, change, changeLabel, icon: Icon, color }: StatCardProps) => {
   const colorClasses = {
-    purple: {
-      bg: 'bg-purple-50',
-      iconBg: 'bg-purple-100',
-      icon: 'text-purple-600',
-      text: 'text-purple-600',
-    },
-    green: {
-      bg: 'bg-green-50',
-      iconBg: 'bg-green-100',
-      icon: 'text-green-600',
-      text: 'text-green-600',
-    },
-    yellow: {
-      bg: 'bg-yellow-50',
-      iconBg: 'bg-yellow-100',
-      icon: 'text-yellow-600',
-      text: 'text-yellow-600',
-    },
-    red: {
-      bg: 'bg-red-50',
-      iconBg: 'bg-red-100',
-      icon: 'text-red-600',
-      text: 'text-red-600',
-    },
+    purple: { bg: 'bg-purple-50', iconBg: 'bg-purple-100', icon: 'text-purple-600', text: 'text-purple-600' },
+    green: { bg: 'bg-green-50', iconBg: 'bg-green-100', icon: 'text-green-600', text: 'text-green-600' },
+    yellow: { bg: 'bg-yellow-50', iconBg: 'bg-yellow-100', icon: 'text-yellow-600', text: 'text-yellow-600' },
+    red: { bg: 'bg-red-50', iconBg: 'bg-red-100', icon: 'text-red-600', text: 'text-red-600' },
   };
 
   const colors = colorClasses[color];
@@ -77,28 +53,17 @@ const StatCard = ({ title, value, subtitle, change, changeLabel, icon: Icon, col
           <Icon className={`w-6 h-6 ${colors.icon}`} />
         </div>
       </div>
-
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">{subtitle}</p>
         <div className={`flex items-center gap-1 ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-          {isPositive ? (
-            <ArrowUp className="w-4 h-4" />
-          ) : (
-            <ArrowDown className="w-4 h-4" />
-          )}
-          <span className="text-sm font-semibold">
-            {isPositive ? '+' : ''}{change}%
-          </span>
+          {isPositive ? <ArrowUp className="w-4 h-4" /> : <ArrowDown className="w-4 h-4" />}
+          <span className="text-sm font-semibold">{isPositive ? '+' : ''}{change}%</span>
           <span className="text-xs text-gray-500 ml-1">{changeLabel}</span>
         </div>
       </div>
     </div>
   );
 };
-
-// ============================================================================
-// COMPOSANT ACTION CARD
-// ============================================================================
 
 interface ActionCardProps {
   title: string;
@@ -121,154 +86,83 @@ const ActionCard = ({ title, icon: Icon, color, onClick }: ActionCardProps) => {
   );
 };
 
-// ============================================================================
-// PAGE DASHBOARD
-// ============================================================================
-
 export const Dashboard = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("overview");
+  const [isTimetableOpen, setIsTimetableOpen] = useState(false);
 
   return (
     <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('common.dashboard')}</h1>
-          <p className="text-gray-600 mt-1">
-            {t('dashboard.overview')} • {new Date().toLocaleDateString(i18n.language, {
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <LanguageSwitcher />
-          <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-            <Bot className="w-5 h-5" />
-            <span className="font-medium">{t('dashboard.scanAnomalies')}</span>
-          </button>
-        </div>
-      </div>
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="grid w-full grid-cols-2 lg:w-[400px] mb-6">
+          <TabsTrigger value="overview">Vue d'ensemble</TabsTrigger>
+          <TabsTrigger value="ai-documents">Documents IA</TabsTrigger>
+        </TabsList>
 
-      {/* Statistics Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title={t('dashboard.totalStudents')}
-          value="0"
-          subtitle="Classes actives"
-          change={12}
-          changeLabel={t('dashboard.vsLastMonth')}
-          icon={Users}
-          color="purple"
-        />
+        <TabsContent value="overview" className="space-y-6">
+          {/* Header Placeholder - restoring existing logic if any */}
 
-        <StatCard
-          title={t('dashboard.attendanceRate')}
-          value="0%"
-          subtitle={t('dashboard.today')}
-          change={2.3}
-          changeLabel={t('dashboard.vsLastMonth')}
-          icon={TrendingUp}
-          color="green"
-        />
+          {/* Quick Actions Section */}
+          <div className="bg-white rounded-xl p-6 border border-gray-200">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">{t('dashboard.quickActions')}</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+              <ActionCard
+                title={t('dashboard.newStudent')}
+                icon={UserPlus}
+                color="bg-purple-50 text-purple-700 hover:bg-purple-100"
+              />
+              <ActionCard
+                title={t('dashboard.addGrade')}
+                icon={FileText}
+                color="bg-green-50 text-green-700 hover:bg-green-100"
+              />
 
-        <StatCard
-          title={t('dashboard.averageGrade')}
-          value="13.4/20"
-          subtitle={t('dashboard.currentTerm')}
-          change={0.8}
-          changeLabel={t('dashboard.vsLastMonth')}
-          icon={Award}
-          color="yellow"
-        />
+              {/* Modified Action Card for Timetable */}
+              <ActionCard
+                title="EMPLOI DU TEMPS (TEST)"
+                icon={Calendar}
+                color="bg-blue-50 text-blue-700 hover:bg-blue-100"
+                onClick={() => setIsTimetableOpen(true)}
+              />
 
-        <StatCard
-          title={t('dashboard.alertIA')}
-          value="0"
-          subtitle={t('dashboard.localAction')}
-          change={0}
-          changeLabel={t('dashboard.vsLastMonth')}
-          icon={AlertTriangle}
-          color="red"
-        />
-      </div>
+              <ActionCard
+                title={t('dashboard.sendAnnouncement')}
+                icon={Send}
+                color="bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
+              />
 
-      {/* Quick Actions Section */}
-      <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">{t('dashboard.quickActions')}</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          <ActionCard
-            title={t('dashboard.newStudent')}
-            icon={UserPlus}
-            color="bg-purple-50 text-purple-700 hover:bg-purple-100"
-          />
-          <ActionCard
-            title={t('dashboard.addGrade')}
-            icon={FileText}
-            color="bg-green-50 text-green-700 hover:bg-green-100"
-          />
-          <ActionCard
-            title={t('dashboard.createSession')}
-            icon={Calendar}
-            color="bg-blue-50 text-blue-700 hover:bg-blue-100"
-          />
-          <ActionCard
-            title={t('dashboard.sendAnnouncement')}
-            icon={Send}
-            color="bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
-          />
-          <ActionCard
-            title={t('dashboard.askAI')}
-            icon={Bot}
-            color="bg-orange-50 text-orange-700 hover:bg-orange-100"
-          />
-          <ActionCard
-            title={t('dashboard.viewReports')}
-            icon={BarChart3}
-            color="bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
-          />
-        </div>
-      </div>
+              {/* Switch to AI Documents tab instead of navigation */}
+              <ActionCard
+                title="Documents IA"
+                icon={Bot}
+                color="bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-xl"
+                onClick={() => setActiveTab("ai-documents")}
+              />
 
-      {/* Charts Section - Placeholder */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Chart 1 */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.presenceEvolution')}</h3>
-          <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">{t('dashboard.chartComingSoon')}</p>
-          </div>
-        </div>
-
-        {/* Chart 2 */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.gradeDistribution')}</h3>
-          <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">{t('dashboard.chartComingSoon')}</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.recentActivity')}</h3>
-        <div className="space-y-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
-                <Users className="w-5 h-5 text-purple-600" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900">Action {i}</p>
-                <p className="text-sm text-gray-600">Description</p>
-                <p className="text-xs text-gray-400 mt-1">{i * 15} min</p>
-              </div>
+              <ActionCard
+                title={t('dashboard.viewReports')}
+                icon={BarChart3}
+                color="bg-indigo-50 text-indigo-700 hover:bg-indigo-100"
+              />
             </div>
-          ))}
-        </div>
-      </div>
+          </div>
+
+          {/* Timetable Modal */}
+          <Dialog open={isTimetableOpen} onOpenChange={setIsTimetableOpen}>
+            <DialogContent className="max-w-[95vw] w-full h-[90vh] overflow-y-auto sm:max-w-7xl">
+              <div className="p-2">
+                <h2 className="text-2xl font-bold mb-4">Emploi du Temps</h2>
+                <TimetableView />
+              </div>
+            </DialogContent>
+          </Dialog>
+        </TabsContent>
+
+        <TabsContent value="ai-documents">
+          <AIDocuments />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

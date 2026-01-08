@@ -334,10 +334,10 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
     const students = await db.students.toArray();
     const attendance = await db.attendance.toArray();
     const grades = await db.grades.toArray();
-    
+
     const alerts: AIAlert[] = [];
     const schoolId = students[0]?.schoolId || 'demo_school';
-    
+
     // Check for students with repeated absences
     const studentAbsences: Record<string, number> = {};
     attendance.forEach(a => {
@@ -345,7 +345,7 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
             studentAbsences[a.studentId] = (studentAbsences[a.studentId] || 0) + 1;
         }
     });
-    
+
     for (const [studentId, count] of Object.entries(studentAbsences)) {
         if (count >= 3) {
             const student = students.find(s => s.localId === studentId);
@@ -367,14 +367,14 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
             }
         }
     }
-    
+
     // Check for declining grades
     const studentGrades: Record<string, number[]> = {};
     grades.forEach(g => {
         if (!studentGrades[g.studentId]) studentGrades[g.studentId] = [];
         studentGrades[g.studentId].push((g.value / g.maxValue) * 20);
     });
-    
+
     for (const [studentId, gradeList] of Object.entries(studentGrades)) {
         if (gradeList.length >= 2) {
             const recent = gradeList.slice(-2);
@@ -399,12 +399,12 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
             }
         }
     }
-    
+
     // Save alerts to database
     for (const alert of alerts) {
         await db.aiAlerts.add(alert);
     }
-    
+
     return alerts;
 }
 
