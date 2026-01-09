@@ -1,86 +1,29 @@
 /**
- * SchoolGenius - Contexte d'authentification et gestion des rôles
- * RBAC: Role-Based Access Control
+ * SchoolGenius - Authentication Context with Firebase
+ * Google OAuth Authentication
  */
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { db, AppConfig, getCurrentTimestamp } from '../lib/db';
+import {
+    User as FirebaseUser,
+    signInWithPopup,
+    signOut as firebaseSignOut,
+    onAuthStateChanged,
+    GoogleAuthProvider
+} from 'firebase/auth';
+import { auth, googleProvider } from '../config/firebase.config';
 
 // ============================================
 // TYPES
 // ============================================
 
-export type UserRole = 'direction' | 'admin' | 'teacher' | 'parent';
-
 export interface User {
     id: string;
     email: string;
-    token?: string; // JWT Token
-    schoolId: string; // Identifiant de l'établissement
-    firstName: string;
-    lastName: string;
-    role: UserRole;
-    avatar?: string;
-    classIds?: string[]; // Pour enseignants
-    childrenIds?: string[]; // Pour parents
-    permissions: Permission[];
+    displayName: string | null;
+    photoURL: string | null;
+    emailVerified: boolean;
 }
-
-export type Permission =
-    | 'view_all_students'
-    | 'view_own_students'
-    | 'view_own_children'
-    | 'edit_students'
-    | 'view_all_teachers'
-    | 'edit_teachers'
-    | 'view_all_classes'
-    | 'view_own_classes'
-    | 'edit_classes'
-    | 'mark_attendance'
-    | 'view_attendance'
-    | 'add_grades'
-    | 'view_all_grades'
-    | 'view_own_grades'
-    | 'send_messages'
-    | 'view_ai_alerts'
-    | 'access_admin';
-
-// Permissions par rôle
-const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
-    direction: [
-        'view_all_students', 'edit_students',
-        'view_all_teachers', 'edit_teachers',
-        'view_all_classes', 'edit_classes',
-        'mark_attendance', 'view_attendance',
-        'add_grades', 'view_all_grades',
-        'send_messages',
-        'view_ai_alerts',
-        'access_admin',
-    ],
-    admin: [
-        'view_all_students', 'edit_students',
-        'view_all_teachers',
-        'view_all_classes', 'edit_classes',
-        'view_attendance',
-        'view_all_grades',
-        'send_messages',
-        'access_admin',
-    ],
-    teacher: [
-        'view_own_students',
-        'view_all_teachers',
-        'view_own_classes',
-        'mark_attendance', 'view_attendance',
-        'add_grades', 'view_all_grades',
-        'send_messages',
-        'view_ai_alerts',
-    ],
-    parent: [
-        'view_own_children',
-        'view_own_grades',
-        'view_attendance',
-    ],
-};
 
 // ============================================
 // CONTEXT
@@ -88,61 +31,14 @@ const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
 
 interface AuthContextType {
     user: User | null;
+    firebaseUser: FirebaseUser | null;
     isLoading: boolean;
     isAuthenticated: boolean;
-    login: (email: string, password: string) => Promise<boolean>;
-    logout: () => void;
-    switchRole: (role: UserRole) => void; // Pour demo/test
-    hasPermission: (permission: Permission) => boolean;
-    hasAnyPermission: (permissions: Permission[]) => boolean;
+    signInWithGoogle: () => Promise<void>;
+    signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-// ============================================
-// MOCK USERS (pour demo - à remplacer par API)
-// ============================================
-
-const MOCK_USERS: Record<string, User> = {
-    'direction@ecole.ma': {
-        id: 'usr_direction_001',
-        email: 'direction@ecole.ma',
-        schoolId: 'school_001',
-        firstName: 'Mohamed',
-        lastName: 'Directeur',
-        role: 'direction',
-        permissions: ROLE_PERMISSIONS.direction,
-    },
-    'admin@ecole.ma': {
-        id: 'usr_admin_001',
-        email: 'admin@ecole.ma',
-        schoolId: 'school_001',
-        firstName: 'Fatima',
-        lastName: 'Benali',
-        role: 'admin',
-        permissions: ROLE_PERMISSIONS.admin,
-    },
-    'prof@ecole.ma': {
-        id: 'usr_teacher_001',
-        email: 'prof@ecole.ma',
-        schoolId: 'school_001',
-        firstName: 'Ahmed',
-        lastName: 'Professeur',
-        role: 'teacher',
-        classIds: ['class_4b', 'class_5a'],
-        permissions: ROLE_PERMISSIONS.teacher,
-    },
-    'parent@ecole.ma': {
-        id: 'usr_parent_001',
-        email: 'parent@ecole.ma',
-        schoolId: 'school_001',
-        firstName: 'Khadija',
-        lastName: 'Mère',
-        role: 'parent',
-        childrenIds: ['student_001', 'student_002'],
-        permissions: ROLE_PERMISSIONS.parent,
-    },
-};
 
 // ============================================
 // PROVIDER
@@ -150,100 +46,84 @@ const MOCK_USERS: Record<string, User> = {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        loadStoredUser();
+        // Listen to authentication state changes
+        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+            if (firebaseUser) {
+                // User is signed in
+                const userData: User = {
+                    id: firebaseUser.uid,
+                    email: firebaseUser.email || '',
+                    displayName: firebaseUser.displayName,
+                    photoURL: firebaseUser.photoURL,
+                    emailVerified: firebaseUser.emailVerified,
+                };
+                setUser(userData);
+                setFirebaseUser(firebaseUser);
+            } else {
+                // User is signed out
+                setUser(null);
+                setFirebaseUser(null);
+            }
+            setIsLoading(false);
+        });
+
+        // Cleanup subscription on unmount
+        return () => unsubscribe();
     }, []);
 
-    const loadStoredUser = async () => {
+    const signInWithGoogle = async () => {
         try {
-            const stored = await db.appConfig.where('key').equals('currentUser').first();
-            if (stored) {
-                const userData = JSON.parse(stored.value);
-                setUser(userData);
+            setIsLoading(true);
+            const result = await signInWithPopup(auth, googleProvider);
+
+            // This gives you a Google Access Token. You can use it to access Google APIs.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential?.accessToken;
+
+            console.log('Successfully signed in with Google', result.user);
+
+            // The user info is automatically updated via onAuthStateChanged
+        } catch (error: any) {
+            console.error('Error signing in with Google:', error);
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            // Handle specific error cases
+            if (errorCode === 'auth/popup-closed-by-user') {
+                console.log('Sign-in popup was closed by user');
+            } else if (errorCode === 'auth/cancelled-popup-request') {
+                console.log('Sign-in popup was cancelled');
             }
-        } catch (error) {
-            console.error('Failed to load stored user:', error);
+
+            throw error;
         } finally {
             setIsLoading(false);
         }
     };
 
-    const saveUserToStorage = async (userData: any) => {
-        const existing = await db.appConfig.where('key').equals('currentUser').first();
-        const config: AppConfig = {
-            key: 'currentUser',
-            value: JSON.stringify(userData),
-            updatedAt: getCurrentTimestamp(),
-        };
-
-        if (existing) {
-            await db.appConfig.update(existing.id!, config);
-        } else {
-            await db.appConfig.add(config);
-        }
-    };
-
-    const login = async (email: string, password: string): Promise<boolean> => {
+    const signOut = async () => {
         try {
-            const response = await fetch('http://localhost:5000/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                console.error('Login failed:', error.error);
-                return false;
-            }
-
-            const data = await response.json();
-            const userData: User = {
-                ...data.user,
-                token: data.token,
-                permissions: ROLE_PERMISSIONS[data.user.role as UserRole] || [],
-            };
-
-            setUser(userData);
-            await saveUserToStorage(userData);
-            return true;
+            await firebaseSignOut(auth);
+            console.log('Successfully signed out');
         } catch (error) {
-            console.error('Network error during login:', error);
-            return false;
+            console.error('Error signing out:', error);
+            throw error;
         }
-    };
-
-    const logout = async () => {
-        setUser(null);
-        await db.appConfig.where('key').equals('currentUser').delete();
-    };
-
-    const switchRole = (role: UserRole) => {
-        // En mode sécurisé, switchRole ne devrait être utilisé qu'en dev
-        console.warn('SwitchRole is disabled in Secure Mode. Use real login.');
-    };
-
-    const hasPermission = (permission: Permission): boolean => {
-        return user?.permissions.includes(permission) ?? false;
-    };
-
-    const hasAnyPermission = (permissions: Permission[]): boolean => {
-        return permissions.some((p) => hasPermission(p));
     };
 
     return (
         <AuthContext.Provider
             value={{
                 user,
+                firebaseUser,
                 isLoading,
                 isAuthenticated: !!user,
-                login,
-                logout,
-                switchRole,
-                hasPermission,
-                hasAnyPermission,
+                signInWithGoogle,
+                signOut,
             }}
         >
             {children}
@@ -261,63 +141,4 @@ export function useAuth() {
         throw new Error('useAuth must be used within an AuthProvider');
     }
     return context;
-}
-
-// ============================================
-// GUARD COMPONENT
-// ============================================
-
-interface PermissionGuardProps {
-    permission?: Permission;
-    permissions?: Permission[];
-    requireAll?: boolean;
-    fallback?: ReactNode;
-    children: ReactNode;
-}
-
-export function PermissionGuard({
-    permission,
-    permissions,
-    requireAll = false,
-    fallback = null,
-    children,
-}: PermissionGuardProps) {
-    const { hasPermission, hasAnyPermission, user } = useAuth();
-
-    if (!user) return <>{fallback}</>;
-
-    if (permission && !hasPermission(permission)) {
-        return <>{fallback}</>;
-    }
-
-    if (permissions) {
-        if (requireAll) {
-            const hasAll = permissions.every((p) => hasPermission(p));
-            if (!hasAll) return <>{fallback}</>;
-        } else {
-            if (!hasAnyPermission(permissions)) return <>{fallback}</>;
-        }
-    }
-
-    return <>{children}</>;
-}
-
-// ============================================
-// ROLE GUARD
-// ============================================
-
-interface RoleGuardProps {
-    roles: UserRole[];
-    fallback?: ReactNode;
-    children: ReactNode;
-}
-
-export function RoleGuard({ roles, fallback = null, children }: RoleGuardProps) {
-    const { user } = useAuth();
-
-    if (!user || !roles.includes(user.role)) {
-        return <>{fallback}</>;
-    }
-
-    return <>{children}</>;
 }

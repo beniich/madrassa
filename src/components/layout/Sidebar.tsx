@@ -25,6 +25,7 @@ import {
   Bell,
   LogOut,
   Menu,
+  FileSpreadsheet,
 } from 'lucide-react';
 
 // ============================================================================
@@ -98,6 +99,24 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     path: '/messages',
     badge: 5,
     badgeColor: 'red',
+  },
+  {
+    id: 'powerbi',
+    label: 'Power BI',
+    icon: BarChart3,
+    path: '/powerbi',
+  },
+  {
+    id: 'googlesheets',
+    label: 'Google Sheets',
+    icon: FileSpreadsheet,
+    path: '/googlesheets',
+  },
+  {
+    id: 'hr',
+    label: 'Gestion RH',
+    icon: Users,
+    path: '/hr-management',
   },
 ];
 

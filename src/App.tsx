@@ -18,6 +18,12 @@ import AIDocuments from '@/pages/AIDocuments';
 import Schedule from '@/pages/Schedule';
 import Messages from '@/pages/Messages';
 import Settings from '@/pages/Settings';
+import PowerBIDashboard from '@/pages/PowerBIDashboard';
+import GoogleSheetsPage from '@/pages/GoogleSheetsPage';
+import UserProfile from '@/pages/UserProfile';
+import HRManagement from '@/pages/HRManagement';
+import Login from '@/pages/Login';
+import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import NotFound from '@/pages/NotFound';
 
 const queryClient = new QueryClient();
@@ -31,20 +37,31 @@ function App() {
             <Toaster />
             <Sonner />
             <Router>
-              <MainLayout>
-                <Routes>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/students" element={<Students />} />
-                  <Route path="/teachers" element={<Teachers />} />
-                  <Route path="/analytics" element={<Analytics />} />
-                  <Route path="/calendar" element={<Calendar />} />
-                  <Route path="/schedule" element={<Schedule />} />
-                  <Route path="/messages" element={<Messages />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </MainLayout>
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="*" element={
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/students" element={<Students />} />
+                        <Route path="/teachers" element={<Teachers />} />
+                        <Route path="/analytics" element={<Analytics />} />
+                        <Route path="/calendar" element={<Calendar />} />
+                        <Route path="/schedule" element={<Schedule />} />
+                        <Route path="/messages" element={<Messages />} />
+                        <Route path="/powerbi" element={<PowerBIDashboard />} />
+                        <Route path="/googlesheets" element={<GoogleSheetsPage />} />
+                        <Route path="/profile" element={<UserProfile />} />
+                        <Route path="/hr-management" element={<HRManagement />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="*" element={<NotFound />} />
+                      </Routes>
+                    </MainLayout>
+                  </ProtectedRoute>
+                } />
+              </Routes>
             </Router>
           </TooltipProvider>
         </AuthProvider>
