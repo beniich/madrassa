@@ -28,7 +28,8 @@ import {
   CreditCard,
   ClipboardList,
   BookOpen,
-  CheckSquare
+  CheckSquare,
+  FileSpreadsheet
 } from 'lucide-react';
 
 interface SidebarItem {

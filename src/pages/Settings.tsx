@@ -59,6 +59,7 @@ import {
     TabType,
     SearchResult,
     SettingsPreset,
+    AppearanceSettings,
 } from '@/types/settings';
 import {
     getDefaultSettings,
@@ -70,6 +71,8 @@ import {
     copySettingsToClipboard,
     importSettings,
     searchSettings,
+    savePermissionsToLocalStorage,
+    loadPermissionsFromLocalStorage,
 } from '@/lib/settingsUtils';
 
 import { SettingItem } from '@/components/settings/SettingItem';
@@ -80,7 +83,7 @@ import { PresetsPanel } from '@/components/settings/PresetsPanel';
 export const Settings = () => {
     const { t, i18n } = useTranslation();
     const { toast } = useToast();
-    const { schoolProfile, refreshConfig, isLoading: configLoading } = useConfig();
+    const { schoolProfile, refreshConfig, isLoading: configLoading, updateAppearance } = useConfig();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const importInputRef = useRef<HTMLInputElement>(null);
 
@@ -141,6 +144,11 @@ export const Settings = () => {
             });
             setLogoPreview(schoolProfile.logo || '');
         }
+
+        const loadedPermissions = loadPermissionsFromLocalStorage();
+        if (loadedPermissions) {
+            setPermissions(loadedPermissions);
+        }
     }, [schoolProfile]);
 
     useEffect(() => {
@@ -152,18 +160,27 @@ export const Settings = () => {
         }
     }, [searchQuery, settings, t]);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleSettingChange = (category: keyof AllSettings, key: string, value: any) => {
-        setSettings((prev) => ({
-            ...prev,
-            [category]: {
-                ...prev[category],
-                [key]: value,
-            },
-        }));
+        setSettings((prev) => {
+            const updated = {
+                ...prev,
+                [category]: {
+                    ...prev[category],
+                    [key]: value,
+                },
+            };
+            
+            if (category === 'appearance') {
+                updateAppearance(updated.appearance as AppearanceSettings);
+                if (key === 'language') {
+                    i18n.changeLanguage(value);
+                }
+            }
+            
+            return updated;
+        });
         setIsDirty(true);
-        if (category === 'appearance' && key === 'language') {
-            i18n.changeLanguage(value);
-        }
     };
 
     const handleSchoolInfoChange = (key: string, value: string) => {
@@ -176,6 +193,7 @@ export const Settings = () => {
             setIsSaving(true);
             await updateSchoolProfile(schoolInfo);
             saveSettingsToLocalStorage(settings);
+            savePermissionsToLocalStorage(permissions);
             await refreshConfig();
             setSaveSuccess(true);
             setIsDirty(false);
@@ -245,19 +263,25 @@ export const Settings = () => {
     }
 
     return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50">
         <div className="container mx-auto max-w-7xl py-8 px-4 space-y-8">
             {/* HEADER */}
             <div className="flex flex-col xl:flex-row gap-6 justify-between items-start xl:items-center">
                 <div>
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900 group flex items-center gap-3">
-                        {t('settings.settings')}
-                        {isDirty && (
-                            <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-200 animate-in fade-in">
-                                {t('settings.actions.unsaved')}
-                            </Badge>
-                        )}
-                    </h1>
-                    <p className="text-gray-500 mt-2 text-lg">{t('settings.description')}</p>
+                    <div className="flex items-center gap-3 mb-1">
+                        <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-200">
+                            <LayoutTemplate className="w-5 h-5 text-white" />
+                        </div>
+                        <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-700 to-purple-600 bg-clip-text text-transparent group flex items-center gap-3" style={{fontFamily: 'Inter, sans-serif'}}>
+                            {t('settings.settings')}
+                            {isDirty && (
+                                <span className="inline-flex items-center rounded-md px-2.5 py-0.5 border bg-amber-100 text-amber-700 border-amber-200 animate-in fade-in text-xs font-bold">
+                                    {t('settings.actions.unsaved')}
+                                </span>
+                            )}
+                        </h1>
+                    </div>
+                    <p className="text-slate-500 mt-1 text-base ml-13 pl-1">{t('settings.description')}</p>
                 </div>
 
                 <div className="flex flex-wrap gap-3 w-full xl:w-auto">
@@ -329,8 +353,11 @@ export const Settings = () => {
                     <Button
                         onClick={handleSaveAll}
                         disabled={isSaving || !isDirty}
-                        className={`min-w-[140px] transition-all duration-300 ${saveSuccess ? 'bg-green-600 hover:bg-green-700' : 'bg-purple-600 hover:bg-purple-700'
-                            }`}
+                        className={`min-w-[140px] font-bold transition-all duration-300 shadow-lg ${
+                            saveSuccess
+                                ? 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200'
+                                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 shadow-indigo-200'
+                        }`}
                     >
                         {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : saveSuccess ? <Check className="w-4 h-4 mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                         {saveSuccess ? 'Enregistré !' : t('settings.actions.save')}
@@ -340,12 +367,12 @@ export const Settings = () => {
 
             <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as TabType)} className="space-y-6">
                 <ScrollArea className="w-full pb-2">
-                    <TabsList className="flex h-auto w-full justify-start gap-1 bg-transparent p-0">
+                    <TabsList className="flex h-auto w-full justify-start gap-1.5 bg-white/70 backdrop-blur-sm p-1.5 rounded-2xl border border-indigo-100 shadow-sm">
                         {tabs.map((tab) => (
                             <TabsTrigger
                                 key={tab.id}
                                 value={tab.id}
-                                className="flex items-center gap-2 rounded-full border border-transparent px-4 py-2 text-sm font-medium text-gray-600 data-[state=active]:border-purple-200 data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700 transition-all hover:text-purple-600 hover:bg-gray-50"
+                                className="flex items-center gap-2 rounded-xl border border-transparent px-4 py-2 text-sm font-semibold text-slate-500 data-[state=active]:border-indigo-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-md transition-all hover:text-indigo-600 hover:bg-indigo-50"
                             >
                                 <tab.icon className="w-4 h-4" />
                                 {tab.label}
@@ -460,6 +487,19 @@ export const Settings = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
+                                        <Label>Thème de couleur</Label>
+                                        <Select value={settings.appearance?.colorScheme} onValueChange={(v) => handleSettingChange('appearance', 'colorScheme', v)}>
+                                            <SelectTrigger><SelectValue /></SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="purple">Violet Prestige</SelectItem>
+                                                <SelectItem value="blue">Bleu Académique</SelectItem>
+                                                <SelectItem value="green">Vert Nature</SelectItem>
+                                                <SelectItem value="red">Rouge Dynamique</SelectItem>
+                                                <SelectItem value="caterpillar">Caterpillar Industrial 🏗️</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                    <div className="space-y-3">
                                         <Label>{t('settings.dateFormat')}</Label>
                                         <Select value={settings.appearance?.dateFormat} onValueChange={(v) => handleSettingChange('appearance', 'dateFormat', v)}>
                                             <SelectTrigger><SelectValue /></SelectTrigger>
@@ -478,6 +518,7 @@ export const Settings = () => {
                                                 <SelectItem value="Inter">Inter</SelectItem>
                                                 <SelectItem value="Roboto">Roboto</SelectItem>
                                                 <SelectItem value="Poppins">Poppins</SelectItem>
+                                                <SelectItem value="Archivo Black">Archivo Black (Caterpillar)</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -626,6 +667,7 @@ export const Settings = () => {
                                     {permissions.map((perm) => (
                                         <PermissionItem
                                             key={perm.id}
+                                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                             permission={perm as any}
                                             onToggle={(id, val) => {
                                                 const newPerms = permissions.map(p => p.id === id ? { ...p, enabled: val } : p);
@@ -703,6 +745,7 @@ export const Settings = () => {
                     toast({ title: "Preset appliqué", description: `Le preset ${preset.name} a été activé.` });
                 }}
             />
+        </div>
         </div>
     );
 };

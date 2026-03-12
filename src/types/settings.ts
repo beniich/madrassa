@@ -44,8 +44,8 @@ export interface AppearanceSettings {
     dateFormat: string;
     timeFormat: '12h' | '24h';
     fontSize: 'small' | 'medium' | 'large';
-    colorScheme: 'purple' | 'blue' | 'green' | 'red';
-    fontFamily: 'Inter' | 'Roboto' | 'Open Sans' | 'Poppins';
+    colorScheme: 'purple' | 'blue' | 'green' | 'red' | 'caterpillar';
+    fontFamily: 'Inter' | 'Roboto' | 'Open Sans' | 'Poppins' | 'Archivo Black';
     compactMode: boolean;
     sidebarCollapsed: boolean;
 }

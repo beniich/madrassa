@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -72,6 +73,11 @@ All colors MUST be HSL.
     --font-mono:
       "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
       "Liberation Mono", "Courier New", monospace;
+    --font-caterpillar: "Archivo Black", sans-serif;
+
+    /* Caterpillar Colors */
+    --cat-yellow: 48 100% 50%; /* #FFCD00 */
+    --cat-black: 0 0% 10%; /* #1A1A1A */
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
@@ -91,19 +97,43 @@ All colors MUST be HSL.
     --card-foreground: 43 56% 94%;
     --popover: 0 0% 13%;
     --popover-foreground: 43 56% 94%;
-    --primary: 21 100% 56%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 48 100% 50%; /* Caterpillar Yellow in Dark Mode */
+    --primary-foreground: 0 0% 10%;
     --secondary: 0 0% 20%;
     --secondary-foreground: 43 56% 94%;
     --muted: 0 0% 20%;
     --muted-foreground: 0 0% 70%;
-    --accent: 21 100% 56%;
-    --accent-foreground: 43 56% 94%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 10%;
     --destructive: 0 62% 30%;
     --destructive-foreground: 43 56% 94%;
     --border: 0 0% 20%;
     --input: 0 0% 20%;
-    --ring: 21 100% 56%;
+    --ring: 48 100% 50%;
+  }
+
+  .caterpillar {
+    --primary: 48 100% 50%; /* Caterpillar Yellow */
+    --primary-foreground: 0 0% 10%;
+    --background: 0 0% 7%; /* Deeper Black */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 100%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 10%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 48 100% 50%;
+    --sidebar-background: 0 0% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 48 100% 50%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-accent: 0 0% 15%;
+    --font-sans: var(--font-caterpillar);
   }
 }
 

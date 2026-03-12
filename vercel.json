@@ -1,5 +1,5 @@
 {
-    "installCommand": "npm install",
+    "installCommand": "corepack enable && pnpm install --no-frozen-lockfile",
     "buildCommand": "npm run build",
     "framework": "vite",
     "rewrites": [

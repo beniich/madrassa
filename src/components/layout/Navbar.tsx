@@ -9,7 +9,7 @@ const Navbar = () => {
     { name: "Fonctionnalités", href: "#features" },
     { name: "Modules", href: "#modules" },
     { name: "IA", href: "#ai" },
-    { name: "Tarifs", href: "#pricing" },
+    { name: "Tarifs", href: "/pricing" },
   ];
 
   return (
@@ -40,10 +40,12 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost">Connexion</Button>
-            <a href="/dashboard">
+            <a href="/login">
+              <Button variant="ghost">Connexion</Button>
+            </a>
+            <a href="/register">
               <Button variant="hero" size="lg">
-                Démo gratuite 🚀
+                S'inscrire 🚀
               </Button>
             </a>
           </div>
@@ -77,9 +79,11 @@ const Navbar = () => {
                 </a>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" className="w-full">Connexion</Button>
-                <a href="/dashboard" className="w-full">
-                  <Button variant="hero" className="w-full">Démo gratuite 🚀</Button>
+                <a href="/login" className="w-full">
+                  <Button variant="ghost" className="w-full">Connexion</Button>
+                </a>
+                <a href="/register" className="w-full">
+                  <Button variant="hero" className="w-full">S'inscrire 🚀</Button>
                 </a>
               </div>
             </div>
