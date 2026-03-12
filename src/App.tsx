@@ -29,6 +29,7 @@ import SchoolPalette from '@/pages/SchoolPalette';
 import PowerBIDashboard from '@/pages/PowerBIDashboard';
 import HRManagement from '@/pages/HRManagement';
 import GoogleSheetsPage from '@/pages/GoogleSheetsPage';
+import Schedule from '@/pages/Schedule';
 import NotFound from '@/pages/NotFound';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';

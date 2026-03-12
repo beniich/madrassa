@@ -28,7 +28,7 @@ export const Checkout: React.FC = () => {
     // Simulate payment
     setTimeout(() => {
       setIsLoading(false);
-      navigate('/login'); // After successful subscription, send them to login
+      navigate('/dashboard'); // After successful subscription, send them to dashboard
     }, 2000);
   };
 
