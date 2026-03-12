@@ -16,8 +16,6 @@ import Students from '@/pages/Students';
 import Teachers from '@/pages/Teachers';
 import Analytics from '@/pages/Analytics';
 import Calendar from '@/pages/Calendar';
-import AIDocuments from '@/pages/AIDocuments';
-import Schedule from '@/pages/Schedule';
 import Messages from '@/pages/Messages';
 import Settings from '@/pages/Settings';
 import Invoicing from '@/pages/Invoicing';
@@ -94,4 +92,3 @@ function App() {
 }
 
 export default App;
-
