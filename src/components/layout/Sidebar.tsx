@@ -119,6 +119,24 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     badge: 5,
     badgeColor: 'red',
   },
+  {
+    id: 'powerbi',
+    label: 'Power BI',
+    icon: BarChart3,
+    path: '/powerbi',
+  },
+  {
+    id: 'googlesheets',
+    label: 'Google Sheets',
+    icon: FileSpreadsheet,
+    path: '/googlesheets',
+  },
+  {
+    id: 'hr',
+    label: 'Gestion RH',
+    icon: Users,
+    path: '/hr-management',
+  },
 ];
 
 

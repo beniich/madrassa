@@ -1,11 +1,9 @@
 // ============================================================================
-// HEADER PROFESSIONNEL - SchoolGenius
-// ============================================================================
-// Fichier : src/components/layout/Header.tsx
+// HEADER PROFESSIONNEL avec Firebase Auth - SchoolGenius
 // ============================================================================
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
   Search,
@@ -17,8 +15,11 @@ import {
   RefreshCw,
   Wifi,
   WifiOff,
+  UserCircle,
 } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 interface HeaderProps {
   sidebarCollapsed: boolean;
@@ -27,10 +28,32 @@ interface HeaderProps {
 
 export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
   const { t } = useTranslation();
+  const { user, isAuthenticated, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isOnline, setIsOnline] = useState(true);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      toast({
+        title: 'Déconnexion réussie',
+        description: 'À bientôt !',
+      });
+      setShowProfile(false);
+      navigate('/login');
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Erreur',
+        description: 'Erreur lors de la déconnexion',
+      });
+    }
+  };
 
   // Données factices pour les notifications
   const notifications = [
@@ -207,46 +230,54 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
               <ChevronDown className="w-4 h-4 text-gray-600 hidden sm:block" />
             </button>
 
-            {/* Profile Dropdown Menu */}
-            {showProfile && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setShowProfile(false)}
-                />
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-200">
-                    <p className="font-semibold text-gray-900">Admin Principal</p>
-                    <p className="text-sm text-gray-600">admin@schoolgenius.com</p>
+              {/* Profile Dropdown Menu */}
+              {showProfile && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowProfile(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                    <div className="p-4 border-b border-gray-200">
+                      <p className="font-semibold text-gray-900">{user.displayName || 'Utilisateur'}</p>
+                      <p className="text-sm text-gray-600 truncate">{user.email}</p>
+                    </div>
+                    <div className="py-2">
+                      <Link
+                        to="/profile"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                        onClick={() => setShowProfile(false)}
+                      >
+                        <UserCircle className="w-4 h-4 text-gray-600" />
+                        <span className="text-sm text-gray-700">{t('common.profile')}</span>
+                      </Link>
+                      <Link
+                        to="/settings"
+                        className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                        onClick={() => setShowProfile(false)}
+                      >
+                        <Settings className="w-4 h-4 text-gray-600" />
+                        <span className="text-sm text-gray-700">{t('common.settings')}</span>
+                      </Link>
+                    </div>
+                    <div className="border-t border-gray-200 py-2">
+                      <button
+                        onClick={handleSignOut}
+                        className="flex items-center gap-3 px-4 py-2 w-full hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <LogOut className="w-4 h-4 text-red-600" />
+                        <span className="text-sm text-red-600">{t('common.logout')}</span>
+                      </button>
+                    </div>
                   </div>
-                  <div className="py-2">
-                    <Link
-                      to="/profile"
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
-                      onClick={() => setShowProfile(false)}
-                    >
-                      <User className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-700">{t('common.profile')}</span>
-                    </Link>
-                    <Link
-                      to="/settings"
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
-                      onClick={() => setShowProfile(false)}
-                    >
-                      <Settings className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-700">{t('common.settings')}</span>
-                    </Link>
-                  </div>
-                  <div className="border-t border-gray-200 py-2">
-                    <button className="flex items-center gap-3 px-4 py-2 w-full hover:bg-gray-50 transition-colors text-left">
-                      <LogOut className="w-4 h-4 text-red-600" />
-                      <span className="text-sm text-red-600">{t('common.logout')}</span>
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-3 py-2 rounded-lg">
+              <User className="w-5 h-5 text-gray-400" />
+            </div>
+          )}
         </div>
       </div>
     </header>

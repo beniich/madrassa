@@ -20,8 +20,6 @@ import { syncEngine } from '../lib/syncEngine';
 // TYPES
 // ============================================
 
-export type UserRole = 'direction' | 'admin' | 'teacher' | 'parent';
-
 export interface User {
     id: string;
     email: string;
@@ -79,6 +77,7 @@ const STORAGE_KEY = 'sg_user';
 
 interface AuthContextType {
     user: User | null;
+    firebaseUser: FirebaseUser | null;
     isLoading: boolean;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<boolean>;
@@ -94,6 +93,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
+    const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -177,6 +177,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         <AuthContext.Provider
             value={{
                 user,
+                firebaseUser,
                 isLoading,
                 isAuthenticated: !!user,
                 login,

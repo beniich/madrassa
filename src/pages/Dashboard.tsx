@@ -68,10 +68,6 @@ const StatCard = ({ title, value, sub, change, up, icon: Icon, color }: StatCard
   );
 };
 
-// ============================================================================
-// PAGE DASHBOARD
-// ============================================================================
-
 export const Dashboard = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
