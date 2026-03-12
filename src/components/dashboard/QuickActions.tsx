@@ -1,38 +1,47 @@
 import { UserPlus, FileText, Calendar, Megaphone, Bot, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
 
 const QuickActions = () => {
+  const navigate = useNavigate();
+
   const actions = [
     {
       icon: UserPlus,
       label: "Nouvel Élève",
       color: "bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground",
+      onClick: () => navigate("/students")
     },
     {
       icon: FileText,
       label: "Ajouter Note",
       color: "bg-green-500/10 text-green-600 hover:bg-green-500 hover:text-white",
+      onClick: () => navigate("/analytics")
     },
     {
       icon: Calendar,
       label: "Créer Séance",
       color: "bg-blue-500/10 text-blue-600 hover:bg-blue-500 hover:text-white",
+      onClick: () => navigate("/schedule")
     },
     {
       icon: Megaphone,
       label: "Envoyer Annonce",
       color: "bg-yellow-500/10 text-yellow-600 hover:bg-yellow-500 hover:text-white",
+      onClick: () => navigate("/messages")
     },
     {
       icon: Bot,
       label: "Demander à l'IA",
       color: "bg-accent/20 text-accent-foreground hover:bg-accent hover:text-accent-foreground",
+      onClick: () => navigate("/messages") // Redirige vers messages pour l'instant ou une page IA si elle existe
     },
     {
       icon: BarChart3,
       label: "Voir Rapports",
       color: "bg-purple-500/10 text-purple-600 hover:bg-purple-500 hover:text-white",
+      onClick: () => navigate("/analytics")
     },
   ];
 
@@ -47,6 +56,7 @@ const QuickActions = () => {
             <Button
               key={index}
               variant="ghost"
+              onClick={action.onClick}
               className={`h-auto py-4 flex flex-col items-center gap-2 transition-all duration-300 ${action.color}`}
             >
               <action.icon className="h-6 w-6" />
@@ -60,3 +70,4 @@ const QuickActions = () => {
 };
 
 export default QuickActions;
+

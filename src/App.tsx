@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ConfigProvider } from "@/contexts/ConfigContext";
 import { MainLayout } from '@/components/layout/MainLayout';
+import { CustomCursor } from '@/components/common/CustomCursor';
 
 // Import TOUTES les pages
 import Dashboard from '@/pages/Dashboard';
@@ -18,6 +19,11 @@ import Documents from '@/pages/Documents';
 import Schedule from '@/pages/Schedule';
 import Messages from '@/pages/Messages';
 import Settings from '@/pages/Settings';
+import Invoicing from '@/pages/Invoicing';
+import Exams from '@/pages/Exams';
+import Attendance from '@/pages/Attendance';
+import Classes from '@/pages/Classes';
+import Profile from '@/pages/Profile';
 import NotFound from '@/pages/NotFound';
 
 const queryClient = new QueryClient();
@@ -28,6 +34,7 @@ function App() {
       <ConfigProvider>
         <AuthProvider>
           <TooltipProvider>
+            <CustomCursor />
             <Toaster />
             <Sonner />
             <Router>
@@ -37,12 +44,17 @@ function App() {
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/students" element={<Students />} />
                   <Route path="/teachers" element={<Teachers />} />
+                  <Route path="/classes" element={<Classes />} />
                   <Route path="/analytics" element={<Analytics />} />
                   <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/attendance" element={<Attendance />} />
+                  <Route path="/exams" element={<Exams />} />
+                  <Route path="/invoicing" element={<Invoicing />} />
                   <Route path="/documents" element={<Documents />} />
                   <Route path="/schedule" element={<Schedule />} />
                   <Route path="/messages" element={<Messages />} />
                   <Route path="/settings" element={<Settings />} />
+                  <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </MainLayout>
@@ -55,3 +67,4 @@ function App() {
 }
 
 export default App;
+

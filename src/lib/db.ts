@@ -38,8 +38,12 @@ export interface Teacher {
     phone?: string;
     subjects: string[];
     classIds: string[];
+    experience: number;
+    students: number;
+    hoursPerWeek: number;
     hireDate: string;
-    status: 'active' | 'inactive';
+    status: 'active' | 'inactive' | 'onLeave';
+    photo?: string;
     syncStatus: 'pending' | 'synced' | 'error';
     createdAt: string;
     updatedAt: string;
@@ -199,7 +203,7 @@ export interface SyncAction {
     actionId: string;
     schoolId: string; // Pour synchroniser avec le bon établissement
     type: 'CREATE' | 'UPDATE' | 'DELETE';
-    entity: 'student' | 'teacher' | 'class' | 'attendance' | 'grade' | 'message' | 'exam' | 'invoice' | 'document';
+    entity: 'student' | 'teacher' | 'class' | 'subject' | 'attendance' | 'grade' | 'message' | 'exam' | 'invoice' | 'document' | 'schoolProfile';
     entityId: string;
     payload: string; // JSON stringified
     status: 'pending' | 'syncing' | 'synced' | 'error';

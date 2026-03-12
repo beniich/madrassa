@@ -22,6 +22,7 @@ import {
     generateLocalId,
     getCurrentTimestamp
 } from '../lib/db';
+export { db };
 import { syncEngine } from '../lib/syncEngine';
 
 // ============================================
@@ -487,5 +488,5 @@ export async function updateSchoolProfile(schoolId: string, data: Partial<School
     }
 
     // Sync via dedicated school profile endpoint
-    await syncEngine.queueAction('UPDATE', 'school_profile' as any, schoolId, profile, schoolId);
+    await syncEngine.queueAction('UPDATE', 'schoolProfile', schoolId, profile, schoolId);
 }

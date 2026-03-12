@@ -1,15 +1,17 @@
 /**
  * SchoolGenius - Sync Engine
  * Gestion de la synchronisation offline/online avec support Multi-Tenancy
+ * Mode: PRODUCTION — synchronise avec le backend JWT sur port 5000
  */
 
 import { db, SyncAction, generateLocalId, getCurrentTimestamp } from './db';
+import { API_BASE_URL } from './apiClient';
 
 // ============================================
 // TYPES
 // ============================================
 
-type EntityType = 'student' | 'teacher' | 'class' | 'attendance' | 'grade' | 'message' | 'exam' | 'invoice' | 'document';
+export type EntityType = 'student' | 'teacher' | 'class' | 'subject' | 'attendance' | 'grade' | 'message' | 'exam' | 'invoice' | 'document' | 'schoolProfile';
 type ActionType = 'CREATE' | 'UPDATE' | 'DELETE';
 
 interface SyncResult {
@@ -19,32 +21,57 @@ interface SyncResult {
     errors: string[];
 }
 
+type DexieTable = {
+    where: (key: string) => { equals: (val: string) => { first: () => Promise<any> } };
+    update: (id: number, changes: object) => Promise<number>;
+    add: (data: any) => Promise<any>;
+};
+
 // ============================================
 // SYNC ENGINE CLASS
 // ============================================
 
 class SyncEngine {
     private isSyncing = false;
-    private apiBaseUrl = '/api'; // À configurer selon le backend
     private maxRetries = 3;
 
     // ==========================================
-    // QUEUE MANAGEMENT - File d'actions locales
+    // TOKEN RESOLUTION
     // ==========================================
 
-    /**
-     * Ajoute une action à la file de synchronisation
-     */
+    private getToken(): string | null {
+        const raw = localStorage.getItem('sg_user');
+        if (!raw) return null;
+        try {
+            return JSON.parse(raw)?.token ?? null;
+        } catch {
+            return null;
+        }
+    }
+
+    private buildHeaders(schoolId: string): Record<string, string> {
+        const token = this.getToken();
+        return {
+            'Content-Type': 'application/json',
+            'X-School-Id': schoolId,
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        };
+    }
+
+    // ==========================================
+    // QUEUE MANAGEMENT
+    // ==========================================
+
     async queueAction(
         type: ActionType,
         entity: EntityType,
         entityId: string,
-        payload: any,
+        payload: unknown,
         schoolId: string
     ): Promise<void> {
         const action: SyncAction = {
             actionId: generateLocalId(),
-            schoolId, // Separation au niveau de la sync
+            schoolId,
             type,
             entity,
             entityId,
@@ -55,17 +82,13 @@ class SyncEngine {
         };
 
         await db.syncActions.add(action);
-        console.log(`[SyncEngine] Action queued [${schoolId}]: ${type} ${entity} ${entityId}`);
+        console.log(`[SyncEngine] Queued [${schoolId}]: ${type} ${entity} ${entityId}`);
 
-        // Tenter une sync immédiate si online
         if (navigator.onLine) {
             this.syncNow();
         }
     }
 
-    /**
-     * Récupère les actions en attente
-     */
     async getPendingActions(): Promise<SyncAction[]> {
         return db.syncActions
             .where('status')
@@ -78,14 +101,10 @@ class SyncEngine {
     // SYNCHRONIZATION
     // ==========================================
 
-    /**
-     * Lance la synchronisation
-     */
     async syncNow(): Promise<SyncResult> {
         if (this.isSyncing) {
             return { success: false, syncedCount: 0, failedCount: 0, errors: ['Sync in progress'] };
         }
-
         if (!navigator.onLine) {
             return { success: false, syncedCount: 0, failedCount: 0, errors: ['Offline'] };
         }
@@ -117,27 +136,19 @@ class SyncEngine {
         return result;
     }
 
-    /**
-     * Traite une action de synchronisation
-     */
     private async processSyncAction(action: SyncAction): Promise<void> {
         await db.syncActions.update(action.id!, { status: 'syncing' });
 
         try {
             const payload = JSON.parse(action.payload);
             const endpoint = this.getEndpoint(action.entity);
+            const headers = this.buildHeaders(action.schoolId);
 
             let response: Response;
 
-            // Inclure schoolId dans les headers pour le backend
-            const headers = {
-                'Content-Type': 'application/json',
-                'X-School-Id': action.schoolId
-            };
-
             switch (action.type) {
                 case 'CREATE':
-                    response = await fetch(`${this.apiBaseUrl}${endpoint}`, {
+                    response = await fetch(`${API_BASE_URL}${endpoint}`, {
                         method: 'POST',
                         headers,
                         body: JSON.stringify(payload),
@@ -145,7 +156,7 @@ class SyncEngine {
                     break;
 
                 case 'UPDATE':
-                    response = await fetch(`${this.apiBaseUrl}${endpoint}/${action.entityId}`, {
+                    response = await fetch(`${API_BASE_URL}${endpoint}/${action.entityId}`, {
                         method: 'PUT',
                         headers,
                         body: JSON.stringify(payload),
@@ -153,7 +164,7 @@ class SyncEngine {
                     break;
 
                 case 'DELETE':
-                    response = await fetch(`${this.apiBaseUrl}${endpoint}/${action.entityId}`, {
+                    response = await fetch(`${API_BASE_URL}${endpoint}/${action.entityId}`, {
                         method: 'DELETE',
                         headers,
                     });
@@ -189,12 +200,14 @@ class SyncEngine {
             student: '/students',
             teacher: '/teachers',
             class: '/classes',
+            subject: '/subjects',
             attendance: '/attendance',
             grade: '/grades',
             message: '/messages',
             exam: '/exams',
             invoice: '/invoices',
-            document: '/documents'
+            document: '/documents',
+            schoolProfile: '/school-profile',
         };
         return endpoints[entity];
     }
@@ -204,29 +217,105 @@ class SyncEngine {
         localId: string,
         status: 'pending' | 'synced' | 'error'
     ): Promise<void> {
-        const tableMap: any = {
-            student: db.students,
-            teacher: db.teachers,
-            class: db.classes,
-            attendance: db.attendance,
-            grade: db.grades,
-            message: db.messages,
-            exam: db.exams,
-            invoice: db.invoices,
-            document: db.documents
+        const tableMap: Record<EntityType, DexieTable> = {
+            student: db.students as unknown as DexieTable,
+            teacher: db.teachers as unknown as DexieTable,
+            class: db.classes as unknown as DexieTable,
+            subject: db.subjects as unknown as DexieTable,
+            attendance: db.attendance as unknown as DexieTable,
+            grade: db.grades as unknown as DexieTable,
+            message: db.messages as unknown as DexieTable,
+            exam: db.exams as unknown as DexieTable,
+            invoice: db.invoices as unknown as DexieTable,
+            document: db.documents as unknown as DexieTable,
+            schoolProfile: db.schoolProfile as unknown as DexieTable,
         };
 
         const table = tableMap[entity];
-        if (table) {
-            const record = await table.where('localId').equals(localId).first();
-            if (record) {
-                await table.update(record.id!, { syncStatus: status });
-            }
+        if (!table) return;
+
+        const record = await table.where('localId').equals(localId).first();
+        if (record) {
+            await table.update(record.id!, { syncStatus: status });
         }
     }
 
+    // ==========================================
+    // PULL SYNCHRONIZATION (Server -> Local)
+    // ==========================================
+
+    /**
+     * Pulls all records for a specific entity type and updates local DB.
+     */
+    async pullEntity(entity: EntityType, schoolId: string): Promise<void> {
+        const token = this.getToken();
+        if (!token || !navigator.onLine) return;
+
+        try {
+            const endpoint = this.getEndpoint(entity);
+            const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+                method: 'GET',
+                headers: this.buildHeaders(schoolId),
+            });
+
+            if (!response.ok) throw new Error(`Pull ${entity} failed: ${response.status}`);
+
+            const remoteData = await response.json();
+            if (!Array.isArray(remoteData)) return;
+
+            const tableMap: Record<EntityType, DexieTable> = {
+                student: db.students as unknown as DexieTable,
+                teacher: db.teachers as unknown as DexieTable,
+                class: db.classes as unknown as DexieTable,
+                subject: db.subjects as unknown as DexieTable,
+                attendance: db.attendance as unknown as DexieTable,
+                grade: db.grades as unknown as DexieTable,
+                message: db.messages as unknown as DexieTable,
+                exam: db.exams as unknown as DexieTable,
+                invoice: db.invoices as unknown as DexieTable,
+                document: db.documents as unknown as DexieTable,
+                schoolProfile: db.schoolProfile as unknown as DexieTable,
+            };
+
+            const table = tableMap[entity];
+            if (!table) return;
+
+            for (const item of remoteData) {
+                const localId = item.localId;
+                if (!localId) continue;
+
+                const existing = await table.where('localId').equals(localId).first();
+                if (existing) {
+                    await table.update(existing.id!, { ...item, syncStatus: 'synced' });
+                } else {
+                    await table.add({ ...item, syncStatus: 'synced' });
+                }
+            }
+            console.log(`[SyncEngine] Successfully pulled ${remoteData.length} ${entity}s`);
+        } catch (error) {
+            console.error(`[SyncEngine] Error pulling ${entity}:`, error);
+        }
+    }
+
+    /**
+     * Pulls everything for the current school.
+     */
+    async pullAll(schoolId: string): Promise<void> {
+        console.log(`[SyncEngine] Starting full pull for school: ${schoolId}`);
+        const entities: EntityType[] = ['class', 'teacher', 'student', 'subject', 'attendance', 'grade', 'message', 'exam', 'invoice', 'document'];
+        
+        await Promise.allSettled(entities.map(e => this.pullEntity(e, schoolId)));
+        console.log(`[SyncEngine] Full pull completed.`);
+    }
+
     initNetworkListeners(): void {
-        window.addEventListener('online', () => this.syncNow());
+        window.addEventListener('online', () => {
+            console.log('[SyncEngine] Back online — starting sync...');
+            this.syncNow();
+        });
+        window.addEventListener('offline', () => {
+            console.log('[SyncEngine] Offline — queuing changes locally.');
+        });
     }
 }
 

@@ -25,11 +25,11 @@ import {
   Bell,
   LogOut,
   Menu,
+  CreditCard,
+  ClipboardList,
+  BookOpen,
+  CheckSquare
 } from 'lucide-react';
-
-// ============================================================================
-// TYPES & INTERFACES
-// ============================================================================
 
 interface SidebarItem {
   id: string;
@@ -45,10 +45,6 @@ interface SidebarProps {
   className?: string;
   onCollapsedChange?: (collapsed: boolean) => void;
 }
-
-// ============================================================================
-// CONFIGURATION DES ITEMS
-// ============================================================================
 
 const SIDEBAR_ITEMS: SidebarItem[] = [
   {
@@ -72,30 +68,48 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     path: '/teachers',
   },
   {
+    id: 'classes',
+    label: 'common.classes',
+    icon: BookOpen,
+    path: '/classes',
+  },
+  {
+    id: 'attendance',
+    label: 'common.attendance',
+    icon: CheckSquare,
+    path: '/attendance',
+  },
+  {
+    id: 'exams',
+    label: 'common.exams',
+    icon: ClipboardList,
+    path: '/exams',
+  },
+  {
     id: 'analytics',
-    label: 'dashboard.averageGrade', // Using existing key for stats/analytics
+    label: 'common.analytics',
     icon: BarChart3,
     path: '/analytics',
   },
   {
     id: 'calendar',
-    label: 'common.timetable', // Or new key 'common.calendar'
+    label: 'common.calendar',
     icon: Calendar,
     path: '/calendar',
     badge: 3,
     badgeColor: 'blue',
   },
   {
+    id: 'invoicing',
+    label: 'common.invoicing',
+    icon: CreditCard,
+    path: '/invoicing',
+  },
+  {
     id: 'documents',
     label: 'common.documents',
     icon: FileText,
     path: '/documents',
-  },
-  {
-    id: 'schedule',
-    label: 'common.timetable',
-    icon: Clock,
-    path: '/schedule',
   },
   {
     id: 'messages',
@@ -106,6 +120,7 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     badgeColor: 'red',
   },
 ];
+
 
 const BOTTOM_ITEMS: SidebarItem[] = [
   {
@@ -165,14 +180,14 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          'fixed left-0 top-0 z-50 h-screen bg-white border-r border-gray-200 transition-all duration-300 flex flex-col',
-          collapsed ? 'w-16' : 'w-80',
+          'fixed left-0 top-0 z-50 h-screen bg-sidebar border-r border-sidebar-border transition-all duration-300 flex flex-col',
+          collapsed ? 'w-16' : 'w-64',
           mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0',
           className
         )}
       >
         {/* Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-sidebar-border">
           {!collapsed && (
             <Link to="/dashboard" className="flex items-center gap-2">
               {schoolLogo ? (
@@ -182,11 +197,13 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
                   className="w-8 h-8 object-contain rounded-lg"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20">
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
               )}
-              <span className="font-bold text-xl text-gray-900">{schoolName}</span>
+              <span className="font-black text-xl text-sidebar-foreground tracking-tighter italic">
+                School<span className="text-primary">Genius</span>
+              </span>
             </Link>
           )}
 
@@ -199,7 +216,7 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
                   className="w-8 h-8 object-contain rounded-lg"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
                   <GraduationCap className="w-5 h-5 text-white" />
                 </div>
               )}
@@ -208,35 +225,35 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 overflow-y-auto py-4 px-2">
-          <div className="space-y-1">
+        <nav className="flex-1 overflow-y-auto py-6 px-3">
+          <div className="space-y-2">
             {SIDEBAR_ITEMS.map((item) => (
               <Link
                 key={item.id}
                 to={item.path}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors relative group',
+                  'flex items-center gap-3 px-4 py-3 rounded-2xl transition-all relative group',
                   isActive(item.path)
-                    ? 'bg-purple-50 text-purple-600'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-primary text-white shadow-lg shadow-primary/30'
+                    : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                 )}
               >
                 <item.icon
                   className={cn(
-                    'w-5 h-5 flex-shrink-0',
-                    isActive(item.path) ? 'text-purple-600' : 'text-gray-500'
+                    'w-5 h-5 flex-shrink-0 transition-transform group-hover:scale-110',
+                    isActive(item.path) ? 'text-white' : 'text-sidebar-foreground/50'
                   )}
                 />
 
                 {!collapsed && (
                   <>
-                    <span className="flex-1 font-medium text-sm">{t(item.label)}</span>
+                    <span className="flex-1 font-black text-xs uppercase tracking-widest">{t(item.label)}</span>
 
                     {item.badge && item.badge > 0 && (
                       <span
                         className={cn(
-                          'px-2 py-0.5 text-xs font-semibold rounded-full',
-                          getBadgeColorClass(item.badgeColor)
+                          'px-2 py-0.5 text-[10px] font-black rounded-full',
+                          isActive(item.path) ? 'bg-white text-primary' : getBadgeColorClass(item.badgeColor)
                         )}
                       >
                         {item.badge > 99 ? '99+' : item.badge}
@@ -245,21 +262,9 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
                   </>
                 )}
 
-                {/* Tooltip pour mode collapsed */}
-                {collapsed && (
-                  <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
-                    {t(item.label)}
-                    {item.badge && item.badge > 0 && (
-                      <span className="ml-2 px-1.5 py-0.5 bg-red-500 rounded-full text-xs">
-                        {item.badge}
-                      </span>
-                    )}
-                  </div>
-                )}
-
                 {/* Indicateur actif */}
                 {isActive(item.path) && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-purple-600 rounded-r-full" />
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-8 bg-white rounded-l-full shadow-[0_0_10px_white]" />
                 )}
               </Link>
             ))}
@@ -267,34 +272,28 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
         </nav>
 
         {/* Bottom Items */}
-        <div className="border-t border-gray-200 p-2">
-          <div className="space-y-1">
+        <div className="p-3 border-t border-sidebar-border">
+          <div className="space-y-2">
             {BOTTOM_ITEMS.map((item) => (
               <Link
                 key={item.id}
                 to={item.path}
                 className={cn(
-                  'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors relative group',
+                  'flex items-center gap-3 px-4 py-3 rounded-2xl transition-all relative group',
                   isActive(item.path)
-                    ? 'bg-purple-50 text-purple-600'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-primary text-white shadow-lg shadow-primary/30'
+                    : 'text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
                 )}
               >
                 <item.icon
                   className={cn(
                     'w-5 h-5 flex-shrink-0',
-                    isActive(item.path) ? 'text-purple-600' : 'text-gray-500'
+                    isActive(item.path) ? 'text-white' : 'text-sidebar-foreground/50'
                   )}
                 />
 
                 {!collapsed && (
-                  <span className="flex-1 font-medium text-sm">{t(item.label)}</span>
-                )}
-
-                {collapsed && (
-                  <div className="absolute left-full ml-2 px-3 py-1.5 bg-gray-900 text-white text-sm rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50">
-                    {t(item.label)}
-                  </div>
+                  <span className="flex-1 font-black text-xs uppercase tracking-widest">{t(item.label)}</span>
                 )}
               </Link>
             ))}
@@ -303,14 +302,14 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
           {/* Toggle Button */}
           <button
             onClick={() => handleCollapse(!collapsed)}
-            className="hidden lg:flex w-full items-center justify-center gap-2 px-3 py-2.5 mt-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+            className="hidden lg:flex w-full items-center justify-center gap-2 px-4 py-3 mt-4 rounded-2xl text-sidebar-foreground/50 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-all"
           >
             {collapsed ? (
               <ChevronRight className="w-5 h-5" />
             ) : (
               <>
                 <ChevronLeft className="w-5 h-5" />
-                <span className="text-sm font-medium">{t('sidebar.collapse')}</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">{t('sidebar.collapse')}</span>
               </>
             )}
           </button>
@@ -320,6 +319,8 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
+        title={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
+        aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
         className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-white shadow-lg border border-gray-200"
       >
         <Menu className="w-6 h-6 text-gray-700" />

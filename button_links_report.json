@@ -1,0 +1,278 @@
+[
+  {
+    "file": "src\\pages\\AIAssistant.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSend",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Attendance.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleMark(record.studentId, record.classId, 'present')",
+    "text": "P"
+  },
+  {
+    "file": "src\\pages\\Attendance.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleMark(record.studentId, record.classId, 'late')",
+    "text": "R"
+  },
+  {
+    "file": "src\\pages\\Attendance.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleMark(record.studentId, record.classId, 'absent')",
+    "text": "A"
+  },
+  {
+    "file": "src\\pages\\Communication.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setNewMessage({ ...newMessage, recipientType: 'all'",
+    "text": "Tous"
+  },
+  {
+    "file": "src\\pages\\Communication.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setNewMessage({ ...newMessage, recipientType: 'class'",
+    "text": "Classe"
+  },
+  {
+    "file": "src\\pages\\DashboardHome.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleGenerateOfflineAlerts",
+    "text": "Scanner anomalies (IA Offline)"
+  },
+  {
+    "file": "src\\pages\\modules\\AIAssistantModule.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsCopilotOpen(true)",
+    "text": "Ouvrir Copilot"
+  },
+  {
+    "file": "src\\pages\\modules\\CommunicationModule.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsCopilotOpen(true)",
+    "text": "Assistant IA"
+  },
+  {
+    "file": "src\\pages\\modules\\CommunicationModule.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setReply(prev => prev + \" (Assistant: Reformuler avec plus de pédagogie...) \")",
+    "text": "Aider à rédiger"
+  },
+  {
+    "file": "src\\pages\\modules\\CommunicationModule.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSend",
+    "text": "Répondre"
+  },
+  {
+    "file": "src\\pages\\modules\\CommunicationModule.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {",
+    "text": "Consulter les annonces globale"
+  },
+  {
+    "file": "src\\pages\\NotFound.tsx",
+    "type": "a (Ancre)",
+    "dest": "/",
+    "text": "Return to Home"
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "triggerFileInput",
+    "text": "{isUploadingLogo ? (\r\n        "
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleRemoveLogo",
+    "text": "{t('settings.removeLogo')}"
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSaveName",
+    "text": "{isSaving ? (\r\n               "
+  },
+  {
+    "file": "src\\components\\dashboard\\CenterPane.tsx",
+    "type": "Button (onClick)",
+    "dest": "onAdd",
+    "text": "{addLabel}"
+  },
+  {
+    "file": "src\\components\\dashboard\\CopilotPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsCopilotOpen(false)",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\dashboard\\CopilotPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleSend()",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\dashboard\\DashboardSidebar.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setCollapsed(!collapsed)",
+    "text": "{collapsed ?  : }"
+  },
+  {
+    "file": "src\\components\\dashboard\\DetailPane.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsMaximized(!isMaximized)",
+    "text": "{isMaximized ? (\r\n            "
+  },
+  {
+    "file": "src\\components\\dashboard\\DetailPane.tsx",
+    "type": "Button (onClick)",
+    "dest": "onClose",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\dashboard\\NetworkStatus.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSync",
+    "text": "{getStatusIcon()}"
+  },
+  {
+    "file": "src\\components\\dashboard\\OutlookTopBar.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSync",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "/",
+    "text": "SchoolGenius"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "mailto:contact@schoolgenius.fr",
+    "text": "contact@schoolgenius.fr"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "tel:+33123456789",
+    "text": "01 23 45 67 89"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "{link.name}"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "{link.name}"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "{link.name}"
+  },
+  {
+    "file": "src\\components\\landing\\Footer.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "{link.name}"
+  },
+  {
+    "file": "src\\components\\layout\\Header.tsx",
+    "type": "Link",
+    "dest": "/notifications",
+    "text": "setShowNotifications(false)}\r\n"
+  },
+  {
+    "file": "src\\components\\layout\\Header.tsx",
+    "type": "Link",
+    "dest": "/profile",
+    "text": "setShowProfile(false)}\r\n      "
+  },
+  {
+    "file": "src\\components\\layout\\Header.tsx",
+    "type": "Link",
+    "dest": "/settings",
+    "text": "setShowProfile(false)}\r\n      "
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "/",
+    "text": "SchoolGenius"
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "{link.name}"
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "/dashboard",
+    "text": "Démo gratuite 🚀"
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "link.href",
+    "text": "setIsOpen(false)}\r\n           "
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "/dashboard",
+    "text": "Démo gratuite 🚀"
+  },
+  {
+    "file": "src\\components\\layout\\Sidebar.tsx",
+    "type": "Link",
+    "dest": "/dashboard",
+    "text": "{schoolLogo ? (\r\n             "
+  },
+  {
+    "file": "src\\components\\layout\\Sidebar.tsx",
+    "type": "Link",
+    "dest": "/dashboard",
+    "text": "{schoolLogo ? (\r\n             "
+  },
+  {
+    "file": "src\\components\\layout\\Sidebar.tsx",
+    "type": "Link",
+    "dest": "item.path",
+    "text": "{!collapsed && (\r\n            "
+  },
+  {
+    "file": "src\\components\\layout\\Sidebar.tsx",
+    "type": "Link",
+    "dest": "item.path",
+    "text": "{!collapsed && (\r\n            "
+  },
+  {
+    "file": "src\\components\\ui\\carousel.tsx",
+    "type": "Button (onClick)",
+    "dest": "scrollPrev",
+    "text": "Previous slide"
+  },
+  {
+    "file": "src\\components\\ui\\carousel.tsx",
+    "type": "Button (onClick)",
+    "dest": "scrollNext",
+    "text": "Next slide"
+  },
+  {
+    "file": "src\\components\\ui\\sidebar.tsx",
+    "type": "Button (onClick)",
+    "dest": "(event) => {\r\n          onClick?.(event);\r\n          toggleSidebar();",
+    "text": "Toggle Sidebar"
+  }
+]

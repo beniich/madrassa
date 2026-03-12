@@ -82,5 +82,11 @@
         "language": "Language",
         "languageDesc": "Choose your interface language",
         "languageSwitcher": "Use the language switcher at the top right of the screen."
+    },
+    "roles": {
+        "direction": "Direction",
+        "admin": "Administrator",
+        "teacher": "Teacher",
+        "parent": "Parent"
     }
 }

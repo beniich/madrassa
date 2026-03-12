@@ -64,30 +64,27 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
 
   return (
     <header
-      className={`fixed top-0 right-0 h-16 bg-white border-b border-gray-200 z-40 transition-all duration-300 ${sidebarCollapsed ? 'left-16' : 'left-80'
+      className={`fixed top-0 right-0 h-16 bg-background border-b border-border z-40 transition-all duration-300 ${sidebarCollapsed ? 'lg:left-16' : 'lg:left-64'
         } ${className}`}
     >
       <div className="h-full px-6 flex items-center justify-between gap-4">
         {/* Left Section - School Year & Search */}
         <div className="flex items-center gap-4 flex-1">
           {/* School Year Badge */}
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-purple-50 text-purple-700 rounded-lg border border-purple-200">
-            <span className="text-sm font-semibold">2024-2025</span>
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-secondary text-primary rounded-xl border border-primary/20">
+            <span className="text-xs font-black uppercase tracking-widest italic">Session 2024-2025</span>
           </div>
 
           {/* Search Bar */}
           <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
             <input
               type="text"
               placeholder={t('common.search')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              className="w-full pl-12 pr-4 py-2.5 bg-white/50 backdrop-blur-sm border border-border rounded-xl text-sm font-bold focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-gray-400"
             />
-            <kbd className="hidden md:inline-flex absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 text-xs font-semibold text-gray-500 bg-white border border-gray-200 rounded">
-              ⌘K
-            </kbd>
           </div>
         </div>
 
@@ -96,42 +93,51 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
           {/* Language Switcher */}
           <LanguageSwitcher />
 
-          {/* Sync Button */}
-          <button
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors relative group"
-            title={t('common.save')}
-          >
-            <RefreshCw className="w-5 h-5 text-gray-600" />
-          </button>
+          {/* Action Buttons */}
+          <div className="flex items-center gap-1 bg-white/50 p-1 rounded-xl border border-border">
+              <button
+                className="p-2 rounded-lg hover:bg-secondary transition-colors text-gray-600 hover:text-primary"
+                title={t('common.save')}
+              >
+                <RefreshCw className="w-5 h-5" />
+              </button>
+              
+              <div className="w-px h-4 bg-border mx-1" />
+
+              <button
+                onClick={() => setShowNotifications(!showNotifications)}
+                className="relative p-2 rounded-lg hover:bg-secondary transition-colors text-gray-600 hover:text-primary"
+              >
+                <Bell className="w-5 h-5" />
+                {unreadCount > 0 && (
+                  <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-primary rounded-full ring-2 ring-white" />
+                )}
+              </button>
+          </div>
 
           {/* Connection Status */}
           <div
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg ${isOnline ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border ${isOnline ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100'
               }`}
           >
-            {isOnline ? (
-              <>
-                <Wifi className="w-4 h-4" />
-                <span className="text-xs font-medium hidden sm:inline">{t('common.online')}</span>
-              </>
-            ) : (
-              <>
-                <WifiOff className="w-4 h-4" />
-                <span className="text-xs font-medium hidden sm:inline">{t('common.offline')}</span>
-              </>
-            )}
+            <div className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
+            <span className="text-[10px] font-black uppercase tracking-widest hidden sm:inline">{isOnline ? t('common.online') : t('common.offline')}</span>
           </div>
 
-          {/* Notifications */}
-          <div className="relative">
+          {/* Profile Dropdown */}
+          <div className="relative ml-2">
             <button
-              onClick={() => setShowNotifications(!showNotifications)}
-              className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              onClick={() => setShowProfile(!showProfile)}
+              title="Menu profil"
+              className="flex items-center gap-2 p-1 pr-3 rounded-xl bg-white border border-border hover:border-primary/50 transition-all group"
             >
-              <Bell className="w-5 h-5 text-gray-600" />
-              {unreadCount > 0 && (
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
-              )}
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
+                <User className="w-4 h-4 text-white" />
+              </div>
+              <div className="hidden sm:block text-left mr-2">
+                  <p className="text-[10px] font-black text-gray-900 leading-none">ADMIN</p>
+                  <ChevronDown className="w-3 h-3 text-gray-400 mt-0.5" />
+              </div>
             </button>
 
             {/* Notifications Dropdown */}
@@ -192,6 +198,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
           <div className="relative">
             <button
               onClick={() => setShowProfile(!showProfile)}
+              title="Menu Profil"
               className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">

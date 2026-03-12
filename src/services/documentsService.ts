@@ -1,10 +1,32 @@
+/**
+ * Documents Service - Real API Backend
+ * Replaces hardcoded mock data with live calls to /api/documents
+ */
 
-import { SchoolFile, SchoolFolder } from '../types/school-365';
+import { apiClient } from '@/lib/apiClient';
+
+export interface SchoolFolder {
+    id: string;
+    name: string;
+    parentId: string | null;
+    itemCount: number;
+}
+
+export interface SchoolFile {
+    id: string;
+    name: string;
+    type: string;
+    size: string;
+    updatedAt: string;
+    owner: string;
+    parentId: string;
+    url?: string;
+}
 
 class DocumentsService {
     private static instance: DocumentsService;
 
-    private constructor() { }
+    private constructor() {}
 
     public static getInstance(): DocumentsService {
         if (!DocumentsService.instance) {
@@ -13,43 +35,76 @@ class DocumentsService {
         return DocumentsService.instance;
     }
 
+    /**
+     * Return all documents grouped as virtual folders by category.
+     * Falls back to empty array if backend is unavailable.
+     */
     public async getFolders(parentId: string | null = null): Promise<SchoolFolder[]> {
-        // Structure initiale
-        if (parentId === null) {
-            return [
-                { id: 'f-eco', name: 'École', parentId: null, itemCount: 12 },
-                { id: 'f-cla', name: 'Classes', parentId: null, itemCount: 45 },
-                { id: 'f-ele', name: 'Élèves', parentId: null, itemCount: 150 },
-            ];
-        }
+        try {
+            const docs = await apiClient.get<any[]>('/documents');
 
-        // Sous-dossiers exemple pour 'Classes'
-        if (parentId === 'f-cla') {
-            return [
-                { id: 'f-cla-4b', name: 'Classe 4B', parentId: 'f-cla', itemCount: 15 },
-                { id: 'f-cla-3a', name: 'Classe 3A', parentId: 'f-cla', itemCount: 10 },
-            ];
-        }
+            // Build virtual folders from category field
+            const categories = new Map<string, number>();
+            for (const doc of docs) {
+                const cat = doc.category ?? 'Général';
+                categories.set(cat, (categories.get(cat) ?? 0) + 1);
+            }
 
-        return [];
+            const allFolders: SchoolFolder[] = Array.from(categories.entries()).map(([cat, count]) => ({
+                id: `folder-${cat.toLowerCase().replace(/\s+/g, '-')}`,
+                name: cat,
+                parentId: null,
+                itemCount: count,
+            }));
+
+            if (parentId === null) return allFolders;
+
+            // Virtual sub-folder navigation not supported yet — return empty
+            return [];
+        } catch (err) {
+            console.error('[DocumentsService] getFolders error:', err);
+            return [];
+        }
     }
 
+    /**
+     * Return documents that belong to a given virtual folder (by category slug).
+     */
     public async getFiles(parentId: string): Promise<SchoolFile[]> {
-        if (parentId === 'f-eco') {
-            return [
-                { id: 'file-1', name: 'Procédures_Rentrée.pdf', type: 'pdf', size: '1.2 MB', updatedAt: '2024-12-01', owner: 'Admin', parentId },
-                { id: 'file-2', name: 'Planning_Annuel.xlsx', type: 'xlsx', size: '450 KB', updatedAt: '2024-11-20', owner: 'Direction', parentId },
-            ];
-        }
+        try {
+            const docs = await apiClient.get<any[]>('/documents');
+            const folderName = parentId.replace('folder-', '').replace(/-/g, ' ');
 
-        if (parentId === 'f-cla-4b') {
-            return [
-                { id: 'file-3', name: 'Support_Cours_Maths.pdf', type: 'pdf', size: '2.5 MB', updatedAt: '2024-12-15', owner: 'M. Martin', parentId },
-                { id: 'file-4', name: 'Devoir_Maison_1.docx', type: 'docx', size: '120 KB', updatedAt: '2024-12-18', owner: 'M. Martin', parentId },
-            ];
+            return docs
+                .filter((d) => (d.category ?? 'général').toLowerCase() === folderName)
+                .map((d) => ({
+                    id: d.localId,
+                    name: d.name,
+                    type: d.type ?? 'other',
+                    size: d.size ?? '—',
+                    updatedAt: d.uploadedAt?.substring(0, 10) ?? '',
+                    owner: d.uploadedBy ?? 'Inconnu',
+                    parentId,
+                    url: d.fileUrl ?? undefined,
+                }));
+        } catch (err) {
+            console.error('[DocumentsService] getFiles error:', err);
+            return [];
         }
+    }
 
-        return [];
+    /**
+     * Upload a new document.
+     */
+    public async uploadDocument(doc: Omit<SchoolFile, 'id'>): Promise<void> {
+        await apiClient.post('/documents', doc);
+    }
+
+    /**
+     * Delete a document by its localId.
+     */
+    public async deleteDocument(localId: string): Promise<void> {
+        await apiClient.delete(`/documents/${localId}`);
     }
 }
 

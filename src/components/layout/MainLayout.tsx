@@ -16,7 +16,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       {/* Sidebar */}
       <Sidebar onCollapsedChange={setSidebarCollapsed} />
 
@@ -25,10 +25,10 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
 
       {/* Main Content */}
       <main
-        className={`transition-all duration-300 pt-16 ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-80'
+        className={`transition-all duration-300 pt-16 ${sidebarCollapsed ? 'lg:pl-16' : 'lg:pl-64'
           }`}
       >
-        <div className="p-6">
+        <div className="p-8">
           {children}
         </div>
       </main>

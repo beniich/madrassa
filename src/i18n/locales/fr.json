@@ -82,5 +82,11 @@
         "language": "Langue",
         "languageDesc": "Choisir la langue de l'interface",
         "languageSwitcher": "Utilisez le sélecteur de langue en haut à droite de l'écran."
+    },
+    "roles": {
+        "direction": "Direction",
+        "admin": "Administrateur",
+        "teacher": "Enseignant",
+        "parent": "Parent"
     }
 }

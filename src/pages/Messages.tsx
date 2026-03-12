@@ -22,6 +22,9 @@ import {
   Archive,
   Trash2,
 } from 'lucide-react';
+import { toast } from "sonner";
+import { useNavigate } from 'react-router-dom';
+
 
 // ============================================================================
 // TYPES
@@ -480,13 +483,27 @@ export const Messages = () => {
               </div>
 
               <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <button 
+                    onClick={() => toast.info(`Démarrage de l'appel audio avec ${selectedConversation.name}... (Fonction bientôt disponible)`)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Appel audio"
+                    title="Appel audio"
+                >
                   <Phone className="w-5 h-5 text-gray-600" />
                 </button>
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <button 
+                    onClick={() => toast.info(`Démarrage de l'appel vidéo avec ${selectedConversation.name}... (Fonction bientôt disponible)`)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Appel vidéo"
+                    title="Appel vidéo"
+                >
                   <Video className="w-5 h-5 text-gray-600" />
                 </button>
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <button 
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    aria-label="Plus d'options"
+                    title="Plus d'options"
+                >
                   <MoreVertical className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
@@ -521,15 +538,29 @@ export const Messages = () => {
             {/* Input message */}
             <div className="p-4 border-t border-gray-200 bg-white">
               <form onSubmit={handleSendMessage} className="flex gap-2">
+                <input 
+                    type="file" 
+                    id="attachment-input" 
+                    className="hidden" 
+                    onChange={(e) => {
+                        if (e.target.files?.[0]) toast.success(`Fichier "${e.target.files[0].name}" prêt à être envoyé`);
+                    }}
+                />
                 <button
                   type="button"
+                  onClick={() => document.getElementById('attachment-input')?.click()}
                   className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
+                  aria-label="Joindre un fichier"
+                  title="Joindre un fichier"
                 >
                   <Paperclip className="w-5 h-5 text-gray-600" />
                 </button>
                 <button
                   type="button"
+                  onClick={() => document.getElementById('attachment-input')?.click()}
                   className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
+                  aria-label="Joindre une image"
+                  title="Joindre une image"
                 >
                   <Image className="w-5 h-5 text-gray-600" />
                 </button>
@@ -539,13 +570,18 @@ export const Messages = () => {
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Écrire un message..."
                   className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  aria-label="Champ de message"
                 />
                 <button
                   type="button"
+                  onClick={() => toast.info("Sélecteur d'emojis (Simulation)")}
                   className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
+                  aria-label="Ajouter un emoji"
+                  title="Ajouter un emoji"
                 >
                   <Smile className="w-5 h-5 text-gray-600" />
                 </button>
+
                 <button
                   type="submit"
                   disabled={!newMessage.trim()}

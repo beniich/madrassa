@@ -4,11 +4,11 @@
 // Fichier : src/pages/Documents.tsx
 // ============================================================================
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import {
   FileText,
   Upload,
-  Folder,
+  Folder as FolderIcon,
   Download,
   Search,
   MoreVertical,
@@ -17,15 +17,26 @@ import {
   Trash2,
   Share2,
   File,
-  Image,
+  Image as ImageIcon,
   FileSpreadsheet,
-  FileCode,
   X,
   Plus,
   Grid,
   List,
   Filter,
+  ArrowUpRight,
+  HardDrive,
+  Clock,
+  Zap,
+  ChevronRight
 } from 'lucide-react';
+import { toast } from "sonner";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+
 
 // ============================================================================
 // TYPES
@@ -55,11 +66,11 @@ interface Folder {
 // ============================================================================
 
 const DEMO_FOLDERS: Folder[] = [
-  { id: '1', name: 'Examens', color: 'bg-red-500', documentCount: 12 },
-  { id: '2', name: 'Cours', color: 'bg-blue-500', documentCount: 45 },
-  { id: '3', name: 'Administratif', color: 'bg-green-500', documentCount: 23 },
-  { id: '4', name: 'Rapports', color: 'bg-purple-500', documentCount: 8 },
-  { id: '5', name: 'Photos', color: 'bg-yellow-500', documentCount: 156 },
+  { id: '1', name: 'Examens', color: 'from-rose-500 to-red-600', documentCount: 12 },
+  { id: '2', name: 'Cours', color: 'from-blue-500 to-indigo-600', documentCount: 45 },
+  { id: '3', name: 'Administratif', color: 'from-emerald-500 to-teal-600', documentCount: 23 },
+  { id: '4', name: 'Rapports', color: 'from-purple-500 to-purple-800', documentCount: 8 },
+  { id: '5', name: 'Photos', color: 'from-amber-500 to-orange-600', documentCount: 156 },
 ];
 
 const DEMO_DOCUMENTS: Document[] = [
@@ -105,10 +116,7 @@ const DEMO_DOCUMENTS: Document[] = [
   },
 ];
 
-// ============================================================================
-// UTILITAIRES
-// ============================================================================
-
+// ... utility functions
 const formatFileSize = (bytes: number): string => {
   if (bytes < 1024) return bytes + ' B';
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -119,16 +127,11 @@ const formatFileSize = (bytes: number): string => {
 
 const getFileIcon = (type: string) => {
   switch (type) {
-    case 'pdf':
-      return <FileText className="w-8 h-8 text-red-500" />;
-    case 'doc':
-      return <FileText className="w-8 h-8 text-blue-500" />;
-    case 'image':
-      return <Image className="w-8 h-8 text-green-500" />;
-    case 'excel':
-      return <FileSpreadsheet className="w-8 h-8 text-green-600" />;
-    default:
-      return <File className="w-8 h-8 text-gray-500" />;
+    case 'pdf': return <FileText className="w-8 h-8 text-rose-500" />;
+    case 'doc': return <FileText className="w-8 h-8 text-blue-500" />;
+    case 'image': return <ImageIcon className="w-8 h-8 text-emerald-500" />;
+    case 'excel': return <FileSpreadsheet className="w-8 h-8 text-green-600" />;
+    default: return <File className="w-8 h-8 text-gray-500" />;
   }
 };
 
@@ -137,8 +140,7 @@ const formatDate = (dateString: string): string => {
   const now = new Date();
   const diff = now.getTime() - date.getTime();
   const hours = Math.floor(diff / (1000 * 60 * 60));
-  
-  if (hours < 1) return 'Il y a moins d\'une heure';
+  if (hours < 1) return 'À l\'instant';
   if (hours < 24) return `Il y a ${hours}h`;
   if (hours < 48) return 'Hier';
   return date.toLocaleDateString('fr-FR');
@@ -154,119 +156,63 @@ const DocumentCard = ({
   onEdit,
   onDelete,
   onShare,
+  onDownload,
 }: {
   doc: Document;
   onView: (id: string) => void;
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onShare: (id: string) => void;
+  onDownload: (id: string) => void;
 }) => {
-  const [showMenu, setShowMenu] = useState(false);
-
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-lg transition-all">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-3">
-          {getFileIcon(doc.type)}
-          <div className="flex-1 min-w-0">
-            <h4 className="font-semibold text-gray-900 text-sm truncate">
-              {doc.name}
-            </h4>
-            <p className="text-xs text-gray-500 mt-1">
-              {formatFileSize(doc.size)}
+    <Card className="group bg-white rounded-[2rem] border-none shadow-lg hover:shadow-2xl hover:translate-y-[-5px] transition-all duration-500 p-6 flex flex-col relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button 
+                title="Options"
+                className="p-2 hover:bg-gray-50 rounded-xl transition-colors"
+                onClick={(e) => { e.stopPropagation(); toast.info("Options avancées...") }}
+            >
+                <MoreVertical className="h-4 w-4 text-gray-400" />
+            </button>
+        </div>
+      
+        <div className="h-32 mb-6 flex items-center justify-center bg-gray-50 rounded-3xl group-hover:scale-105 transition-transform duration-500">
+            {getFileIcon(doc.type)}
+        </div>
+
+        <div className="space-y-1 mb-6">
+            <h4 className="font-black text-gray-900 text-sm truncate italic italic tracking-tight">{doc.name}</h4>
+            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">
+                {formatFileSize(doc.size)} • {doc.type.toUpperCase()}
             </p>
-          </div>
         </div>
 
-        <div className="relative">
-          <button
-            onClick={() => setShowMenu(!showMenu)}
-            className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <MoreVertical className="w-4 h-4 text-gray-600" />
-          </button>
-
-          {showMenu && (
-            <>
-              <div
-                className="fixed inset-0 z-10"
-                onClick={() => setShowMenu(false)}
-              />
-              <div className="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-xl border border-gray-200 z-20">
-                <button
-                  onClick={() => {
-                    onView(doc.id);
-                    setShowMenu(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 w-full text-left text-sm"
+        <div className="mt-auto space-y-4">
+            <div className="flex items-center justify-between text-[10px] font-black text-gray-400 uppercase tracking-tighter">
+                <span className="flex items-center gap-1"><Clock className="h-3 w-3" /> {formatDate(doc.uploadedAt)}</span>
+                <span className="text-gray-900 italic">#{doc.folder}</span>
+            </div>
+            
+            <div className="flex gap-2">
+                <Button 
+                    title="Visualiser"
+                    variant="ghost" 
+                    className="flex-1 h-10 rounded-xl bg-gray-50 hover:bg-purple-50 hover:text-purple-600 font-black text-[10px] uppercase tracking-widest p-0"
+                    onClick={() => onView(doc.id)}
                 >
-                  <Eye className="w-4 h-4 text-blue-600" />
-                  Visualiser
-                </button>
-                <button
-                  onClick={() => {
-                    onShare(doc.id);
-                    setShowMenu(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 w-full text-left text-sm"
+                    VOIR
+                </Button>
+                <Button 
+                    title="Télécharger"
+                    className="flex-1 h-10 rounded-xl bg-gray-900 hover:bg-black text-white font-black text-[10px] uppercase tracking-widest p-0"
+                    onClick={() => onDownload(doc.id)}
                 >
-                  <Share2 className="w-4 h-4 text-green-600" />
-                  Partager
-                </button>
-                <button
-                  onClick={() => {
-                    onEdit(doc.id);
-                    setShowMenu(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 w-full text-left text-sm"
-                >
-                  <Edit className="w-4 h-4 text-purple-600" />
-                  Renommer
-                </button>
-                <button className="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 w-full text-left text-sm">
-                  <Download className="w-4 h-4 text-gray-600" />
-                  Télécharger
-                </button>
-                <button
-                  onClick={() => {
-                    onDelete(doc.id);
-                    setShowMenu(false);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2.5 hover:bg-gray-50 w-full text-left text-sm border-t"
-                >
-                  <Trash2 className="w-4 h-4 text-red-600" />
-                  Supprimer
-                </button>
-              </div>
-            </>
-          )}
+                    DL
+                </Button>
+            </div>
         </div>
-      </div>
-
-      <div className="space-y-2 text-xs text-gray-600">
-        <div className="flex items-center gap-2">
-          <Folder className="w-3 h-3" />
-          <span>{doc.folder}</span>
-        </div>
-        <div>
-          <span>Par {doc.uploadedBy}</span>
-        </div>
-        <div>
-          <span>{formatDate(doc.uploadedAt)}</span>
-        </div>
-      </div>
-
-      {doc.sharedWith.length > 0 && (
-        <div className="mt-3 pt-3 border-t border-gray-200">
-          <div className="flex items-center gap-2">
-            <Share2 className="w-3 h-3 text-gray-400" />
-            <span className="text-xs text-gray-500">
-              Partagé avec {doc.sharedWith.length} groupe(s)
-            </span>
-          </div>
-        </div>
-      )}
-    </div>
+    </Card>
   );
 };
 
@@ -280,223 +226,237 @@ export const Documents = () => {
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showUpload, setShowUpload] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const filteredDocuments = documents.filter((doc) => {
-    const matchesSearch = doc.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesFolder =
-      selectedFolder === 'all' || doc.folder === selectedFolder;
+    const matchesSearch = doc.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFolder = selectedFolder === 'all' || doc.folder === selectedFolder;
     return matchesSearch && matchesFolder;
   });
 
-  const handleView = (id: string) => {
-    alert(`Visualiser document ${id}`);
+  const handleDownload = (id: string) => {
+    const doc = documents.find(d => d.id === id);
+    if (doc) toast.success(`Téléchargement de ${doc.name} initié...`);
   };
 
-  const handleEdit = (id: string) => {
-    alert(`Renommer document ${id}`);
-  };
-
-  const handleDelete = (id: string) => {
-    if (confirm('Supprimer ce document ?')) {
-      setDocuments(documents.filter((d) => d.id !== id));
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.[0]) {
+        toast.success("Synchronisation Cloud terminée (Simulation)");
+        setShowUpload(false);
     }
   };
 
-  const handleShare = (id: string) => {
-    alert(`Partager document ${id}`);
-  };
-
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Documents</h1>
-          <p className="text-gray-600 mt-1">
-            Gérez tous vos fichiers et documents
-          </p>
-        </div>
-        <button
-          onClick={() => setShowUpload(true)}
-          className="flex items-center gap-2 px-4 py-2.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
-        >
-          <Upload className="w-5 h-5" />
-          Importer
-        </button>
-      </div>
+    <div className="space-y-8 pb-20">
+      <input type="file" ref={fileInputRef} onChange={handleFileUpload} className="hidden" title="Parcourir" />
 
-      {/* Statistiques rapides */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-2xl font-bold text-gray-900">
-            {documents.length}
-          </p>
-          <p className="text-sm text-gray-600 mt-1">Documents</p>
+      {/* Premium Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-[0.03]">
+            <FolderIcon className="h-24 w-24 -rotate-12" />
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-2xl font-bold text-gray-900">
-            {DEMO_FOLDERS.length}
-          </p>
-          <p className="text-sm text-gray-600 mt-1">Dossiers</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-2xl font-bold text-gray-900">
-            {formatFileSize(
-              documents.reduce((sum, doc) => sum + doc.size, 0)
-            )}
-          </p>
-          <p className="text-sm text-gray-600 mt-1">Espace utilisé</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4">
-          <p className="text-2xl font-bold text-gray-900">50 GB</p>
-          <p className="text-sm text-gray-600 mt-1">Espace total</p>
-        </div>
-      </div>
-
-      {/* Dossiers */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
-        <h3 className="font-bold text-gray-900 mb-4">Dossiers</h3>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <button
-            onClick={() => setSelectedFolder('all')}
-            className={`p-4 rounded-lg border-2 transition-all ${
-              selectedFolder === 'all'
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-gray-300'
-            }`}
-          >
-            <Folder className="w-8 h-8 text-gray-600 mx-auto mb-2" />
-            <p className="font-semibold text-sm text-gray-900">Tous</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {documents.length} docs
+        <div className="relative z-10 space-y-2">
+            <Badge className="bg-purple-50 text-purple-600 border-purple-100 font-black text-[9px] uppercase tracking-[0.2em] px-3 mb-2">
+                MEDIATHÈQUE CLOUD
+            </Badge>
+            <h1 className="text-4xl font-black text-gray-900 tracking-tight italic">Espace Documents</h1>
+            <p className="text-gray-500 font-medium text-sm flex items-center gap-2">
+                Archives, ressources pédagogiques et documents administratifs
             </p>
-          </button>
-          {DEMO_FOLDERS.map((folder) => (
-            <button
-              key={folder.id}
-              onClick={() => setSelectedFolder(folder.name)}
-              className={`p-4 rounded-lg border-2 transition-all ${
-                selectedFolder === folder.name
-                  ? 'border-purple-500 bg-purple-50'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
+        </div>
+        <div className="flex flex-wrap gap-3 relative z-10">
+            <Button
+                onClick={() => setShowUpload(true)}
+                title="Déposer un nouveau fichier"
+                className="h-14 px-8 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-xl shadow-purple-100 gap-3 group"
             >
-              <Folder className={`w-8 h-8 mx-auto mb-2 ${folder.color.replace('bg-', 'text-')}`} />
-              <p className="font-semibold text-sm text-gray-900">
-                {folder.name}
-              </p>
-              <p className="text-xs text-gray-500 mt-1">
-                {folder.documentCount} docs
-              </p>
-            </button>
-          ))}
+                <Upload className="w-5 h-5 group-hover:translate-y-[-2px] transition-transform" /> IMPORTER
+            </Button>
+            <Button
+                variant="outline"
+                title="Plus d'actions"
+                className="h-14 w-14 rounded-2xl border-gray-100 p-0 hover:bg-gray-50"
+            >
+                <MoreVertical className="h-6 w-6 text-gray-400" />
+            </Button>
         </div>
       </div>
 
-      {/* Barre de recherche et filtres */}
-      <div className="bg-white rounded-xl border border-gray-200 p-4">
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Rechercher un document..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+      {/* Stats Drive */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: 'Documents Total', val: documents.length, icon: FileText, color: 'text-purple-600', bg: 'bg-purple-50' },
+          { label: 'Espace Utilisé', val: '12.4 GB', icon: HardDrive, color: 'text-blue-600', bg: 'bg-blue-50' },
+          { label: 'Vitesse Sync', val: '450 Mbps', icon: Zap, color: 'text-amber-600', bg: 'bg-amber-50' },
+          { label: 'Partages Actifs', val: '28', icon: Share2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+        ].map((stat, i) => (
+          <Card key={i} className="p-6 border-none shadow-md bg-white hover:shadow-xl transition-all">
+             <div className="flex justify-between items-center mb-1">
+                <div className={cn("p-2 rounded-xl", stat.bg, stat.color)}>
+                    <stat.icon className="h-5 w-5" />
+                </div>
+                <div className="h-1 w-12 bg-gray-100 rounded-full"></div>
+             </div>
+             <p className="text-2xl font-black text-gray-900 tracking-tighter">{stat.val}</p>
+             <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">{stat.label}</p>
+          </Card>
+        ))}
+      </div>
+
+      {/* Dossiers Grid */}
+      <div className="space-y-6">
+          <div className="flex items-center justify-between px-2">
+            <h3 className="text-xl font-black text-gray-900 italic tracking-tight flex items-center gap-3">
+                <FolderIcon className="h-5 w-5 text-purple-600" /> Vos Dossiers
+            </h3>
+            <Button variant="ghost" className="text-[10px] font-black text-purple-600 p-0 hover:bg-transparent h-auto italic flex items-center gap-1">
+                TOUT VOIR <ChevronRight className="h-3 w-3" />
+            </Button>
+          </div>
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            <Card 
+                onClick={() => setSelectedFolder('all')}
+                className={cn(
+                    "cursor-pointer group rounded-[2rem] border-none p-6 transition-all duration-300 relative overflow-hidden",
+                    selectedFolder === 'all' 
+                        ? "bg-gray-900 text-white shadow-2xl shadow-gray-400 scale-105" 
+                        : "bg-white text-gray-900 shadow-md hover:shadow-xl border border-gray-50 hover:translate-y-[-5px]"
+                )}
+            >
+                <FolderIcon className={cn("h-8 w-8 mb-4 transition-transform group-hover:scale-110", selectedFolder === 'all' ? "text-white" : "text-gray-400")} />
+                <p className="font-black italic text-sm tracking-tight mb-1">Tous</p>
+                <p className={cn("text-[9px] font-black uppercase tracking-widest", selectedFolder === 'all' ? "text-gray-400" : "text-gray-400")}>{documents.length} OBJETS</p>
+            </Card>
+
+            {DEMO_FOLDERS.map((folder) => (
+               <Card 
+                key={folder.id}
+                onClick={() => setSelectedFolder(folder.name)}
+                className={cn(
+                    "cursor-pointer group rounded-[2.2rem] border-none p-6 transition-all duration-300 relative overflow-hidden",
+                    selectedFolder === folder.name 
+                        ? "bg-purple-600 text-white shadow-2xl shadow-purple-200 scale-105" 
+                        : "bg-white text-gray-900 shadow-md hover:shadow-xl border border-gray-50 hover:translate-y-[-5px]"
+                )}
+            >
+                <div className={cn(
+                    "h-10 w-10 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110 shadow-lg",
+                    selectedFolder === folder.name ? "bg-white/20" : "bg-gray-50"
+                )}>
+                    <FolderIcon className={cn("h-5 w-5", selectedFolder === folder.name ? "text-white" : "text-gray-400")} />
+                </div>
+                <p className="font-black italic text-sm tracking-tight mb-1 truncate">{folder.name}</p>
+                <p className={cn("text-[9px] font-black uppercase tracking-widest", selectedFolder === folder.name ? "text-purple-100" : "text-gray-400")}>{folder.documentCount} DOCS</p>
+                {selectedFolder === folder.name && <div className="absolute top-0 right-0 p-4"><div className="h-1.5 w-1.5 rounded-full bg-white animate-pulse"></div></div>}
+            </Card>
+            ))}
+            
+            <button 
+                title="Nouveau Dossier"
+                className="rounded-[2.2rem] border-2 border-dashed border-gray-100 p-6 flex flex-col items-center justify-center gap-2 hover:bg-gray-50/50 hover:border-purple-200 transition-all text-gray-300 hover:text-purple-500"
+            >
+                <Plus className="h-8 w-8" />
+                <span className="text-[10px] font-black uppercase tracking-widest">Créer</span>
+            </button>
+          </div>
+      </div>
+
+      {/* Explorer Tools */}
+      <div className="bg-white p-4 rounded-[2.5rem] border border-gray-100 shadow-sm flex flex-col md:flex-row gap-4 items-center mt-12">
+          <div className="relative flex-1 w-full group">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
+            <Input 
+                placeholder="Filtrer les documents par nom ou type..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-14 h-14 bg-gray-50/50 border-none rounded-[1.5rem] font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-purple-200"
             />
           </div>
-
           <div className="flex gap-2">
-            <button
-              onClick={() => setViewMode('grid')}
-              className={`p-2.5 rounded-lg border transition-colors ${
-                viewMode === 'grid'
-                  ? 'bg-purple-50 border-purple-500 text-purple-600'
-                  : 'border-gray-300 text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              <Grid className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setViewMode('list')}
-              className={`p-2.5 rounded-lg border transition-colors ${
-                viewMode === 'list'
-                  ? 'bg-purple-50 border-purple-500 text-purple-600'
-                  : 'border-gray-300 text-gray-600 hover:bg-gray-50'
-              }`}
-            >
-              <List className="w-5 h-5" />
-            </button>
+             <Button variant="ghost" size="icon" title="Vue grille" className={cn("h-12 w-12 rounded-2xl", viewMode === 'grid' ? "bg-gray-900 text-white shadow-lg" : "text-gray-400 hover:bg-gray-50")} onClick={() => setViewMode('grid')}>
+                <Grid className="h-5 w-5" />
+             </Button>
+             <Button variant="ghost" size="icon" title="Vue liste" className={cn("h-12 w-12 rounded-2xl", viewMode === 'list' ? "bg-gray-900 text-white shadow-lg" : "text-gray-400 hover:bg-gray-50")} onClick={() => setViewMode('list')}>
+                <List className="h-5 w-5" />
+             </Button>
           </div>
-        </div>
       </div>
 
-      {/* Liste/Grille de documents */}
+      {/* Content Grid */}
       {filteredDocuments.length > 0 ? (
-        <div
-          className={
-            viewMode === 'grid'
-              ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'
-              : 'space-y-2'
-          }
-        >
+        <div className={cn(
+            viewMode === 'grid' 
+                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8' 
+                : 'space-y-4'
+        )}>
           {filteredDocuments.map((doc) => (
             <DocumentCard
               key={doc.id}
               doc={doc}
-              onView={handleView}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onShare={handleShare}
+              onView={(id) => toast.info(`Aperçu du document #${id}`)}
+              onEdit={() => {}}
+              onDelete={() => {}}
+              onShare={() => {}}
+              onDownload={handleDownload}
             />
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-          <FileText className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <p className="text-gray-600 font-medium">Aucun document trouvé</p>
-          <p className="text-sm text-gray-500 mt-2">
-            Essayez de modifier vos critères de recherche
-          </p>
+        <div className="py-32 text-center bg-white rounded-[3rem] border border-dashed border-gray-200 max-w-2xl mx-auto w-full">
+            <FileText className="h-24 w-24 text-gray-100 mx-auto mb-6" />
+            <h3 className="text-2xl font-black text-gray-900 italic tracking-tight mb-2">Drive Introuvable</h3>
+            <p className="text-gray-400 font-medium max-w-xs mx-auto text-sm leading-relaxed px-6">
+                Aucun document ne correspond à vos critères de filtrage. Essayez de réinitialiser la vue ou de changer de dossier.
+            </p>
+            <Button variant="outline" className="mt-8 rounded-2xl border-gray-100 font-black text-[10px] uppercase tracking-widest px-8" onClick={() => { setSelectedFolder('all'); setSearchQuery(''); }}>
+                VOIR TOUT
+            </Button>
         </div>
       )}
 
-      {/* Zone d'upload (Modal) */}
+      {/* Upload Modal (Premium Animation) */}
       {showUpload && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-xl max-w-lg w-full p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-bold text-gray-900">
-                Importer un fichier
-              </h3>
-              <button
-                onClick={() => setShowUpload(false)}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-              >
-                <X className="w-5 h-5 text-gray-600" />
-              </button>
-            </div>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-md z-[100] flex items-center justify-center p-4 animate-in fade-in duration-300">
+           <Card className="rounded-[3rem] border-none shadow-2xl max-w-xl w-full p-12 bg-white animate-in zoom-in-95 duration-500 overflow-hidden relative">
+                <div className="absolute top-0 right-0 p-12 opacity-[0.02] active">
+                    <Upload className="h-64 w-64 text-gray-900" />
+                </div>
+                
+                <div className="relative z-10 space-y-10">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h3 className="text-3xl font-black text-gray-900 italic tracking-tight">Déposer un fichier</h3>
+                            <p className="text-[10px] font-black text-purple-600 uppercase tracking-[0.2em] mt-2">Cloud Synchro Enabled</p>
+                        </div>
+                        <button onClick={() => setShowUpload(false)} title="Fermer" className="p-3 hover:bg-gray-50 rounded-2xl transition-all">
+                            <X className="h-6 w-6 text-gray-400" />
+                        </button>
+                    </div>
 
-            <div className="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-purple-500 transition-colors cursor-pointer">
-              <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-700 font-medium mb-2">
-                Glissez-déposez vos fichiers ici
-              </p>
-              <p className="text-sm text-gray-500 mb-4">
-                ou cliquez pour parcourir
-              </p>
-              <button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-                Sélectionner des fichiers
-              </button>
-            </div>
+                    <div 
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border-2 border-dashed border-gray-100 bg-gray-50/50 rounded-[2.5rem] p-16 text-center group hover:border-purple-200 transition-all cursor-pointer"
+                    >
+                        <div className="h-20 w-20 bg-white rounded-[1.5rem] shadow-lg flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            <Upload className="h-8 w-8 text-purple-600" />
+                        </div>
+                        <p className="text-gray-900 font-black italic text-lg mb-2">Glissez & Déposez</p>
+                        <p className="text-gray-400 text-xs font-medium leading-relaxed max-w-[200px] mx-auto">
+                            OU cliquez pour parcourir vos fichiers (Max 250MB par unité)
+                        </p>
+                    </div>
 
-            <p className="text-xs text-gray-500 mt-4 text-center">
-              Formats supportés : PDF, DOCX, XLSX, images (max. 50 MB)
-            </p>
-          </div>
+                    <div className="flex gap-4 p-5 bg-blue-50 rounded-3xl items-center border border-blue-100">
+                        <div className="p-2 bg-blue-500 rounded-xl text-white">
+                            <Zap className="h-4 w-4" />
+                        </div>
+                        <p className="text-[10px] font-black text-blue-700 uppercase tracking-widest leading-relaxed">
+                            L'IA trie automatiquement vos fichiers importés dans les dossiers correspondants.
+                        </p>
+                    </div>
+                </div>
+           </Card>
         </div>
       )}
     </div>
