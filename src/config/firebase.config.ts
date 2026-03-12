@@ -1,5 +1,5 @@
 // Firebase Configuration
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -12,8 +12,15 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase (only once, with fallback if env vars are missing)
+let app;
+try {
+    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+} catch (err) {
+    console.error('Firebase initialization error:', err);
+    // Fallback to an empty app to prevent the whole app from crashing
+    app = getApps()[0] ?? initializeApp({ apiKey: 'missing', projectId: 'missing', appId: 'missing' }, 'fallback');
+}
 
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);

@@ -80,6 +80,16 @@ import { ToggleWithIcon } from '@/components/settings/ToggleWithIcon';
 import { PermissionItem } from '@/components/settings/PermissionItem';
 import { PresetsPanel } from '@/components/settings/PresetsPanel';
 
+const COLOR_THEMES = [
+  { id: "blue", name: "Bleu Académique", emoji: "🔵", primary: "#2563EB", primaryLight: "#EFF6FF", primaryDark: "#1E40AF", sidebar: "#1E293B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "teal", name: "Teal Moderne", emoji: "🟦", primary: "#0D9488", primaryLight: "#F0FDFA", primaryDark: "#0F766E", sidebar: "#134E4A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "indigo", name: "Indigo Prestige", emoji: "🟣", primary: "#4F46E5", primaryLight: "#EEF2FF", primaryDark: "#3730A3", sidebar: "#1E1B4B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#0D9488" },
+  { id: "slate", name: "Ardoise Sobre", emoji: "⚫", primary: "#475569", primaryLight: "#F8FAFC", primaryDark: "#1E293B", sidebar: "#0F172A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "green", name: "Vert Nature", emoji: "🟢", primary: "#15803D", primaryLight: "#F0FDF4", primaryDark: "#14532D", sidebar: "#14532D", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "rose", name: "Rose Dynamique", emoji: "🌸", primary: "#DB2777", primaryLight: "#FFF1F2", primaryDark: "#9D174D", sidebar: "#4C0519", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "caterpillar", name: "Caterpillar Industrial", emoji: "🏗️", primary: "#FFCD00", primaryLight: "#FFF7D6", primaryDark: "#E6B800", sidebar: "#0D0D0D", success: "#16A34A", warning: "#FFCD00", danger: "#E11D48", admin: "#FFCD00" },
+];
+
 export const Settings = () => {
     const { t, i18n } = useTranslation();
     const { toast } = useToast();
@@ -486,18 +496,38 @@ export const Settings = () => {
                                             </SelectContent>
                                         </Select>
                                     </div>
-                                    <div className="space-y-3">
-                                        <Label>Thème de couleur</Label>
-                                        <Select value={settings.appearance?.colorScheme} onValueChange={(v) => handleSettingChange('appearance', 'colorScheme', v)}>
-                                            <SelectTrigger><SelectValue /></SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="purple">Violet Prestige</SelectItem>
-                                                <SelectItem value="blue">Bleu Académique</SelectItem>
-                                                <SelectItem value="green">Vert Nature</SelectItem>
-                                                <SelectItem value="red">Rouge Dynamique</SelectItem>
-                                                <SelectItem value="caterpillar">Caterpillar Industrial 🏗️</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                    <div className="space-y-3 md:col-span-2">
+                                        <Label>Thème de couleurs</Label>
+                                        <p className="text-sm text-gray-500 mb-2">
+                                            Couleur principale de l'interface, navigation et boutons.
+                                        </p>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                            {COLOR_THEMES.map((t) => (
+                                                <button
+                                                    key={t.id}
+                                                    onClick={() => handleSettingChange('appearance', 'colorScheme', t.id)}
+                                                    className={`border-2 rounded-xl p-3 flex flex-col gap-3 transition-all text-left ${
+                                                        settings.appearance?.colorScheme === t.id
+                                                            ? 'border-indigo-600 bg-indigo-50/50 shadow-sm'
+                                                            : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50'
+                                                    }`}
+                                                >
+                                                    <div className="flex items-center justify-between w-full">
+                                                        <span className="font-semibold text-sm flex items-center gap-2">
+                                                            <span>{t.emoji}</span> {t.name}
+                                                        </span>
+                                                        {settings.appearance?.colorScheme === t.id && (
+                                                            <Check className="w-4 h-4 text-indigo-600" />
+                                                        )}
+                                                    </div>
+                                                    <div className="flex gap-1.5">
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.primary }} title="Primaire" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.sidebar }} title="Sidebar" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.success }} title="Succès" />
+                                                    </div>
+                                                </button>
+                                            ))}
+                                        </div>
                                     </div>
                                     <div className="space-y-3">
                                         <Label>{t('settings.dateFormat')}</Label>

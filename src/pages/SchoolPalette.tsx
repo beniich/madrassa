@@ -1,9 +1,5 @@
 import { useState } from "react";
 
-// ============================================================================
-// PALETTE DE COULEURS — SchoolGenius
-// ============================================================================
-
 const palette = {
   primary: {
     label: "Primaire — Bleu Académique",
@@ -101,7 +97,7 @@ const palette = {
       { name: "900", hex: "#4C1D95", tw: "bg-violet-900" },
     ],
   },
-} as const;
+};
 
 const usages = [
   { role: "Fond principal", tw: "bg-slate-50", hex: "#F8FAFC", text: "text-slate-900" },
@@ -114,7 +110,7 @@ const usages = [
   { role: "Bordures", tw: "bg-slate-200", hex: "#E2E8F0", text: "text-slate-600" },
 ];
 
-function CopyBadge({ text }: { text: string }) {
+function CopyBadge({ text }) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
     navigator.clipboard.writeText(text);
@@ -133,12 +129,12 @@ function CopyBadge({ text }: { text: string }) {
 }
 
 export default function SchoolPalette() {
-  const [activeGroup, setActiveGroup] = useState<keyof typeof palette>("primary");
+  const [activeGroup, setActiveGroup] = useState("primary");
 
   return (
     <div style={{ fontFamily: "'Segoe UI', system-ui, sans-serif", background: "#F8FAFC", minHeight: "100vh", padding: "2rem" }}>
+      {/* Header */}
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
-        {/* Header */}
         <div style={{ marginBottom: "2rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
             <span style={{ fontSize: 28 }}>🏫</span>
@@ -153,7 +149,7 @@ export default function SchoolPalette() {
 
         {/* Tabs */}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: "1.5rem" }}>
-          {(Object.entries(palette) as [keyof typeof palette, typeof palette[keyof typeof palette]][]).map(([key, val]) => (
+          {Object.entries(palette).map(([key, val]) => (
             <button
               key={key}
               onClick={() => setActiveGroup(key)}
@@ -175,7 +171,7 @@ export default function SchoolPalette() {
         </div>
 
         {/* Active Palette */}
-        {(Object.entries(palette) as [keyof typeof palette, typeof palette[keyof typeof palette]][]).map(([key, group]) =>
+        {Object.entries(palette).map(([key, group]) =>
           activeGroup !== key ? null : (
             <div key={key} style={{ background: "white", borderRadius: 16, padding: "1.5rem", boxShadow: "0 1px 6px rgba(0,0,0,0.07)", marginBottom: "1.5rem" }}>
               <div style={{ marginBottom: "1rem" }}>
@@ -183,26 +179,29 @@ export default function SchoolPalette() {
                 <p style={{ color: "#64748B", margin: 0, fontSize: "0.85rem" }}>{group.description}</p>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(10, 1fr)", gap: 6 }}>
-                {group.shades.map((s) => (
-                  <div key={s.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                    <div
-                      style={{
-                        width: "100%",
-                        aspectRatio: "1",
-                        borderRadius: 10,
-                        background: s.hex,
-                        border: "1px solid rgba(0,0,0,0.07)",
-                        cursor: "pointer",
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.06)",
-                        transition: "transform 0.1s",
-                      }}
-                      title={`${s.tw} — ${s.hex}`}
-                      onClick={() => navigator.clipboard.writeText(s.hex)}
-                    />
-                    <span style={{ fontSize: "0.62rem", color: "#94A3B8", fontWeight: 600 }}>{s.name}</span>
-                    <span style={{ fontSize: "0.58rem", color: "#CBD5E1", fontFamily: "monospace" }}>{s.hex}</span>
-                  </div>
-                ))}
+                {group.shades.map((s) => {
+                  const isDark = parseInt(s.name) >= 600;
+                  return (
+                    <div key={s.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                      <div
+                        style={{
+                          width: "100%",
+                          aspectRatio: "1",
+                          borderRadius: 10,
+                          background: s.hex,
+                          border: "1px solid rgba(0,0,0,0.07)",
+                          cursor: "pointer",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.06)",
+                          transition: "transform 0.1s",
+                        }}
+                        title={`${s.tw} — ${s.hex}`}
+                        onClick={() => navigator.clipboard.writeText(s.hex)}
+                      />
+                      <span style={{ fontSize: "0.62rem", color: "#94A3B8", fontWeight: 600 }}>{s.name}</span>
+                      <span style={{ fontSize: "0.58rem", color: "#CBD5E1", fontFamily: "monospace" }}>{s.hex}</span>
+                    </div>
+                  );
+                })}
               </div>
               {/* Tailwind class list */}
               <div style={{ marginTop: "1.2rem", display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -223,7 +222,11 @@ export default function SchoolPalette() {
             {usages.map((u) => (
               <div
                 key={u.role}
-                style={{ borderRadius: 10, overflow: "hidden", border: "1px solid #E2E8F0" }}
+                style={{
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  border: "1px solid #E2E8F0",
+                }}
               >
                 <div
                   style={{
