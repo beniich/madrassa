@@ -207,6 +207,7 @@ All colors MUST be HSL.
 
   .animate-float {
     animation: float 3s ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
   }
 
   .animate-bounce-slow {

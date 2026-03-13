@@ -33,6 +33,7 @@ type DexieTable = {
 
 class SyncEngine {
     private isSyncing = false;
+    private isPulling = false;
     private maxRetries = 3;
 
     // ==========================================
@@ -301,11 +302,30 @@ class SyncEngine {
      * Pulls everything for the current school.
      */
     async pullAll(schoolId: string): Promise<void> {
-        console.log(`[SyncEngine] Starting full pull for school: ${schoolId}`);
-        const entities: EntityType[] = ['class', 'teacher', 'student', 'subject', 'attendance', 'grade', 'message', 'exam', 'invoice', 'document'];
+        if (this.isPulling || !navigator.onLine) return;
         
-        await Promise.allSettled(entities.map(e => this.pullEntity(e, schoolId)));
-        console.log(`[SyncEngine] Full pull completed.`);
+        this.isPulling = true;
+        console.log(`[SyncEngine] Starting full pull for school: ${schoolId}`);
+        
+        const priorityEntities: EntityType[] = ['schoolProfile', 'class', 'teacher'];
+        const otherEntities: EntityType[] = ['student', 'subject', 'attendance', 'grade', 'message', 'exam', 'invoice', 'document'];
+        
+        try {
+            // Pull priority first sequentially to ensure core UI is ready
+            for (const entity of priorityEntities) {
+                await this.pullEntity(entity, schoolId);
+            }
+            
+            // Pull others in parallel in background
+            Promise.allSettled(otherEntities.map(e => this.pullEntity(e, schoolId)))
+                .finally(() => {
+                    this.isPulling = false;
+                    console.log(`[SyncEngine] Background pull completed.`);
+                });
+        } catch (error) {
+            console.error('[SyncEngine] Pull all failed:', error);
+            this.isPulling = false;
+        }
     }
 
     initNetworkListeners(): void {

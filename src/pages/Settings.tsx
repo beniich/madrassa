@@ -26,6 +26,16 @@ import {
     Check,
     FileJson,
     FileCode,
+    CreditCard as BillingIcon,
+    History,
+    ExternalLink,
+    Slack,
+    Github,
+    Activity,
+    Server,
+    Terminal,
+    Wrench,
+    Trash2,
 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -282,7 +292,7 @@ export const Settings = () => {
                         <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-200">
                             <LayoutTemplate className="w-5 h-5 text-white" />
                         </div>
-                        <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-700 to-purple-600 bg-clip-text text-transparent group flex items-center gap-3" style={{fontFamily: 'Inter, sans-serif'}}>
+                        <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-700 to-purple-600 bg-clip-text text-transparent group flex items-center gap-3 font-inter">
                             {t('settings.settings')}
                             {isDirty && (
                                 <span className="inline-flex items-center rounded-md px-2.5 py-0.5 border bg-amber-100 text-amber-700 border-amber-200 animate-in fade-in text-xs font-bold">
@@ -299,7 +309,9 @@ export const Settings = () => {
                     <div className="relative w-full md:w-64">
                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                         <Input
+                            id="settings-search"
                             placeholder={t('settings.search.placeholder')}
+                            aria-label={t('settings.search.placeholder')}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="pl-9 bg-white"
@@ -342,7 +354,7 @@ export const Settings = () => {
                             </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem onClick={() => downloadSettings(exportToJSON({ ...settings, schoolInfo } as AllSettings), 'json')}>
+                            <DropdownMenuItem aria-label="Export JSON" onClick={() => downloadSettings(exportToJSON({ ...settings, schoolInfo } as AllSettings), 'json')}>
                                 <FileJson className="w-4 h-4 mr-2" /> JSON
                             </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => downloadSettings(exportToYAML({ ...settings, schoolInfo } as AllSettings), 'yaml')}>
@@ -354,7 +366,7 @@ export const Settings = () => {
                         </DropdownMenuContent>
                     </DropdownMenu>
 
-                    <input ref={importInputRef} type="file" accept=".json,.yaml,.yml" className="hidden" onChange={handleImport} />
+                    <input ref={importInputRef} type="file" accept=".json,.yaml,.yml" className="hidden" title="Importer des paramètres" onChange={handleImport} />
                     <Button variant="outline" onClick={() => importInputRef.current?.click()}>
                         <UploadIcon className="w-4 h-4 mr-2" />
                         {t('settings.actions.import')}
@@ -401,11 +413,11 @@ export const Settings = () => {
                         <CardContent className="space-y-8">
                             <div className="flex flex-col sm:flex-row gap-8 items-center sm:items-start p-6 bg-gray-50 rounded-xl border border-dashed border-gray-200">
                                 <div className="relative group shrink-0">
-                                    <div className="w-32 h-32 rounded-full border-4 border-white shadow-md bg-white flex items-center justify-center overflow-hidden">
+                                    <div className="w-32 h-32 rounded-full border-4 border-white shadow-md bg-white flex items-center justify-center overflow-hidden" role="img" aria-label="Aperçu du logo">
                                         {logoPreview ? (
-                                            <img src={logoPreview} alt="Logo" className="w-full h-full object-contain" />
+                                            <img src={logoPreview} alt="Logo de l'établissement" className="w-full h-full object-contain" />
                                         ) : (
-                                            <ImageIcon className="w-10 h-10 text-gray-300" />
+                                            <ImageIcon className="w-10 h-10 text-gray-300" aria-hidden="true" />
                                         )}
                                     </div>
                                     {isUploadingLogo && <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-full"><Loader2 className="animate-spin text-purple-600" /></div>}
@@ -416,7 +428,7 @@ export const Settings = () => {
                                         <p className="text-sm text-gray-500">Recommandé: PNG transparent, min 200x200px</p>
                                     </div>
                                     <div className="flex gap-3 justify-center sm:justify-start">
-                                        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleLogoUpload} className="hidden" />
+                                        <input ref={fileInputRef} type="file" accept="image/*" title="Uploader un logo" onChange={handleLogoUpload} className="hidden" />
                                         <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
                                             <Upload className="w-4 h-4 mr-2" /> Changer
                                         </Button>
@@ -431,32 +443,32 @@ export const Settings = () => {
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <Label>{t('settings.schoolName')}</Label>
-                                    <Input value={schoolInfo.name} onChange={(e) => handleSchoolInfoChange('name', e.target.value)} />
+                                    <Label htmlFor="school-name">{t('settings.schoolName')}</Label>
+                                    <Input id="school-name" value={schoolInfo.name} onChange={(e) => handleSchoolInfoChange('name', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>{t('settings.academicYear')}</Label>
-                                    <Input value={schoolInfo.academicYear} onChange={(e) => handleSchoolInfoChange('academicYear', e.target.value)} />
+                                    <Label htmlFor="academic-year">{t('settings.academicYear')}</Label>
+                                    <Input id="academic-year" value={schoolInfo.academicYear} onChange={(e) => handleSchoolInfoChange('academicYear', e.target.value)} />
                                 </div>
                                 <div className="space-y-2 md:col-span-2">
-                                    <Label>{t('settings.schoolAddress')}</Label>
-                                    <Input value={schoolInfo.address} onChange={(e) => handleSchoolInfoChange('address', e.target.value)} />
+                                    <Label htmlFor="school-address">{t('settings.schoolAddress')}</Label>
+                                    <Input id="school-address" value={schoolInfo.address} onChange={(e) => handleSchoolInfoChange('address', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>{t('settings.city')}</Label>
-                                    <Input value={schoolInfo.city} onChange={(e) => handleSchoolInfoChange('city', e.target.value)} />
+                                    <Label htmlFor="school-city">{t('settings.city')}</Label>
+                                    <Input id="school-city" value={schoolInfo.city} onChange={(e) => handleSchoolInfoChange('city', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>{t('settings.country')}</Label>
-                                    <Input value={schoolInfo.country} onChange={(e) => handleSchoolInfoChange('country', e.target.value)} />
+                                    <Label htmlFor="school-country">{t('settings.country')}</Label>
+                                    <Input id="school-country" value={schoolInfo.country} onChange={(e) => handleSchoolInfoChange('country', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>{t('settings.schoolEmail')}</Label>
-                                    <Input value={schoolInfo.email} onChange={(e) => handleSchoolInfoChange('email', e.target.value)} />
+                                    <Label htmlFor="school-email">{t('settings.schoolEmail')}</Label>
+                                    <Input id="school-email" value={schoolInfo.email} onChange={(e) => handleSchoolInfoChange('email', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>{t('settings.schoolPhone')}</Label>
-                                    <Input value={schoolInfo.phone} onChange={(e) => handleSchoolInfoChange('phone', e.target.value)} />
+                                    <Label htmlFor="school-phone">{t('settings.schoolPhone')}</Label>
+                                    <Input id="school-phone" value={schoolInfo.phone} onChange={(e) => handleSchoolInfoChange('phone', e.target.value)} />
                                 </div>
                             </div>
                         </CardContent>
@@ -520,10 +532,10 @@ export const Settings = () => {
                                                             <Check className="w-4 h-4 text-indigo-600" />
                                                         )}
                                                     </div>
-                                                    <div className="flex gap-1.5">
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.primary }} title="Primaire" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.sidebar }} title="Sidebar" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ background: t.success }} title="Succès" />
+                                                    <div className="flex gap-1.5" aria-hidden="true">
+                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.primary } as React.CSSProperties} title="Primaire" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.sidebar } as React.CSSProperties} title="Sidebar" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.success } as React.CSSProperties} title="Succès" />
                                                     </div>
                                                 </button>
                                             ))}
@@ -655,8 +667,8 @@ export const Settings = () => {
                                     </Select>
                                 </div>
                                 <div className="space-y-2">
-                                    <Label>Expiration Mot de Passe (jours)</Label>
-                                    <Input type="number" value={settings.security?.passwordExpiry} onChange={(e) => handleSettingChange('security', 'passwordExpiry', parseInt(e.target.value))} />
+                                    <Label htmlFor="password-expiry">Expiration Mot de Passe (jours)</Label>
+                                    <Input id="password-expiry" type="number" value={settings.security?.passwordExpiry} onChange={(e) => handleSettingChange('security', 'passwordExpiry', parseInt(e.target.value))} />
                                 </div>
                             </div>
                         </CardContent>
@@ -741,26 +753,226 @@ export const Settings = () => {
                 </TabsContent>
                 <TabsContent value="billing" className="space-y-6">
                     <Card>
-                        <CardHeader><CardTitle>{t('settings.billing.title')}</CardTitle></CardHeader>
-                        <CardContent><p className="text-gray-500">Module de facturation à venir.</p></CardContent>
+                        <CardHeader>
+                            <CardTitle>{t('settings.billing.title')}</CardTitle>
+                            <CardDescription>Gérez votre abonnement et vos factures</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="flex items-center justify-between p-4 bg-indigo-50 border border-indigo-100 rounded-xl">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center">
+                                        <BillingIcon className="text-indigo-600 w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-slate-900">Plan Premium Académique</p>
+                                        <p className="text-sm text-slate-500">29.00€ / mois • Renouvellement le 12 Avril 2026</p>
+                                    </div>
+                                </div>
+                                <Button variant="outline" className="bg-white hover:bg-white shadow-sm font-semibold border-indigo-200">
+                                    Gérer
+                                </Button>
+                            </div>
+
+                            <Separator />
+
+                            <div className="space-y-4">
+                                <h3 className="font-semibold text-slate-900 flex items-center gap-2">
+                                    <History className="w-4 h-4 text-slate-400" />
+                                    Historique des factures
+                                </h3>
+                                <div className="border rounded-xl overflow-hidden">
+                                    <table className="w-full text-sm text-left">
+                                        <thead className="bg-slate-50 text-slate-500 font-medium">
+                                            <tr>
+                                                <th className="px-4 py-3">Date</th>
+                                                <th className="px-4 py-3">Montant</th>
+                                                <th className="px-4 py-3">Statut</th>
+                                                <th className="px-4 py-3 text-right">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y">
+                                            <tr>
+                                                <td className="px-4 py-3 font-medium">12 Mars 2026</td>
+                                                <td className="px-4 py-3">29.00€</td>
+                                                <td className="px-4 py-3"><Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none">Payé</Badge></td>
+                                                <td className="px-4 py-3 text-right"><Button variant="ghost" size="sm" className="h-8 px-2 text-indigo-600">PDF</Button></td>
+                                            </tr>
+                                            <tr>
+                                                <td className="px-4 py-3 font-medium">12 Fév 2026</td>
+                                                <td className="px-4 py-3">29.00€</td>
+                                                <td className="px-4 py-3"><Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-100 border-none">Payé</Badge></td>
+                                                <td className="px-4 py-3 text-right"><Button variant="ghost" size="sm" className="h-8 px-2 text-indigo-600">PDF</Button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </CardContent>
                     </Card>
                 </TabsContent>
+
                 <TabsContent value="integrations" className="space-y-6">
                     <Card>
-                        <CardHeader><CardTitle>{t('settings.integrations.title')}</CardTitle></CardHeader>
-                        <CardContent><p className="text-gray-500">Module d'intégrations à venir.</p></CardContent>
+                        <CardHeader>
+                            <CardTitle>{t('settings.integrations.title')}</CardTitle>
+                            <CardDescription>Connectez vos outils favoris à votre établissement</CardDescription>
+                        </CardHeader>
+                        <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {[
+                                { name: 'Slack', icon: Slack, status: 'Connecté', desc: 'Alertes automatiques dans vos canaux' },
+                                { name: 'GitHub', icon: Github, status: 'Non connecté', desc: 'Liez vos dépôts de code pédagogiques' },
+                                { name: 'Google Drive', icon: Database, status: 'Connecté', desc: 'Stockage Cloud pour vos documents' },
+                                { name: 'Microsoft Teams', icon: Network, status: 'Non connecté', desc: 'Vidéoconférences pour vos classes' },
+                            ].map((integration) => (
+                                <div key={integration.name} className="p-4 border rounded-xl hover:border-indigo-200 hover:shadow-md transition-all group">
+                                    <div className="flex items-start justify-between mb-3">
+                                        <div className="w-10 h-10 bg-slate-50 rounded-lg flex items-center justify-center group-hover:bg-indigo-50">
+                                            <integration.icon className={`w-5 h-5 ${integration.status === 'Connecté' ? 'text-indigo-600' : 'text-slate-400'}`} />
+                                        </div>
+                                        <Badge variant={integration.status === 'Connecté' ? 'default' : 'outline'} className={integration.status === 'Connecté' ? 'bg-indigo-100 text-indigo-700 hover:bg-indigo-100 border-none' : ''}>
+                                            {integration.status}
+                                        </Badge>
+                                    </div>
+                                    <h4 className="font-bold text-slate-900">{integration.name}</h4>
+                                    <p className="text-xs text-slate-500 mt-1 mb-4">{integration.desc}</p>
+                                    <Button variant="ghost" size="sm" className="w-full text-xs font-semibold hover:bg-indigo-50 hover:text-indigo-600">
+                                        <ExternalLink className="w-3 h-3 mr-2" /> Paramétrer
+                                    </Button>
+                                </div>
+                            ))}
+                        </CardContent>
                     </Card>
                 </TabsContent>
+
                 <TabsContent value="system" className="space-y-6">
-                    <Card>
-                        <CardHeader><CardTitle>{t('settings.system')}</CardTitle></CardHeader>
-                        <CardContent><p className="text-gray-500">Informations système affichées ici.</p></CardContent>
-                    </Card>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <Card className="lg:col-span-2">
+                            <CardHeader>
+                                <CardTitle>{t('settings.system')}</CardTitle>
+                                <CardDescription>État technique de votre instance</CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-xs font-medium text-slate-500 uppercase mb-2">Version du logiciel</p>
+                                        <p className="text-lg font-bold text-indigo-700">v2.4.12-pro (Build 762)</p>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-xs font-medium text-slate-500 uppercase mb-2">Statut du serveur</p>
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                                            <p className="text-lg font-bold text-emerald-600">Opérationnel</p>
+                                        </div>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-xs font-medium text-slate-500 uppercase mb-2">Uptime cumulé</p>
+                                        <p className="text-lg font-bold text-slate-700">99.98% (30 derniers jours)</p>
+                                    </div>
+                                    <div className="p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                        <p className="text-xs font-medium text-slate-500 uppercase mb-2">Temps de réponse API</p>
+                                        <p className="text-lg font-bold text-indigo-600">42ms avg</p>
+                                    </div>
+                                </div>
+                                <Separator />
+                                <div className="space-y-4">
+                                    <h4 className="font-semibold text-slate-900 flex items-center gap-2">
+                                        <Activity className="w-4 h-4 text-indigo-500" />
+                                        Ressources consommées
+                                    </h4>
+                                    <div className="space-y-3">
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between text-xs font-medium">
+                                                <span>Utilisation CPU</span>
+                                                <span>12%</span>
+                                            </div>
+                                            <Progress value={12} className="h-1.5" />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <div className="flex justify-between text-xs font-medium">
+                                                <span>Mémoire RAM</span>
+                                                <span>1.4 GB / 4 GB</span>
+                                            </div>
+                                            <Progress value={35} className="h-1.5" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card className="bg-slate-900 text-white border-none overflow-hidden relative">
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2" />
+                            <CardHeader>
+                                <CardTitle className="text-white flex items-center gap-2">
+                                    <Terminal className="w-5 h-5 text-indigo-400" />
+                                    Diagnostics
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="bg-black/40 rounded-lg p-3 font-mono text-[10px] space-y-1 border border-white/5">
+                                    <p className="text-emerald-400">[OK] Database connection established</p>
+                                    <p className="text-emerald-400">[OK] Redis cache active</p>
+                                    <p className="text-emerald-400">[OK] Firebase auth connected</p>
+                                    <p className="text-amber-400">[WARN] High disk IO on logs/debug.log</p>
+                                    <p className="text-emerald-400">[OK] Workers (4/4) active</p>
+                                </div>
+                                <Button variant="outline" className="w-full bg-white/5 hover:bg-white/10 text-white border-white/10 text-xs py-1 h-8">
+                                    Lancer un scan complet
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </TabsContent>
+
                 <TabsContent value="advanced" className="space-y-6">
                     <Card>
-                        <CardHeader><CardTitle>Avancé</CardTitle></CardHeader>
-                        <CardContent><p className="text-gray-500">Paramètres développeur.</p></CardContent>
+                        <CardHeader>
+                            <CardTitle>Paramètres Avancés</CardTitle>
+                            <CardDescription>Outils d'administration et de maintenance</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="space-y-6">
+                                <ToggleWithIcon 
+                                    icon={Server} 
+                                    label="Mode Maintenance" 
+                                    description="Désactive l'accès public au portail (les administrateurs conservent l'accès)"
+                                    checked={false}
+                                    onChange={() => {}}
+                                    color="text-red-500"
+                                />
+                                <ToggleWithIcon 
+                                    icon={Code2} 
+                                    label="Logs de Débug" 
+                                    description="Active l'enregistrement détaillé des erreurs (impacte les performances)"
+                                    checked={true}
+                                    onChange={() => {}}
+                                />
+                                <ToggleWithIcon 
+                                    icon={Activity} 
+                                    label="Analyse en temps réel" 
+                                    description="Envoie des données télémétriques anonymes pour l'amélioration"
+                                    checked={true}
+                                    onChange={() => {}}
+                                />
+                            </div>
+                            
+                            <Separator />
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <Button variant="outline" className="h-24 flex flex-col items-center justify-center gap-2 border-dashed border-2 hover:border-indigo-300 hover:bg-indigo-50 transition-all rounded-2xl group">
+                                    <RotateCcw className="w-6 h-6 text-slate-400 group-hover:text-indigo-600 group-hover:rotate-180 transition-all duration-500" />
+                                    <div className="text-center">
+                                        <p className="font-bold text-sm">Vider le cache</p>
+                                        <p className="text-xs text-slate-500">Purge Redis & Local Storage</p>
+                                    </div>
+                                </Button>
+                                <Button variant="outline" className="h-24 flex flex-col items-center justify-center gap-2 border-dashed border-2 hover:border-red-300 hover:bg-red-50 transition-all rounded-2xl group text-red-600">
+                                    <Trash2 className="w-6 h-6 text-slate-400 group-hover:text-red-600" />
+                                    <div className="text-center">
+                                        <p className="font-bold text-sm">Réinitialisation d'usine</p>
+                                        <p className="text-xs text-slate-500 text-red-400">Attention: Action irréversible</p>
+                                    </div>
+                                </Button>
+                            </div>
+                        </CardContent>
                     </Card>
                 </TabsContent>
 

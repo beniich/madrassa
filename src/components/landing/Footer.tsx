@@ -3,28 +3,28 @@ import { GraduationCap, Sparkles, Mail, Phone, MapPin } from "lucide-react";
 const Footer = () => {
   const links = {
     product: [
-      { name: "Fonctionnalités", href: "#features" },
-      { name: "Modules IA", href: "#ai" },
-      { name: "Tarifs", href: "#pricing" },
-      { name: "Roadmap", href: "#roadmap" },
+      { name: "Fonctionnalités", href: "/features" },
+      { name: "Modules IA", href: "/#ai" },
+      { name: "Tarifs", href: "/pricing" },
+      { name: "Roadmap", href: "/#roadmap" },
     ],
     resources: [
-      { name: "Documentation", href: "#" },
-      { name: "Blog", href: "#" },
+      { name: "Documentation", href: "/documentation" },
+      { name: "Blog", href: "/blog" },
       { name: "Webinaires", href: "#" },
       { name: "Case Studies", href: "#" },
     ],
     company: [
-      { name: "À propos", href: "#" },
+      { name: "À propos", href: "/about" },
       { name: "Carrières", href: "#" },
-      { name: "Contact", href: "#" },
+      { name: "Contact", href: "/contact" },
       { name: "Partenaires", href: "#" },
     ],
     legal: [
-      { name: "CGU", href: "#" },
-      { name: "Confidentialité", href: "#" },
-      { name: "RGPD", href: "#" },
-      { name: "Cookies", href: "#" },
+      { name: "CGU", href: "/terms" },
+      { name: "Confidentialité", href: "/privacy" },
+      { name: "RGPD", href: "/gdpr" },
+      { name: "Cookies", href: "/cookies" },
     ],
   };
 
@@ -121,10 +121,10 @@ const Footer = () => {
             © 2024 SchoolGenius. Fait avec ❤️ et beaucoup de ☕ en France.
           </p>
           <div className="flex items-center gap-4">
-            <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">🐦</span>
-            <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">💼</span>
-            <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">📸</span>
-            <span className="text-2xl hover:scale-110 transition-transform cursor-pointer">📺</span>
+            <span role="img" aria-label="Twitter" className="text-2xl hover:scale-110 transition-transform cursor-pointer">🐦</span>
+            <span role="img" aria-label="LinkedIn" className="text-2xl hover:scale-110 transition-transform cursor-pointer">💼</span>
+            <span role="img" aria-label="Instagram" className="text-2xl hover:scale-110 transition-transform cursor-pointer">📸</span>
+            <span role="img" aria-label="YouTube" className="text-2xl hover:scale-110 transition-transform cursor-pointer">📺</span>
           </div>
         </div>
       </div>

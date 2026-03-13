@@ -8,29 +8,29 @@ const HeroSection = () => {
       {/* Background Elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-pulse delay-1000" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-3xl" />
       </div>
 
       {/* Floating Elements */}
       <div className="absolute top-32 right-20 animate-float hidden lg:block">
         <div className="bg-card p-3 rounded-2xl shadow-xl border border-border">
-          <span className="text-3xl">🎓</span>
+          <span role="img" aria-label="Diplôme" className="text-3xl">🎓</span>
         </div>
       </div>
-      <div className="absolute top-48 left-16 animate-float hidden lg:block" style={{ animationDelay: "0.5s" }}>
+      <div className="absolute top-48 left-16 animate-float hidden lg:block delay-500">
         <div className="bg-card p-3 rounded-2xl shadow-xl border border-border">
-          <span className="text-3xl">🤖</span>
+          <span role="img" aria-label="Robot" className="text-3xl">🤖</span>
         </div>
       </div>
-      <div className="absolute bottom-32 left-24 animate-float hidden lg:block" style={{ animationDelay: "1s" }}>
+      <div className="absolute bottom-32 left-24 animate-float hidden lg:block delay-1000">
         <div className="bg-card p-3 rounded-2xl shadow-xl border border-border">
-          <span className="text-3xl">📚</span>
+          <span role="img" aria-label="Livres" className="text-3xl">📚</span>
         </div>
       </div>
-      <div className="absolute bottom-48 right-32 animate-float hidden lg:block" style={{ animationDelay: "1.5s" }}>
+      <div className="absolute bottom-48 right-32 animate-float hidden lg:block delay-1500">
         <div className="bg-card p-3 rounded-2xl shadow-xl border border-border">
-          <span className="text-3xl">⭐</span>
+          <span role="img" aria-label="Étoile" className="text-3xl">⭐</span>
         </div>
       </div>
 
@@ -137,9 +137,9 @@ const HeroSection = () => {
               </div>
 
               {/* Floating Card - Notification */}
-              <div className="absolute -top-4 -right-4 bg-card p-4 rounded-2xl shadow-xl border border-border animate-float" style={{ animationDelay: "0.7s" }}>
+              <div className="absolute -top-4 -right-4 bg-card p-4 rounded-2xl shadow-xl border border-border animate-float delay-700">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">🎉</span>
+                  <span role="img" aria-label="Célébration" className="text-2xl">🎉</span>
                   <div>
                     <p className="font-bold text-foreground text-sm">+15 bulletins</p>
                     <p className="text-xs text-muted-foreground">Générés automatiquement</p>

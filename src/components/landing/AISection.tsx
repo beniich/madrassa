@@ -37,15 +37,11 @@ const AISection = () => {
       {/* Animated Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-3xl animate-pulse delay-1000" />
         
         {/* Grid Pattern */}
         <div 
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)`,
-            backgroundSize: '40px 40px'
-          }}
+          className="absolute inset-0 opacity-[0.02] bg-[radial-gradient(circle_at_1px_1px,currentColor_1px,transparent_0)] bg-[length:40px_40px]"
         />
       </div>
 
@@ -59,7 +55,7 @@ const AISection = () => {
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             L'IA qui fait vraiment{" "}
-            <span className="text-gradient">le boulot</span> 🤖
+            <span className="text-gradient">le boulot</span> <span role="img" aria-label="Robot">🤖</span>
           </h2>
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -79,7 +75,7 @@ const AISection = () => {
               <div>
                 <h4 className="font-bold text-foreground">SchoolGenius AI</h4>
                 <p className="text-xs text-muted-foreground flex items-center gap-1">
-                  <span className="w-2 h-2 bg-success rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-success rounded-full animate-pulse" role="status" aria-label="En ligne" />
                   En ligne • Répond en ~2s
                 </p>
               </div>
@@ -89,16 +85,16 @@ const AISection = () => {
             <div className="p-6 space-y-4">
               {/* User Message */}
               <div className="flex justify-end">
-                <div className="bg-primary text-primary-foreground px-4 py-3 rounded-2xl rounded-br-md max-w-md">
-                  <p className="text-sm">Génère-moi un contrôle de SVT sur la photosynthèse pour mes 6èmes 🌱</p>
+                <div className="bg-primary text-primary-foreground px-4 py-3 rounded-2xl rounded-br-md max-w-md" aria-label="Message de l'utilisateur">
+                  <p className="text-sm">Génère-moi un contrôle de SVT sur la photosynthèse pour mes 6èmes <span role="img" aria-label="Plante">🌱</span></p>
                 </div>
               </div>
 
               {/* AI Response */}
               <div className="flex justify-start">
-                <div className="bg-muted px-4 py-3 rounded-2xl rounded-bl-md max-w-md">
+                <div className="bg-muted px-4 py-3 rounded-2xl rounded-bl-md max-w-md" aria-label="Réponse de l'IA">
                   <p className="text-sm text-foreground mb-3">
-                    Voici un contrôle adapté au niveau 6ème ! 📝
+                    Voici un contrôle adapté au niveau 6ème ! <span role="img" aria-label="Note">📝</span>
                   </p>
                   <div className="bg-background rounded-xl p-3 border border-border text-xs space-y-2">
                     <p className="font-bold text-foreground">CONTRÔLE SVT - La Photosynthèse</p>

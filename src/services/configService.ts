@@ -3,6 +3,7 @@
  */
 
 import { db, type SchoolProfile, generateLocalId, getCurrentTimestamp } from '@/lib/db';
+import { apiClient } from '@/lib/apiClient';
 
 const DEFAULT_SCHOOL_ID = 'school_default';
 
@@ -10,9 +11,17 @@ const DEFAULT_SCHOOL_ID = 'school_default';
  * Récupère le profil de l'école
  */
 export const getSchoolProfile = async (): Promise<SchoolProfile> => {
-    const profiles = await db.schoolProfile.toArray();
+    // Try backend first
+    try {
+        const profile = await apiClient.get<SchoolProfile>('/config/school');
+        if (profile) return profile;
+    } catch (err) {
+        console.warn('[ConfigService] Backend profile unavailable, falling back to local');
+    }
 
+    const profiles = await db.schoolProfile.toArray();
     if (profiles.length === 0) {
+        // ... (rest of the local logic)
         // Créer un profil par défaut
         const defaultProfile: SchoolProfile = {
             localId: DEFAULT_SCHOOL_ID,
@@ -44,8 +53,14 @@ export const getSchoolProfile = async (): Promise<SchoolProfile> => {
 export const updateSchoolProfile = async (
     updates: Partial<Omit<SchoolProfile, 'id' | 'localId'>>
 ): Promise<void> => {
-    const profile = await getSchoolProfile();
+    // Sync with backend
+    try {
+        await apiClient.put('/config/school', updates);
+    } catch (err) {
+        console.warn('[ConfigService] Failed to sync update to backend');
+    }
 
+    const profile = await getSchoolProfile();
     if (profile.id) {
         await db.schoolProfile.update(profile.id, {
             ...updates,

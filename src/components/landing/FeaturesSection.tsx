@@ -82,7 +82,7 @@ const FeaturesSection = () => {
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
             8 modules puissants,{" "}
-            <span className="text-gradient">0 prise de tête</span> 🎯
+            <span className="text-gradient">0 prise de tête</span> <span role="img" aria-label="Cible">🎯</span>
           </h2>
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -97,11 +97,11 @@ const FeaturesSection = () => {
             <div
               key={feature.title}
               className="group relative bg-card p-6 rounded-2xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              style={{ animationDelay: `${index * 0.1}s` }}
+              style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}
             >
               {/* Emoji Badge */}
-              <div className="absolute -top-3 -right-3 text-3xl animate-float" style={{ animationDelay: `${index * 0.2}s` }}>
-                {feature.emoji}
+              <div className="absolute -top-3 -right-3 text-3xl animate-float" style={{ '--delay': `${index * 0.2}s` } as React.CSSProperties}>
+                <span role="img" aria-label={feature.title}>{feature.emoji}</span>
               </div>
 
               {/* Icon */}
