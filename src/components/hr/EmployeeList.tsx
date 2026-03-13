@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui-1cc/button';
+import { Input } from '@/components/ui-1cc/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui-1cc/select';
+import { Badge } from '@/components/ui-1cc/badge';
 import { Search, Plus, Eye, Edit, Trash2, Mail, Phone, Calendar, Briefcase, MapPin, X, ChevronRight, User, Loader2, FileText } from 'lucide-react';
 import { hrService, HRMember } from '@/services/hrService';
 import { toast } from 'sonner';
@@ -246,7 +246,7 @@ export const EmployeeList: React.FC = () => {
                             </div>
 
                             <div>
-                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Professional Profile</h4>
+                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Profil Professionnel</h4>
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-4 group">
                                         <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-[#222222] transition-colors">

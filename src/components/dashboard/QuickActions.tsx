@@ -1,6 +1,6 @@
 import { UserPlus, FileText, Calendar, Megaphone, Bot, BarChart3 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui-1cc/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
 import { useNavigate } from "react-router-dom";
 
 const QuickActions = () => {

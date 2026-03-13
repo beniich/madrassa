@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui-1cc/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui-1cc/avatar";
 
 interface ListItemProps {
   title: string;

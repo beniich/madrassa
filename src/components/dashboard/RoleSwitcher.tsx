@@ -10,8 +10,8 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
+} from '@/components/ui-1cc/select';
+import { Badge } from '@/components/ui-1cc/badge';
 import { Crown, Shield, GraduationCap, User } from 'lucide-react';
 
 const roleConfig: Record<UserRole, { label: string; icon: React.ElementType; color: string }> = {

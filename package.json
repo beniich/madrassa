@@ -90,7 +90,12 @@
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^0.9.9",
     "workbox-window": "^7.4.0",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "zustand": "^5.0.9",
+    "framer-motion": "^11.18.2",
+    "@hello-pangea/dnd": "^18.0.1",
+    "@xyflow/react": "^12.10.0",
+    "reactflow": "^11.11.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.32.0",

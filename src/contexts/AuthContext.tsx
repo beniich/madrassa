@@ -50,33 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [firebaseUser, setFirebaseUser] = useState<FirebaseUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        // Try to load from cache immediately for instant UI
-        const cached = localStorage.getItem(STORAGE_KEY);
-        if (cached) {
-            try {
-                setUser(JSON.parse(cached));
-                setIsLoading(false); // We have a user, show the app
-            } catch (e) {
-                console.warn('[Auth] Failed to parse cached user');
-            }
-        }
-
-        const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
-            setFirebaseUser(fbUser);
-            if (fbUser) {
-                await handleFirebaseUser(fbUser);
-            } else {
-                setUser(null);
-                localStorage.removeItem(STORAGE_KEY);
-                setIsLoading(false);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    const handleFirebaseUser = async (fbUser: FirebaseUser) => {
+    const handleFirebaseUser = React.useCallback(async (fbUser: FirebaseUser) => {
         try {
             const token = await getIdToken(fbUser);
             
@@ -89,20 +63,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 },
             });
 
-            // If we don't have a user yet, we MUST wait for the first sync
+            // If we don't have a user yet, we MUST try to sync
             if (!user) {
-                const response = await syncPromise;
-                if (response.ok) {
-                    const data = await response.json();
-                    const role = (data.user.role ?? 'teacher') as UserRole;
-                    const userData: User = {
-                        ...data.user,
+                try {
+                    const response = await syncPromise;
+                    if (response.ok) {
+                        const data = await response.json();
+                        const role = (data.user.role ?? 'teacher') as UserRole;
+                        const userData: User = {
+                            ...data.user,
+                            token,
+                            permissions: ROLE_PERMISSIONS[role] ?? [],
+                        };
+                        setUser(userData);
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+                        syncEngine.pullAll(userData.schoolId);
+                    } else {
+                        throw new Error('Sync response not ok');
+                    }
+                } catch (syncErr) {
+                    console.warn('[Auth] Initial sync failed, using fallback user profile:', syncErr);
+                    // Fallback to a basic user object from Firebase info
+                    const fallbackUser: User = {
+                        id: fbUser.uid,
+                        email: fbUser.email || '',
+                        name: fbUser.displayName || 'User',
+                        role: 'teacher',
+                        schoolId: 'school_001',
                         token,
-                        permissions: ROLE_PERMISSIONS[role] ?? [],
+                        permissions: ROLE_PERMISSIONS['teacher']
                     };
-                    setUser(userData);
-                    localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-                    syncEngine.pullAll(userData.schoolId);
+                    setUser(fallbackUser);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(fallbackUser));
                 }
             } else {
                 // Already have a user from cache, just update in background
@@ -129,7 +121,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [user]);
+
+    useEffect(() => {
+        // Try to load from cache immediately for instant UI
+        const cached = localStorage.getItem(STORAGE_KEY);
+        if (cached) {
+            try {
+                setUser(JSON.parse(cached));
+                setIsLoading(false); // We have a user, show the app
+            } catch (e) {
+                console.warn('[Auth] Failed to parse cached user');
+            }
+        }
+
+        const unsubscribe = onAuthStateChanged(auth, async (fbUser) => {
+            setFirebaseUser(fbUser);
+            if (fbUser) {
+                await handleFirebaseUser(fbUser);
+            } else {
+                setUser(null);
+                localStorage.removeItem(STORAGE_KEY);
+                setIsLoading(false);
+            }
+        });
+
+        return () => unsubscribe();
+    }, [handleFirebaseUser]);
 
     const login = async (email: string, password: string): Promise<boolean> => {
         try {

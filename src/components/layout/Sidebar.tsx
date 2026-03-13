@@ -29,7 +29,12 @@ import {
   ClipboardList,
   BookOpen,
   CheckSquare,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Sparkles,
+  ShieldCheck,
+  Wallet,
+  GitBranch,
+  Shapes
 } from 'lucide-react';
 
 interface SidebarItem {
@@ -137,6 +142,38 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Gestion RH',
     icon: Users,
     path: '/hr-management',
+  },
+  {
+    id: 'ai-hub',
+    label: 'AI Hub Enterprise',
+    icon: Sparkles,
+    path: '/ai-hub',
+    badge: 1,
+    badgeColor: 'blue',
+  },
+  {
+    id: 'finance-hub',
+    label: 'Finance Enterprise',
+    icon: Wallet,
+    path: '/finance-hub',
+  },
+  {
+    id: 'security-hub',
+    label: 'Sécurité & Audit',
+    icon: ShieldCheck,
+    path: '/security-hub',
+  },
+  {
+    id: 'workflows',
+    label: 'Automatisations',
+    icon: GitBranch,
+    path: '/workflow-board',
+  },
+  {
+    id: 'diagrams',
+    label: 'Editeur Diagramme',
+    icon: Shapes,
+    path: '/diagrams',
   },
 ];
 

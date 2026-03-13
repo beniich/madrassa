@@ -1,8 +1,8 @@
 import React from "react";
 import { Search, Filter, Plus } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Input } from "@/components/ui-1cc/input";
+import { Button } from "@/components/ui-1cc/button";
+import { ScrollArea } from "@/components/ui-1cc/scroll-area";
 import { cn } from "@/lib/utils";
 
 interface CenterPaneProps {

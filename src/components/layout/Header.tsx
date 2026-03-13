@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks-1cc/use-toast';
 
 interface HeaderProps {
   sidebarCollapsed: boolean;
@@ -118,15 +118,16 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-1 bg-white/50 p-1 rounded-xl border border-border">
-              <button
-                className="p-2 rounded-lg hover:bg-secondary transition-colors text-gray-600 hover:text-primary"
-                title={t('common.save')}
-              >
-                <RefreshCw className="w-5 h-5" />
-              </button>
-              
-              <div className="w-px h-4 bg-border mx-1" />
+            <button
+              className="p-2 rounded-lg hover:bg-secondary transition-colors text-gray-600 hover:text-primary"
+              title={t('common.save')}
+            >
+              <RefreshCw className="w-5 h-5" />
+            </button>
+            
+            <div className="w-px h-4 bg-border mx-1" />
 
+            <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
                 className="relative p-2 rounded-lg hover:bg-secondary transition-colors text-gray-600 hover:text-primary"
@@ -136,6 +137,65 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
                   <span className="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-primary rounded-full ring-2 ring-white" />
                 )}
               </button>
+
+              {/* Notifications Dropdown */}
+              {showNotifications && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setShowNotifications(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+                    <div className="p-4 border-b border-gray-200">
+                      <div className="flex items-center justify-between">
+                        <h3 className="font-semibold text-gray-900">{t('common.notifications')}</h3>
+                        {unreadCount > 0 && (
+                          <span className="px-2 py-0.5 text-xs font-semibold bg-red-500 text-white rounded-full">
+                            {unreadCount}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="max-h-96 overflow-y-auto">
+                      {notifications.length > 0 ? (
+                        notifications.map((notif) => (
+                          <div
+                            key={notif.id}
+                            className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors ${notif.unread ? 'bg-blue-50/50' : ''
+                              }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              {notif.unread && (
+                                <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full flex-shrink-0" />
+                              )}
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium text-gray-900 truncate">
+                                  {notif.title}
+                                </p>
+                                <p className="text-sm text-gray-600 mt-0.5">{notif.message}</p>
+                                <p className="text-xs text-gray-400 mt-1">{notif.time}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="p-8 text-center text-gray-400 italic text-sm">
+                          Aucune notification
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-3 border-t border-gray-200">
+                      <button
+                        className="text-sm text-purple-600 hover:text-purple-700 font-medium w-full text-center"
+                        onClick={() => setShowNotifications(false)}
+                      >
+                        Voir toutes les notifications →
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Connection Status */}
@@ -144,90 +204,29 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
               }`}
           >
             <div className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`} />
-            <span className="text-[10px] font-black uppercase tracking-widest hidden sm:inline">{isOnline ? t('common.online') : t('common.offline')}</span>
+            <span className="text-[10px] font-black uppercase tracking-widest hidden sm:inline">
+              {isOnline ? t('common.online') : t('common.offline')}
+            </span>
           </div>
 
           {/* Profile Dropdown */}
           <div className="relative ml-2">
             <button
               onClick={() => setShowProfile(!showProfile)}
-              title="Menu profil"
+              title="Menu Profil"
               className="flex items-center gap-2 p-1 pr-3 rounded-xl bg-white border border-border hover:border-primary/50 transition-all group"
             >
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
                 <User className="w-4 h-4 text-white" />
               </div>
               <div className="hidden sm:block text-left mr-2">
-                  <p className="text-[10px] font-black text-gray-900 leading-none">ADMIN</p>
-                  <ChevronDown className="w-3 h-3 text-gray-400 mt-0.5" />
+                <p className="text-[10px] font-black text-gray-900 leading-none uppercase">
+                  {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : 'Utilisateur'}
+                </p>
+                <p className="text-[8px] text-primary font-bold uppercase tracking-[0.2em] mt-0.5 flex items-center gap-1">
+                  {user?.role || 'INVITÉ'} <span className="text-gray-300">•</span> {user?.schoolId?.substring(0, 8)}
+                </p>
               </div>
-            </button>
-
-            {/* Notifications Dropdown */}
-            {showNotifications && (
-              <>
-                <div
-                  className="fixed inset-0 z-40"
-                  onClick={() => setShowNotifications(false)}
-                />
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-200">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-gray-900">{t('common.notifications')}</h3>
-                      {unreadCount > 0 && (
-                        <span className="px-2 py-0.5 text-xs font-semibold bg-red-500 text-white rounded-full">
-                          {unreadCount}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <div className="max-h-96 overflow-y-auto">
-                    {notifications.map((notif) => (
-                      <div
-                        key={notif.id}
-                        className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer transition-colors ${notif.unread ? 'bg-blue-50/50' : ''
-                          }`}
-                      >
-                        <div className="flex items-start gap-3">
-                          {notif.unread && (
-                            <div className="w-2 h-2 mt-2 bg-blue-500 rounded-full flex-shrink-0" />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-gray-900 truncate">
-                              {notif.title}
-                            </p>
-                            <p className="text-sm text-gray-600 mt-0.5">{notif.message}</p>
-                            <p className="text-xs text-gray-400 mt-1">{notif.time}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="p-3 border-t border-gray-200">
-                    <Link
-                      to="/notifications"
-                      className="text-sm text-purple-600 hover:text-purple-700 font-medium"
-                      onClick={() => setShowNotifications(false)}
-                    >
-                      Voir toutes les notifications →
-                    </Link>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-
-          {/* Profile Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setShowProfile(!showProfile)}
-              title="Menu Profil"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
-            >
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
-              </div>
-              <ChevronDown className="w-4 h-4 text-gray-600 hidden sm:block" />
             </button>
 
             {/* Profile Dropdown Menu */}
@@ -237,36 +236,49 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
                   className="fixed inset-0 z-40"
                   onClick={() => setShowProfile(false)}
                 />
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
-                  <div className="p-4 border-b border-gray-200">
-                    <p className="font-semibold text-gray-900">{user?.displayName || 'Utilisateur'}</p>
-                    <p className="text-sm text-gray-600 truncate">{user?.email}</p>
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50 overflow-hidden">
+                  <div className="p-4 border-b border-gray-200 bg-gray-50/50">
+                    <p className="font-black text-gray-900 uppercase text-xs tracking-tight">
+                      {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : 'Utilisateur'}
+                    </p>
+                    <p className="text-[10px] text-gray-500 truncate font-bold">{user?.email}</p>
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                       <p className="text-[9px] uppercase tracking-widest text-primary font-black bg-primary/10 inline-block px-2 py-1 rounded-md">
+                         École ID: {user?.schoolId}
+                       </p>
+                    </div>
                   </div>
-                  <div className="py-2">
+                  <div className="py-1">
                     <Link
                       to="/profile"
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors group"
                       onClick={() => setShowProfile(false)}
                     >
-                      <UserCircle className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-700">{t('common.profile')}</span>
+                      <UserCircle className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
+                      <span className="text-xs font-black uppercase tracking-widest text-gray-600 group-hover:text-gray-900">
+                        {t('common.profile')}
+                      </span>
                     </Link>
                     <Link
                       to="/settings"
-                      className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors group"
                       onClick={() => setShowProfile(false)}
                     >
-                      <Settings className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-700">{t('common.settings')}</span>
+                      <Settings className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
+                      <span className="text-xs font-black uppercase tracking-widest text-gray-600 group-hover:text-gray-900">
+                        {t('common.settings')}
+                      </span>
                     </Link>
                   </div>
-                  <div className="border-t border-gray-200 py-2">
+                  <div className="border-t border-gray-200 p-2 bg-gray-50/30">
                     <button
                       onClick={handleSignOut}
-                      className="flex items-center gap-3 px-4 py-2 w-full hover:bg-gray-50 transition-colors text-left"
+                      className="flex items-center gap-3 px-4 py-2 w-full hover:bg-red-50 transition-colors text-left rounded-lg group"
                     >
-                      <LogOut className="w-4 h-4 text-red-600" />
-                      <span className="text-sm text-red-600">{t('common.logout')}</span>
+                      <LogOut className="w-4 h-4 text-red-400 group-hover:text-red-600 transition-colors" />
+                      <span className="text-xs font-black uppercase tracking-widest text-red-500 group-hover:text-red-700">
+                        {t('common.logout')}
+                      </span>
                     </button>
                   </div>
                 </div>

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui-1cc/button";
 import { Sparkles, Play, ArrowRight, Brain, Zap, Star } from "lucide-react";
 import heroImage from "@/assets/hero-illustration.png";
 

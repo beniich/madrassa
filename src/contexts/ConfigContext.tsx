@@ -62,7 +62,7 @@ export const ConfigProvider = ({ children }: ConfigProviderProps) => {
         }
 
         // Apply Color Scheme Class
-        const schemes = ['caterpillar', 'purple', 'blue', 'green', 'red'];
+        const schemes = ['caterpillar', 'purple', 'blue', 'green', 'red', 'glass-professional'];
         schemes.forEach(s => root.classList.remove(s));
         if (appearance.colorScheme) {
             root.classList.add(appearance.colorScheme);

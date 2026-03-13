@@ -7,7 +7,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/components/ui/command";
+} from "@/components/ui-1cc/command";
 import {
   LayoutDashboard,
   Users,

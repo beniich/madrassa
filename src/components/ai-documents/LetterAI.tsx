@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui-1cc/button';
 import { Save, Sparkles, Download, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 import { AIChat } from './AIChat';

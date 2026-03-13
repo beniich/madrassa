@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PowerBIEmbed } from 'powerbi-client-react';
 import { models } from 'powerbi-client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui-1cc/card';
 import { Loader2 } from 'lucide-react';
 
 interface PowerBIReportProps {

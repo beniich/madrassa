@@ -1,8 +1,8 @@
 import React from "react";
 import { X, Maximize2, Minimize2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui-1cc/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";
+import { ScrollArea } from "@/components/ui-1cc/scroll-area";
 import { cn } from "@/lib/utils";
 
 interface Tab {

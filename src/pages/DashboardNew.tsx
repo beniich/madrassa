@@ -144,7 +144,7 @@ export const Dashboard = () => {
         </div>
         <button className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
           <Bot className="w-5 h-5" />
-          <span className="font-medium">AI Audit</span>
+          <span className="font-medium">Audit IA</span>
         </button>
       </div>
 
@@ -155,7 +155,7 @@ export const Dashboard = () => {
           value="0"
           subtitle={t('common.classes')}
           change={12}
-          changeLabel="vs last month"
+          changeLabel="vs mois dernier"
           icon={Users}
           color="purple"
         />
@@ -163,9 +163,9 @@ export const Dashboard = () => {
         <StatCard
           title={t('dashboard.attendanceRate')}
           value="0%"
-          subtitle="Today"
+          subtitle="Aujourd'hui"
           change={2.3}
-          changeLabel="vs last month"
+          changeLabel="vs mois dernier"
           icon={TrendingUp}
           color="green"
         />
@@ -173,19 +173,19 @@ export const Dashboard = () => {
         <StatCard
           title={t('dashboard.averageGrade')}
           value="13.4/20"
-          subtitle="Current Term"
+          subtitle="Trimestre actuel"
           change={0.8}
-          changeLabel="vs last month"
+          changeLabel="vs mois dernier"
           icon={Award}
           color="yellow"
         />
 
         <StatCard
-          title="AI Alerts"
+          title="Alertes IA"
           value="0"
-          subtitle="To review"
+          subtitle="À vérifier"
           change={0}
-          changeLabel="no changes"
+          changeLabel="aucun changement"
           icon={AlertTriangle}
           color="red"
         />
@@ -216,7 +216,7 @@ export const Dashboard = () => {
             color="bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
           />
           <ActionCard
-            title="Ask AI"
+            title="Assistant IA"
             icon={Bot}
             color="bg-orange-50 text-orange-700 hover:bg-orange-100"
           />
@@ -234,7 +234,7 @@ export const Dashboard = () => {
         <div className="bg-white rounded-xl p-6 border border-gray-200">
           <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.attendanceRate')}</h3>
           <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">Chart coming soon</p>
+            <p className="text-gray-400">Graphique bientôt disponible</p>
           </div>
         </div>
 
@@ -242,7 +242,7 @@ export const Dashboard = () => {
         <div className="bg-white rounded-xl p-6 border border-gray-200">
           <h3 className="text-lg font-bold text-gray-900 mb-4">{t('dashboard.averageGrade')}</h3>
           <div className="h-64 flex items-center justify-center border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-400">Chart coming soon</p>
+            <p className="text-gray-400">Graphique bientôt disponible</p>
           </div>
         </div>
       </div>
@@ -257,9 +257,9 @@ export const Dashboard = () => {
                 <Users className="w-5 h-5 text-purple-600" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-gray-900">Activity {i}</p>
-                <p className="text-sm text-gray-600">User performed an action</p>
-                <p className="text-xs text-gray-400 mt-1">{i * 15} min ago</p>
+                <p className="font-medium text-gray-900">Activité {i}</p>
+                <p className="text-sm text-gray-600">L'utilisateur a effectué une action</p>
+                <p className="text-xs text-gray-400 mt-1">Il y a {i * 15} min</p>
               </div>
             </div>
           ))}

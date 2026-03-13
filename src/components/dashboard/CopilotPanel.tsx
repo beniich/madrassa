@@ -15,8 +15,8 @@ import {
   History,
   Info
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui-1cc/button";
+import { ScrollArea } from "@/components/ui-1cc/scroll-area";
 import { cn } from "@/lib/utils";
 import { usePaneContext } from "./OutlookLayout";
 import { aiService } from "@/services/aiService";

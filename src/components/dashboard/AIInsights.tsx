@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui-1cc/card";
+import { Button } from "@/components/ui-1cc/button";
 import { TrendingUp, AlertTriangle, Sparkles } from 'lucide-react';
 
 export const AIInsights = () => {

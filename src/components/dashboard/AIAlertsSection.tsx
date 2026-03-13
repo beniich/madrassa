@@ -1,7 +1,7 @@
 import { AlertTriangle, Lightbulb, ChevronRight, Bot, TrendingDown, UserX } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
+import { Button } from "@/components/ui-1cc/button";
+import { Badge } from "@/components/ui-1cc/badge";
 import { cn } from "@/lib/utils";
 
 interface Alert {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui-1cc/button';
 import { CloudOff, RefreshCw, CheckCircle2 } from 'lucide-react';
 import { syncEngine } from '@/lib/syncEngine';
 import { db } from '@/lib/db';

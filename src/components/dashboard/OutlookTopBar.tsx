@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Bell, Search, User, ChevronDown, LogOut, Settings, RefreshCw, Command } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui-1cc/button";
+import { Badge } from "@/components/ui-1cc/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,10 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from "@/components/ui-1cc/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui-1cc/avatar";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSchoolProfile } from "@/hooks/useOfflineData";
+import { useSchoolProfile } from "@/hooks-1cc/useOfflineData";
 import NetworkStatus from "./NetworkStatus";
 import { usePaneContext } from "./OutlookLayout";
 import { cn } from "@/lib/utils";

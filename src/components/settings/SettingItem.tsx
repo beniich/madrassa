@@ -1,11 +1,11 @@
 import { LucideIcon, Info } from 'lucide-react';
-import { Card } from '@/components/ui/card';
+import { Card } from '@/components/ui-1cc/card';
 import {
     Tooltip,
     TooltipContent,
     TooltipProvider,
     TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@/components/ui-1cc/tooltip';
 
 interface SettingItemProps {
     icon?: LucideIcon;

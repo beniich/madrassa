@@ -74,7 +74,7 @@ const HRManagement: React.FC = () => {
                     </TabsTrigger>
                     <TabsTrigger value="employees" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <Users className="w-4 h-4" />
-                        Staff
+                        Personnel
                     </TabsTrigger>
                     <TabsTrigger value="absences" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <CalendarCheck className="w-4 h-4" />
@@ -131,7 +131,7 @@ const HRManagement: React.FC = () => {
                                 </div>
                             ) : folders.length === 0 ? (
                                 <div className="col-span-full p-8 text-center bg-gray-50 rounded-2xl text-gray-400 font-bold italic">
-                                    No documents found
+                                    Aucun document trouvé
                                 </div>
                             ) : (
                                 folders.map((folder, idx) => (
@@ -142,7 +142,7 @@ const HRManagement: React.FC = () => {
                                             </div>
                                             <div>
                                                 <h4 className="font-black italic text-sm tracking-tighter truncate w-32">{folder.name}</h4>
-                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} files</p>
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} fichier{folder.itemCount !== 1 ? 's' : ''}</p>
                                             </div>
                                         </CardContent>
                                     </Card>

@@ -1,12 +1,12 @@
 import { Users, UserCheck, TrendingUp, AlertTriangle, ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui-1cc/card";
 import { cn } from "@/lib/utils";
 import {
   useStudentCount,
   useAttendanceRate,
   useAverageGrade,
   useUnhandledAlertCount
-} from "@/hooks/useOfflineData";
+} from "@/hooks-1cc/useOfflineData";
 
 interface KPICardProps {
   title: string;

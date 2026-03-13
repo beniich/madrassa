@@ -27,7 +27,12 @@
         "online": "En ligne",
         "offline": "Hors ligne",
         "notifications": "Notifications",
-        "language": "Langue"
+        "language": "Langue",
+        "aiHub": "AI Hub V2",
+        "financeHub": "Finance Enterprise",
+        "securityHub": "Sécurité & Audit",
+        "workflows": "Automatisations",
+        "diagrams": "Diagrammes"
     },
     "sidebar": {
         "collapse": "Réduire",
@@ -154,7 +159,8 @@
             "green": "Vert Nature",
             "rose": "Rose Dynamique",
             "caterpillar": "Caterpillar Industrial",
-            "dark-violet": "Violet Profond"
+            "dark-violet": "Violet Profond",
+            "glass-professional": "Professional Glass (Enterprise)"
         },
         "permissions": {
             "viewStudents": "Voir les élèves",

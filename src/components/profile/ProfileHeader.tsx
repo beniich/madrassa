@@ -1,8 +1,8 @@
 import React from 'react';
 import { Camera, Mail, MapPin, Calendar, Briefcase } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui-1cc/button';
+import { Card } from '@/components/ui-1cc/card';
+import { Badge } from '@/components/ui-1cc/badge';
 
 interface ProfileHeaderProps {
     name: string;

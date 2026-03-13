@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSchoolProfile } from "@/hooks/useOfflineData";
+import { useSchoolProfile } from "@/hooks-1cc/useOfflineData";
 import {
   LayoutDashboard,
   Users,
@@ -20,8 +20,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui-1cc/button";
+import { Badge } from "@/components/ui-1cc/badge";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },

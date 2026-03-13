@@ -41,7 +41,7 @@ export const TopBarProgress = () => {
             className="top-bar-progress-container"
             role="progressbar"
             aria-label="Page loading"
-            aria-valuenow={progress}
+            aria-valuenow={Math.round(progress)}
             aria-valuemin={0}
             aria-valuemax={100}
         >

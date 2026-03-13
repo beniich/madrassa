@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Bell, Search, User, ChevronDown, LogOut, Settings } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui-1cc/button";
+import { Input } from "@/components/ui-1cc/input";
+import { Badge } from "@/components/ui-1cc/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+} from "@/components/ui-1cc/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui-1cc/avatar";
 import { useAuth } from "@/contexts/AuthContext";
 import NetworkStatus from "./NetworkStatus";
 import RoleSwitcher from "./RoleSwitcher";

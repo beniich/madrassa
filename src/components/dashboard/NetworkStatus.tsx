@@ -4,14 +4,14 @@
 
 import { useState, useEffect } from 'react';
 import { Wifi, WifiOff, RefreshCw, Check, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui-1cc/button';
+import { Badge } from '@/components/ui-1cc/badge';
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { usePendingSyncCount } from '@/hooks/useOfflineData';
+} from '@/components/ui-1cc/tooltip';
+import { usePendingSyncCount } from '@/hooks-1cc/useOfflineData';
 import { syncEngine } from '@/lib/syncEngine';
 import { cn } from '@/lib/utils';
 

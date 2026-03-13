@@ -4,8 +4,8 @@ import {
     Users, TrendingUp, GraduationCap, Zap, 
     ArrowUp, ArrowDown 
 } from 'lucide-react';
-import { Card } from "@/components/ui/card";
-import { useStudents, useTeachers } from '@/hooks/useOfflineData';
+import { Card } from "@/components/ui-1cc/card";
+import { useStudents, useTeachers } from '@/hooks-1cc/useOfflineData';
 
 interface StatCardProps {
   title: string;

@@ -96,11 +96,10 @@ const FeaturesSection = () => {
           {features.map((feature, index) => (
             <div
               key={feature.title}
-              className="group relative bg-card p-6 rounded-2xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-              style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}
+              className={`group relative bg-card p-6 rounded-2xl border border-border hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 delay-[${index * 100}ms]`}
             >
               {/* Emoji Badge */}
-              <div className="absolute -top-3 -right-3 text-3xl animate-float" style={{ '--delay': `${index * 0.2}s` } as React.CSSProperties}>
+              <div className={`absolute -top-3 -right-3 text-3xl animate-float delay-[${index * 200}ms]`}>
                 <span role="img" aria-label={feature.title}>{feature.emoji}</span>
               </div>
 

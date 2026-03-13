@@ -1,4 +1,4 @@
-import { Switch } from '@/components/ui/switch';
+import { Switch } from '@/components/ui-1cc/switch';
 import { LucideIcon } from 'lucide-react';
 
 interface ToggleWithIconProps {

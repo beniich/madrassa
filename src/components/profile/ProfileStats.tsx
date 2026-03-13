@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui-1cc/card';
 import { TrendingUp, Users, Award, Clock } from 'lucide-react';
 
 interface StatCardProps {

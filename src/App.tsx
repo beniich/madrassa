@@ -44,6 +44,16 @@ const Features = lazy(() => import('@/pages/Features'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const Documentation = lazy(() => import('@/pages/Documentation'));
 
+// New Modules from school-1cc
+const AIAssistantV2 = lazy(() => import('@/pages-1cc/AIAssistant'));
+const FinancePage = lazy(() => import('@/pages-1cc/FinancePage'));
+const SecurityPage = lazy(() => import('@/pages-1cc/SecurityPage'));
+const WorkflowPage = lazy(() => import('@/pages-1cc/workflow/WorkflowPage'));
+const DiagramEditorPage = lazy(() => import('@/pages-1cc/DiagramEditorPage'));
+const InvoicesPage = lazy(() => import('@/pages-1cc/finance/InvoicesPage').then(m => ({ default: m.InvoicesPage })));
+const TasksPage = lazy(() => import('@/pages-1cc/Tasks'));
+const MessagesV2 = lazy(() => import('@/pages-1cc/MessagesPage'));
+
 const PageLoader = () => (
   <div className="flex h-screen w-full items-center justify-center bg-background/50 backdrop-blur-sm fixed inset-0 z-50">
     <Loader2 className="h-10 w-10 animate-spin text-primary" />
@@ -55,7 +65,9 @@ const AppLayout = () => {
     <>
       <TopBarProgress />
       <Suspense fallback={<PageLoader />}>
-        <Outlet />
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out">
+          <Outlet />
+        </div>
       </Suspense>
     </>
   );
@@ -65,7 +77,9 @@ const ProtectedLayout = () => {
   return (
     <MainLayout>
       <Suspense fallback={<PageLoader />}>
-        <Outlet />
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-out h-full">
+          <Outlet />
+        </div>
       </Suspense>
     </MainLayout>
   );
@@ -80,7 +94,6 @@ const router = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/pricing", element: <Pricing /> },
-      { path: "/checkout", element: <Checkout /> },
       { path: "/about", element: <About /> },
       { path: "/contact", element: <Contact /> },
       { path: "/features", element: <Features /> },
@@ -92,6 +105,7 @@ const router = createBrowserRouter([
         element: <ProtectedLayout />,
         children: [
           { path: "/dashboard", element: <Dashboard /> },
+          { path: "/checkout", element: <Checkout /> },
           { path: "/students", element: <Students /> },
           { path: "/teachers", element: <Teachers /> },
           { path: "/classes", element: <Classes /> },
@@ -110,6 +124,17 @@ const router = createBrowserRouter([
           { path: "/hr-management", element: <HRManagement /> },
           { path: "/googlesheets", element: <GoogleSheetsPage /> },
           { path: "/profile", element: <Profile /> },
+          
+          // school-1cc Integrated Routes
+          { path: "/ai-hub", element: <AIAssistantV2 /> },
+          { path: "/finance-hub", element: <FinancePage /> },
+          { path: "/invoices-v2", element: <InvoicesPage /> },
+          { path: "/security-hub", element: <SecurityPage /> },
+          { path: "/workflow-board", element: <WorkflowPage /> },
+          { path: "/diagrams", element: <DiagramEditorPage /> },
+          { path: "/tasks-v2", element: <TasksPage /> },
+          { path: "/messages-v2", element: <MessagesV2 /> },
+
           { path: "*", element: <NotFound /> },
         ]
       }

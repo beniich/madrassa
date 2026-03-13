@@ -89,6 +89,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
                 paymentIntentId: paymentIntent.id,
                 schoolName
             });
+            localStorage.setItem('schoolgenius_plan', details.id);
         }
       } else {
         // Free migration
@@ -96,6 +97,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
             planId: details.id,
             schoolName
         });
+        localStorage.setItem('schoolgenius_plan', details.id);
       }
 
       toast({
@@ -142,6 +144,14 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
                 {error}
               </div>
             )}
+            
+            <div className="bg-orange-50 border border-orange-200 text-orange-700 px-4 py-3 rounded-xl flex items-start gap-3 text-sm">
+                <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <div>
+                    <strong className="block font-black uppercase tracking-widest text-[10px] mb-1">Mode Démonstration</strong>
+                    Les paiements sont actuellement simulés. Aucune carte réelle ne sera débitée. Utilisez la carte de test Stripe standard (ex: 4242 4242...).
+                </div>
+            </div>
 
             {isPaid && (
               <div className="space-y-4 pt-4 border-t border-gray-100">

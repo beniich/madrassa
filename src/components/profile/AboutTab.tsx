@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui-1cc/card';
+import { Input } from '@/components/ui-1cc/input';
+import { Label } from '@/components/ui-1cc/label';
+import { Textarea } from '@/components/ui-1cc/textarea';
+import { Button } from '@/components/ui-1cc/button';
+import { Separator } from '@/components/ui-1cc/separator';
 import { Phone, Mail, MapPin, Globe, Calendar, User, Save } from 'lucide-react';
 
 interface AboutTabProps {

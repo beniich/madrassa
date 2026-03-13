@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui-1cc/card';
+import { Badge } from '@/components/ui-1cc/badge';
+import { Button } from '@/components/ui-1cc/button';
 import { Calendar as CalendarIcon, Clock, CheckCircle2, XCircle, AlertCircle, Plus, ChevronRight, PieChart, BarChart2, Loader2 } from 'lucide-react';
 import { ResponsiveContainer, PieChart as RePieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
 import { hrService, LeaveRequest } from '@/services/hrService';

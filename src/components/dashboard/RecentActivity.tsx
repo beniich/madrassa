@@ -1,6 +1,6 @@
 import { Clock, UserCheck, FileText, MessageSquare, AlertTriangle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
+import { Badge } from "@/components/ui-1cc/badge";
 import { cn } from "@/lib/utils";
 
 interface Activity {

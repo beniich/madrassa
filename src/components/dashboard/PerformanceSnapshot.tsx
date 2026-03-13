@@ -1,5 +1,5 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui-1cc/card";
+import { Badge } from "@/components/ui-1cc/badge";
 import { Zap } from 'lucide-react';
 
 export const PerformanceSnapshot = () => {
@@ -26,7 +26,7 @@ export const PerformanceSnapshot = () => {
                             </svg>
                             <div className="absolute inset-0 flex items-center justify-center flex-col">
                                 <span className="text-4xl font-black italic">88%</span>
-                                <span className="text-[8px] font-black text-gray-500 uppercase">Global Index</span>
+                                <span className="text-[8px] font-black text-gray-500 uppercase">Indice Global</span>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@ export const PerformanceSnapshot = () => {
                                         <span className="text-xs font-black text-primary">{90 + (i*2)}%</span>
                                     </div>
                                     <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                                        <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${90 + (i*2)}%` } as React.CSSProperties}></div>
+                                        <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${90 + (i*2)}%` }}></div>
                                     </div>
                                 </div>
                             ))}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui-1cc/button";
 import { Menu, X, GraduationCap, Sparkles } from "lucide-react";
 import { LanguageSwitcher } from "../common/LanguageSwitcher";
 

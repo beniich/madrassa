@@ -6,20 +6,50 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { GraduationCap, ArrowRight, BookOpen, AlertCircle } from 'lucide-react';
+import { apiClient } from '@/lib/apiClient';
 
 const Register: React.FC = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        school: '',
+        email: '',
+        password: ''
+    });
 
-    const handleRegister = (e: React.FormEvent) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+    };
+
+    const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        // Mock registration process
-        setTimeout(() => {
+        setError(null);
+        
+        try {
+            // Generates a unique school ID at registration
+            const schoolId = `sch_${Date.now()}`; 
+            
+            await apiClient.post('/auth/register', {
+                email: formData.email,
+                password: formData.password,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                schoolId,
+                role: 'direction' // First user is always the school director
+            });
+            
+            navigate('/pricing?registered=true'); // Provide context to pricing page
+        } catch (err: unknown) {
+            const message = err instanceof Error ? err.message : t('auth.register.error');
+            setError(message);
+        } finally {
             setIsLoading(false);
-            navigate('/pricing'); // Go to pricing after registration
-        }, 1500);
+        }
     };
 
     return (
@@ -42,31 +72,37 @@ const Register: React.FC = () => {
                     </CardHeader>
 
                     <CardContent className="p-10 space-y-6 bg-white text-gray-900 border-t-4 border-primary">
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-4 rounded-xl text-sm font-semibold flex items-center gap-2 border border-red-100">
+                                <AlertCircle className="h-5 w-5" />
+                                {error}
+                            </div>
+                        )}
                         <form onSubmit={handleRegister} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="firstName" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.firstName')}</Label>
-                                    <Input id="firstName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Ahmed" />
+                                    <Input id="firstName" value={formData.firstName} onChange={handleChange} required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Ahmed" />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="lastName" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.lastName')}</Label>
-                                    <Input id="lastName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Benali" />
+                                    <Input id="lastName" value={formData.lastName} onChange={handleChange} required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Benali" />
                                 </div>
                             </div>
                             
                             <div className="space-y-2">
                                 <Label htmlFor="school" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.school')}</Label>
-                                <Input id="school" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder={t('auth.register.schoolPlaceholder')} />
+                                <Input id="school" value={formData.school} onChange={handleChange} required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder={t('auth.register.schoolPlaceholder')} />
                             </div>
 
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.email')}</Label>
-                                <Input id="email" type="email" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="contact@ecole.com" />
+                                <Input id="email" type="email" value={formData.email} onChange={handleChange} required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="contact@ecole.com" />
                             </div>
 
                             <div className="space-y-2 pb-4">
                                 <Label htmlFor="password" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.password')}</Label>
-                                <Input id="password" type="password" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="••••••••" />
+                                <Input id="password" type="password" value={formData.password} onChange={handleChange} required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="••••••••" />
                             </div>
 
                             <Button 

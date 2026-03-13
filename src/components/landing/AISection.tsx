@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui-1cc/button";
 import { 
   Brain, Sparkles, MessageSquare, TrendingUp, 
   FileText, Calendar, ArrowRight, Bot

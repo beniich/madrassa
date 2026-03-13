@@ -252,7 +252,7 @@ export const Analytics = () => {
                 <div className="h-5 bg-secondary/30 rounded-2xl overflow-hidden p-1 border border-secondary shadow-inner">
                   <div 
                     className="h-full bg-gradient-to-r from-[#222222] to-primary rounded-xl transition-all duration-1000 ease-out relative flex items-center justify-end group-hover:shadow-[0_0_20px_rgba(255,109,31,0.3)]"
-                    style={{ width: isLoaded ? `${data.attendance}%` : '0%' } as React.CSSProperties}
+                    style={{ width: isLoaded ? `${data.attendance}%` : '0%' }}
                   >
                     <div className="absolute right-2 w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse"></div>
                   </div>
@@ -291,7 +291,7 @@ export const Analytics = () => {
                   <div className="h-2.5 bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5 shadow-inner">
                     <div
                       className={`h-full bg-gradient-to-r ${subject.color} rounded-full transition-all duration-1000 flex items-center justify-end relative shadow-lg group-hover/item:shadow-primary/40`}
-                      style={{ width: `var(--progress-width, 0%)`, '--progress-width': isLoaded ? `${(subject.average / 20) * 100}%` : '0%' } as React.CSSProperties}
+                      style={{ width: isLoaded ? `${(subject.average / 20) * 100}%` : '0%' }}
                     >
                         <div className="absolute right-1 w-1 h-1 bg-white/30 rounded-full animate-pulse"></div>
                     </div>

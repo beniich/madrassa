@@ -4,7 +4,7 @@ import {
     SheetDescription,
     SheetHeader,
     SheetTitle,
-} from '@/components/ui/sheet';
+} from '@/components/ui-1cc/sheet';
 import {
     Shield,
     Zap,
@@ -12,7 +12,7 @@ import {
     CheckCircle2,
     MousePointer2,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui-1cc/button';
 import { SettingsPreset } from '@/types/settings';
 import { useTranslation } from 'react-i18next';
 

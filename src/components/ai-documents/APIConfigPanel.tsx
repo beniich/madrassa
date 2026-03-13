@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui-1cc/button';
 import { Save, Lock, Key, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 

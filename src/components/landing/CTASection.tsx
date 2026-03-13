@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui-1cc/button";
 import { ArrowRight, Sparkles, CheckCircle } from "lucide-react";
 
 const benefits = [

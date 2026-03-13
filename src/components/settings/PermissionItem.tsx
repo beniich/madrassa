@@ -1,6 +1,6 @@
 import { Lock, Unlock } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
+import { Switch } from '@/components/ui-1cc/switch';
+import { Badge } from '@/components/ui-1cc/badge';
 import { Permission } from '@/types/settings';
 
 interface PermissionItemProps {

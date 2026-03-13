@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { ColDef, ModuleRegistry, ClientSideRowModelModule } from 'ag-grid-community';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui-1cc/button';
 import { Plus, Save, Download, BarChart3, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import { AIChat } from './AIChat';

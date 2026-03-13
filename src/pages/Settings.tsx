@@ -99,6 +99,7 @@ const COLOR_THEMES = [
   { id: "rose", emoji: "🌸", primary: "#DB2777", primaryLight: "#FFF1F2", primaryDark: "#9D174D", sidebar: "#4C0519", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
   { id: "caterpillar", emoji: "🏗️", primary: "#FFCD00", primaryLight: "#FFF7D6", primaryDark: "#E6B800", sidebar: "#0D0D0D", success: "#16A34A", warning: "#FFCD00", danger: "#E11D48", admin: "#FFCD00" },
   { id: "dark-violet", emoji: "🎆", primary: "#ad16e9", primaryLight: "#f7e8fd", primaryDark: "#680d8c", sidebar: "#180321", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#8b11bb" },
+  { id: "glass-professional", emoji: "✨", primary: "#F97316", primaryLight: "#FFF7ED", primaryDark: "#C2410C", sidebar: "#1E293B", success: "#22C55E", warning: "#F59E0B", danger: "#EF4444", admin: "#F97316" },
 ];
 
 export const Settings = () => {
@@ -344,7 +345,7 @@ export const Settings = () => {
 
                     <Button variant="outline" onClick={() => setShowPresets(true)}>
                         <LayoutTemplate className="w-4 h-4 mr-2" />
-                        Presets
+                        Préréglages
                     </Button>
 
                     <DropdownMenu>
@@ -512,7 +513,7 @@ export const Settings = () => {
                                     <div className="space-y-3 md:col-span-2">
                                         <Label>{t('settings.appearance')}</Label>
                                         <p className="text-sm text-gray-500 mb-2">
-                                            Main color of the interface, navigation and buttons.
+                                            Couleur principale de l'interface, de la navigation et des boutons.
                                         </p>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                                             {COLOR_THEMES.map((theme) => (
@@ -534,9 +535,9 @@ export const Settings = () => {
                                                         )}
                                                     </div>
                                                     <div className="flex gap-1.5" aria-hidden="true">
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.primary } as React.CSSProperties} title="Primaire" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.sidebar } as React.CSSProperties} title="Sidebar" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.success } as React.CSSProperties} title="Succès" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.primary }} title="Primaire" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.sidebar }} title="Sidebar" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.success }} title="Succès" />
                                                     </div>
                                                 </button>
                                             ))}
