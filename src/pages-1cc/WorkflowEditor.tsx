@@ -23,7 +23,7 @@ interface CustomNodeData extends Record<string, unknown> {
 import '@xyflow/react/dist/style.css';
 
 import { useParams } from 'react-router-dom';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Button } from '@/components/ui-1cc/button';
 import { Save, Play, ArrowLeft } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';

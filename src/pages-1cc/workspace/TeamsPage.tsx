@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useWorkspaceStore, Team } from '@/stores/useWorkspaceStore';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui-1cc/card';
 import { Button } from '@/components/ui-1cc/button';

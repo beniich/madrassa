@@ -8,7 +8,7 @@ import { Button } from '@/components/ui-1cc/button';
 import { ArrowLeft, LayoutPanelLeft, List, Settings2, Share2, MoreHorizontal, Plus } from 'lucide-react';
 import { Separator } from '@/components/ui-1cc/separator';
 import { RecordPage } from '@/types/engine';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 
 const UniversalPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();

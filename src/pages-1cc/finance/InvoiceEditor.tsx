@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useFinanceStore, Invoice } from '@/stores/useFinanceStore';
 import { Button } from '@/components/ui-1cc/button';
 import { Input } from '@/components/ui-1cc/input';

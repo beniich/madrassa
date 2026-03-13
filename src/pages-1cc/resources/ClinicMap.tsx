@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DndContext, DragOverlay, DragStartEvent, DragEndEvent, useSensor, useSensors, PointerSensor } from '@dnd-kit/core';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { MapCanvas } from '@/components/map/MapCanvas';
 import { WaitingRoom } from '@/components/map/WaitingRoom';
 import { DraggablePatient } from '@/components/map/DraggablePatient';

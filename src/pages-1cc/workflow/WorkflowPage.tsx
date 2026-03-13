@@ -1,5 +1,5 @@
 import React from 'react';
-import { DashboardLayout } from '@/components/DashboardLayout';
+import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { KanbanBoard } from '@/components/workflow/KanbanBoard';
 import { useWorkflowStore } from '@/stores/useWorkflowStore';
 import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
