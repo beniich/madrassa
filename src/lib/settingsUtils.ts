@@ -44,7 +44,7 @@ export const getDefaultSettings = (): Partial<AllSettings> => ({
         dateFormat: 'DD/MM/YYYY',
         timeFormat: '24h',
         fontSize: 'medium',
-        colorScheme: 'purple',
+        colorScheme: 'dark-violet',
         fontFamily: 'Inter',
         compactMode: false,
         sidebarCollapsed: false,

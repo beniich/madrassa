@@ -21,7 +21,7 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
     render() {
         if (this.state.hasError) {
             return (
-                <div style={{ padding: "20px", color: "red", fontFamily: "monospace" }}>
+                <div className="error-boundary-container">
                     <h1>Something went wrong.</h1>
                     <pre>{this.state.error?.toString()}</pre>
                     <pre>{this.state.error?.stack}</pre>

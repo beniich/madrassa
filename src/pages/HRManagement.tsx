@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Users, LayoutDashboard, FileText, CalendarCheck } from 'lucide-react';
 import HRDashboard from '@/components/hr/HRDashboard';
@@ -10,12 +11,20 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
     ArrowUpDown,
-    Loader2
+    Loader2,
+    Search,
+    Filter,
+    Plus,
+    Folder,
+    File,
+    Share2,
+    Trash2
 } from 'lucide-react';
 import { documentsService, SchoolFolder, SchoolFile } from '@/services/documentsService';
 import { toast } from 'sonner';
 
 const HRManagement: React.FC = () => {
+    const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState('dashboard');
     const [folders, setFolders] = useState<SchoolFolder[]>([]);
     const [recentFiles, setRecentFiles] = useState<SchoolFile[]>([]);
@@ -49,7 +58,7 @@ const HRManagement: React.FC = () => {
             <div>
                 <h1 className="text-3xl font-black italic tracking-tighter text-gray-900 flex items-center gap-3">
                     <Users className="w-8 h-8 text-primary" />
-                    Gestion des Ressources Humaines
+                    {t('hr.title')}
                 </h1>
                 <p className="text-gray-400 font-bold mt-1 text-sm uppercase tracking-widest">
                     Gérez vos employés, les absences et les performances
@@ -61,7 +70,7 @@ const HRManagement: React.FC = () => {
                 <TabsList className="bg-white border border-gray-100 rounded-2xl p-1 h-auto flex flex-wrap gap-1 shadow-sm w-fit">
                     <TabsTrigger value="dashboard" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <LayoutDashboard className="w-4 h-4" />
-                        Tableau de bord
+                        {t('common.dashboard')}
                     </TabsTrigger>
                     <TabsTrigger value="employees" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <Users className="w-4 h-4" />
@@ -69,11 +78,11 @@ const HRManagement: React.FC = () => {
                     </TabsTrigger>
                     <TabsTrigger value="absences" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <CalendarCheck className="w-4 h-4" />
-                        Congés & Absences
+                        {t('hr.absences')}
                     </TabsTrigger>
                     <TabsTrigger value="documents" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <FileText className="w-4 h-4" />
-                        Documents
+                        {t('hr.documents')}
                     </TabsTrigger>
                 </TabsList>
 
@@ -101,7 +110,7 @@ const HRManagement: React.FC = () => {
                         <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
                             <div className="relative w-full md:w-96">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                <Input placeholder="Rechercher un document..." className="pl-10 rounded-xl bg-white border-gray-200" />
+                                <Input placeholder={t('hr.searchEmployee')} className="pl-10 rounded-xl bg-white border-gray-200" />
                             </div>
                             <div className="flex gap-2 w-full md:w-auto">
                                 <Button variant="outline" className="rounded-xl border-gray-200 bg-white gap-2 font-black text-[10px] uppercase tracking-widest h-10 px-4">
@@ -122,7 +131,7 @@ const HRManagement: React.FC = () => {
                                 </div>
                             ) : folders.length === 0 ? (
                                 <div className="col-span-full p-8 text-center bg-gray-50 rounded-2xl text-gray-400 font-bold italic">
-                                    Aucun dossier structuré
+                                    No documents found
                                 </div>
                             ) : (
                                 folders.map((folder, idx) => (
@@ -133,7 +142,7 @@ const HRManagement: React.FC = () => {
                                             </div>
                                             <div>
                                                 <h4 className="font-black italic text-sm tracking-tighter truncate w-32">{folder.name}</h4>
-                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} fichiers</p>
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} files</p>
                                             </div>
                                         </CardContent>
                                     </Card>

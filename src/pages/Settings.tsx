@@ -91,13 +91,14 @@ import { PermissionItem } from '@/components/settings/PermissionItem';
 import { PresetsPanel } from '@/components/settings/PresetsPanel';
 
 const COLOR_THEMES = [
-  { id: "blue", name: "Bleu Académique", emoji: "🔵", primary: "#2563EB", primaryLight: "#EFF6FF", primaryDark: "#1E40AF", sidebar: "#1E293B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
-  { id: "teal", name: "Teal Moderne", emoji: "🟦", primary: "#0D9488", primaryLight: "#F0FDFA", primaryDark: "#0F766E", sidebar: "#134E4A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
-  { id: "indigo", name: "Indigo Prestige", emoji: "🟣", primary: "#4F46E5", primaryLight: "#EEF2FF", primaryDark: "#3730A3", sidebar: "#1E1B4B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#0D9488" },
-  { id: "slate", name: "Ardoise Sobre", emoji: "⚫", primary: "#475569", primaryLight: "#F8FAFC", primaryDark: "#1E293B", sidebar: "#0F172A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
-  { id: "green", name: "Vert Nature", emoji: "🟢", primary: "#15803D", primaryLight: "#F0FDF4", primaryDark: "#14532D", sidebar: "#14532D", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
-  { id: "rose", name: "Rose Dynamique", emoji: "🌸", primary: "#DB2777", primaryLight: "#FFF1F2", primaryDark: "#9D174D", sidebar: "#4C0519", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
-  { id: "caterpillar", name: "Caterpillar Industrial", emoji: "🏗️", primary: "#FFCD00", primaryLight: "#FFF7D6", primaryDark: "#E6B800", sidebar: "#0D0D0D", success: "#16A34A", warning: "#FFCD00", danger: "#E11D48", admin: "#FFCD00" },
+  { id: "blue", emoji: "🔵", primary: "#2563EB", primaryLight: "#EFF6FF", primaryDark: "#1E40AF", sidebar: "#1E293B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "teal", emoji: "🟦", primary: "#0D9488", primaryLight: "#F0FDFA", primaryDark: "#0F766E", sidebar: "#134E4A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "indigo", emoji: "🟣", primary: "#4F46E5", primaryLight: "#EEF2FF", primaryDark: "#3730A3", sidebar: "#1E1B4B", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#0D9488" },
+  { id: "slate", emoji: "⚫", primary: "#475569", primaryLight: "#F8FAFC", primaryDark: "#1E293B", sidebar: "#0F172A", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "green", emoji: "🟢", primary: "#15803D", primaryLight: "#F0FDF4", primaryDark: "#14532D", sidebar: "#14532D", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "rose", emoji: "🌸", primary: "#DB2777", primaryLight: "#FFF1F2", primaryDark: "#9D174D", sidebar: "#4C0519", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#7C3AED" },
+  { id: "caterpillar", emoji: "🏗️", primary: "#FFCD00", primaryLight: "#FFF7D6", primaryDark: "#E6B800", sidebar: "#0D0D0D", success: "#16A34A", warning: "#FFCD00", danger: "#E11D48", admin: "#FFCD00" },
+  { id: "dark-violet", emoji: "🎆", primary: "#ad16e9", primaryLight: "#f7e8fd", primaryDark: "#680d8c", sidebar: "#180321", success: "#16A34A", warning: "#D97706", danger: "#E11D48", admin: "#8b11bb" },
 ];
 
 export const Settings = () => {
@@ -135,11 +136,11 @@ export const Settings = () => {
     const [activePresetId, setActivePresetId] = useState<string | null>(null);
 
     const [permissions, setPermissions] = useState([
-        { id: 'p1', name: 'Voir les élèves', description: 'Accès en lecture seule à la liste des élèves', category: 'students', enabled: true },
-        { id: 'p2', name: 'Modifier les élèves', description: 'Créer, modifier et supprimer des fiches élèves', category: 'students', enabled: false },
-        { id: 'p3', name: 'Gérer les notes', description: 'Saisir et modifier les notes des examens', category: 'grades', enabled: true },
-        { id: 'p4', name: 'Accès financier', description: 'Voir les paiements et factures', category: 'finance', enabled: false },
-        { id: 'p5', name: 'Configuration système', description: 'Accès complet aux paramètres', category: 'administration', enabled: false },
+        { id: 'p1', name: t('settings.permissions.viewStudents'), description: t('settings.permissions.viewStudentsDesc'), category: 'students', enabled: true },
+        { id: 'p2', name: t('settings.permissions.editStudents'), description: t('settings.permissions.editStudentsDesc'), category: 'students', enabled: false },
+        { id: 'p3', name: t('settings.permissions.manageGrades'), description: t('settings.permissions.manageGradesDesc'), category: 'grades', enabled: true },
+        { id: 'p4', name: t('settings.permissions.financeAccess'), description: t('settings.permissions.financeAccessDesc'), category: 'finance', enabled: false },
+        { id: 'p5', name: t('settings.permissions.systemConfig'), description: t('settings.permissions.systemConfigDesc'), category: 'administration', enabled: false },
     ]);
 
     useEffect(() => {
@@ -382,7 +383,7 @@ export const Settings = () => {
                         }`}
                     >
                         {isSaving ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : saveSuccess ? <Check className="w-4 h-4 mr-2" /> : <Save className="w-4 h-4 mr-2" />}
-                        {saveSuccess ? 'Enregistré !' : t('settings.actions.save')}
+                        {saveSuccess ? t('common.success') : t('settings.actions.save')}
                     </Button>
                 </div>
             </div>
@@ -509,33 +510,33 @@ export const Settings = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-3 md:col-span-2">
-                                        <Label>Thème de couleurs</Label>
+                                        <Label>{t('settings.appearance')}</Label>
                                         <p className="text-sm text-gray-500 mb-2">
-                                            Couleur principale de l'interface, navigation et boutons.
+                                            Main color of the interface, navigation and buttons.
                                         </p>
                                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                            {COLOR_THEMES.map((t) => (
+                                            {COLOR_THEMES.map((theme) => (
                                                 <button
-                                                    key={t.id}
-                                                    onClick={() => handleSettingChange('appearance', 'colorScheme', t.id)}
+                                                    key={theme.id}
+                                                    onClick={() => handleSettingChange('appearance', 'colorScheme', theme.id)}
                                                     className={`border-2 rounded-xl p-3 flex flex-col gap-3 transition-all text-left ${
-                                                        settings.appearance?.colorScheme === t.id
+                                                        settings.appearance?.colorScheme === theme.id
                                                             ? 'border-indigo-600 bg-indigo-50/50 shadow-sm'
                                                             : 'border-slate-200 bg-white hover:border-indigo-300 hover:bg-slate-50'
                                                     }`}
                                                 >
                                                     <div className="flex items-center justify-between w-full">
                                                         <span className="font-semibold text-sm flex items-center gap-2">
-                                                            <span>{t.emoji}</span> {t.name}
+                                                            <span>{theme.emoji}</span> {t(`settings.themes.${theme.id}`)}
                                                         </span>
-                                                        {settings.appearance?.colorScheme === t.id && (
+                                                        {settings.appearance?.colorScheme === theme.id && (
                                                             <Check className="w-4 h-4 text-indigo-600" />
                                                         )}
                                                     </div>
                                                     <div className="flex gap-1.5" aria-hidden="true">
-                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.primary } as React.CSSProperties} title="Primaire" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.sidebar } as React.CSSProperties} title="Sidebar" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.success } as React.CSSProperties} title="Succès" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.primary } as React.CSSProperties} title="Primaire" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.sidebar } as React.CSSProperties} title="Sidebar" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: theme.success } as React.CSSProperties} title="Succès" />
                                                     </div>
                                                 </button>
                                             ))}

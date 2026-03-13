@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -27,6 +28,7 @@ const MONTHLY_ABSENCE = [
 const COLORS = ['#FFCD00', '#222222', '#FACC15', '#454545', '#71717A'];
 
 export const LeaveManagement: React.FC = () => {
+    const { t, i18n } = useTranslation();
     const [requests, setRequests] = useState<LeaveRequest[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -79,7 +81,7 @@ export const LeaveManagement: React.FC = () => {
             {/* Header Actions */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
                 <div>
-                    <h2 className="text-2xl font-black italic tracking-tighter text-gray-900">Centre des Congés</h2>
+                    <h2 className="text-2xl font-black italic tracking-tighter text-gray-900">{t('hr.absences')}</h2>
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Gérez les absences et plannings</p>
                 </div>
                 <div className="flex gap-3 w-full sm:w-auto">
@@ -201,9 +203,9 @@ export const LeaveManagement: React.FC = () => {
                                             </div>
                                             <div className="flex items-center gap-1.5 text-gray-500 font-bold">
                                                 <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
-                                                {new Date(req.startDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })} 
+                                                {new Date(req.startDate).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-US', { day: '2-digit', month: 'short' })} 
                                                 <span className="text-gray-300 mx-1">→</span> 
-                                                {new Date(req.endDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                                                {new Date(req.endDate).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-US', { day: '2-digit', month: 'short' })}
                                             </div>
                                         </div>
                                     </div>
@@ -213,7 +215,7 @@ export const LeaveManagement: React.FC = () => {
                                         <div className="flex items-center gap-2">
                                             <StatusIcon status={req.status} />
                                             <Badge className={getStatusStyle(req.status)}>
-                                                {req.status === 'approved' ? 'Approuvé' : req.status === 'pending' ? 'En Attente' : 'Refusé'}
+                                                {t(`hr.status.${req.status}`, { defaultValue: req.status })}
                                             </Badge>
                                         </div>
                                         {req.status === 'pending' && (

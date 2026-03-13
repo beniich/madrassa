@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { GraduationCap, ArrowRight, BookOpen, AlertCircle } from 'lucide-react';
 
 const Register: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -32,9 +34,9 @@ const Register: React.FC = () => {
                             </div>
                         </div>
                         <div>
-                            <CardTitle className="text-4xl font-black italic tracking-tighter text-white">Rejoignez-nous</CardTitle>
+                            <CardTitle className="text-4xl font-black italic tracking-tighter text-white">{t('auth.register.title')}</CardTitle>
                             <CardDescription className="text-gray-400 font-bold uppercase tracking-widest text-xs mt-2">
-                                Créez votre compte SchoolGenius
+                                {t('auth.register.subtitle')}
                             </CardDescription>
                         </div>
                     </CardHeader>
@@ -43,27 +45,27 @@ const Register: React.FC = () => {
                         <form onSubmit={handleRegister} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="firstName" className="font-black text-xs uppercase tracking-widest text-gray-400">Prénom</Label>
+                                    <Label htmlFor="firstName" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.firstName')}</Label>
                                     <Input id="firstName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Ahmed" />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="lastName" className="font-black text-xs uppercase tracking-widest text-gray-400">Nom</Label>
+                                    <Label htmlFor="lastName" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.lastName')}</Label>
                                     <Input id="lastName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Benali" />
                                 </div>
                             </div>
                             
                             <div className="space-y-2">
-                                <Label htmlFor="school" className="font-black text-xs uppercase tracking-widest text-gray-400">Établissement</Label>
-                                <Input id="school" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Nom de votre école" />
+                                <Label htmlFor="school" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.school')}</Label>
+                                <Input id="school" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder={t('auth.register.schoolPlaceholder')} />
                             </div>
 
                             <div className="space-y-2">
-                                <Label htmlFor="email" className="font-black text-xs uppercase tracking-widest text-gray-400">Email</Label>
+                                <Label htmlFor="email" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.email')}</Label>
                                 <Input id="email" type="email" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="contact@ecole.com" />
                             </div>
 
                             <div className="space-y-2 pb-4">
-                                <Label htmlFor="password" className="font-black text-xs uppercase tracking-widest text-gray-400">Mot de passe</Label>
+                                <Label htmlFor="password" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('auth.register.password')}</Label>
                                 <Input id="password" type="password" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="••••••••" />
                             </div>
 
@@ -72,16 +74,16 @@ const Register: React.FC = () => {
                                 disabled={isLoading}
                                 className="w-full h-14 bg-[#222222] hover:bg-[#333333] text-white rounded-xl font-black uppercase tracking-widest shadow-lg transition-transform hover:-translate-y-1"
                             >
-                                {isLoading ? 'Création en cours...' : 'Créer mon compte'}
+                                {isLoading ? t('auth.register.creatingAccount') : t('auth.register.createAccount')}
                                 {!isLoading && <ArrowRight className="ml-2 w-5 h-5 text-primary" />}
                             </Button>
                         </form>
 
                         <div className="text-center pt-2">
                             <p className="text-sm font-bold text-gray-400">
-                                Vous avez déjà un compte ?{' '}
+                                {t('auth.register.alreadyHaveAccount')}{' '}
                                 <a href="/login" className="text-[#222222] hover:text-primary transition-colors hover:underline">
-                                    Connectez-vous
+                                    {t('auth.register.login')}
                                 </a>
                             </p>
                         </div>

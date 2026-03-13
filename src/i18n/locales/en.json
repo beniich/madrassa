@@ -110,12 +110,243 @@
         "autoTheme": "System",
         "language": "Language",
         "languageDesc": "Choose your interface language",
-        "languageSwitcher": "Use the language switcher at the top right of the screen."
+        "languageSwitcher": "Use the language switcher at the top right of the screen.",
+        "french": "French",
+        "english": "English",
+        "arabic": "Arabic",
+        "spanish": "Spanish",
+        "dateFormat": "Date Format",
+        "compactMode": "Compact Mode",
+        "compactModeDesc": "Optimize spacing for high-density information",
+        "sidebarCollapsed": "Standard Sidebar Collapsed",
+        "sidebarCollapsedDesc": "Sidebar starts in collapsed mode by default",
+        "tabs": {
+            "general": "General",
+            "appearance": "Appearance",
+            "notifications": "Notifications",
+            "security": "Security",
+            "users": "Users & Permissions",
+            "data": "Data & Storage",
+            "billing": "Billing",
+            "integrations": "Integrations",
+            "system": "System",
+            "advanced": "Advanced"
+        },
+        "actions": {
+            "save": "Save Changes",
+            "import": "Import",
+            "export": "Export",
+            "unsaved": "Unsaved Changes",
+            "allSettingsSaved": "All settings have been saved successfully",
+            "saveFailed": "Error saving settings"
+        },
+        "search": {
+            "placeholder": "Search settings..."
+        },
+        "billing": {
+            "title": "Billing & Subscription"
+        },
+        "themes": {
+            "blue": "Academic Blue",
+            "teal": "Modern Teal",
+            "indigo": "Prestige Indigo",
+            "slate": "Sober Slate",
+            "green": "Nature Green",
+            "rose": "Dynamic Rose",
+            "caterpillar": "Caterpillar Industrial",
+            "dark-violet": "Deep Violet"
+        },
+        "permissions": {
+            "viewStudents": "View Students",
+            "viewStudentsDesc": "Read-only access to student list",
+            "editStudents": "Edit Students",
+            "editStudentsDesc": "Create, edit and delete student records",
+            "manageGrades": "Manage Grades",
+            "manageGradesDesc": "Enter and modify exam grades",
+            "financeAccess": "Finance Access",
+            "financeAccessDesc": "View payments and invoices",
+            "systemConfig": "System Configuration",
+            "systemConfigDesc": "Full access to settings"
+        },
+        "auth": {
+            "login": {
+                "title": "Welcome to SchoolGenius",
+                "subtitle": "Sign in to access your space",
+                "googleSignIn": "Sign in with Google",
+                "signingIn": "Signing in...",
+                "secureAuth": "Secure Authentication",
+                "termsPrefix": "By signing in, you agree to our",
+                "termsLink": "Terms of Use",
+                "and": "and",
+                "privacyLink": "Privacy Policy",
+                "success": "Success",
+                "loginSuccess": "Login successful. Welcome!",
+                "loginError": "Login Error",
+                "genericError": "An error occurred during login.",
+                "popupClosed": "Sign-in window was closed.",
+                "networkError": "Network error. Please check your internet connection."
+            },
+            "footer": {
+                "rights": "All rights reserved."
+            }
+        },
+        "register": {
+            "title": "Join Us",
+            "subtitle": "Create your SchoolGenius account",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "school": "Institution",
+            "schoolPlaceholder": "Your school name",
+            "email": "Email",
+            "password": "Password",
+            "creatingAccount": "Creating account...",
+            "createAccount": "Create my account",
+            "alreadyHaveAccount": "Already have an account?",
+            "login": "Sign In"
+        },
+        "pricing": {
+            "title": "Simple Pricing",
+            "subtitle": "Choose the plan that fits your institution's needs",
+            "starter": {
+                "name": "Starter",
+                "description": "For small schools",
+                "price": "0 $",
+                "unit": "/month",
+                "features": [
+                    "Up to 100 students",
+                    "Absence management",
+                    "Grades and reports",
+                    "Email support"
+                ],
+                "cta": "Get Started"
+            },
+            "pro": {
+                "name": "Pro",
+                "description": "For medium-sized schools",
+                "price": "499 $",
+                "unit": "/month",
+                "popular": "Popular",
+                "features": [
+                    "Unlimited students",
+                    "Advanced AI features",
+                    "Billing management",
+                    "Parent/Student app",
+                    "Priority support"
+                ],
+                "cta": "Choose Pro"
+            },
+            "enterprise": {
+                "name": "Institution",
+                "description": "Customized",
+                "price": "On Quote",
+                "features": [
+                    "Multi-institution",
+                    "Full white label",
+                    "Custom developments",
+                    "Dedicated server",
+                    "24/7 support"
+                ],
+                "cta": "Contact Us"
+            }
+        },
+        "checkout": {
+            "title": "Payment",
+            "subtitle": "Complete your registration",
+            "schoolName": "Institution Name",
+            "schoolPlaceholder": "International School",
+            "paymentInfo": "Payment Information",
+            "processing": "Processing...",
+            "payAmount": "Pay {{price}}",
+            "validate": "Validate my registration",
+            "securePayment": "100% secure payment via Stripe",
+            "summary": {
+                "title": "Order Summary",
+                "plan": "Plan {{name}}"
+            },
+            "success": {
+                "title": "Registration Successful",
+                "description": "Welcome! Your institution {{schoolName}} is now configured."
+            },
+            "errors": {
+                "initFailed": "Impossible to initialize payment",
+                "paymentFailed": "An error occurred during payment.",
+                "generic": "An error occurred. Please try again."
+            }
+        }
     },
     "roles": {
-        "direction": "Direction",
+        "direction": "Management",
         "admin": "Administrator",
         "teacher": "Teacher",
         "parent": "Parent"
+    },
+    "finance": {
+        "title": "Invoicing",
+        "subtitle": "Institution financial management",
+        "annualCA": "Annual Turnover",
+        "pending": "Pending",
+        "recovery": "Recovery",
+        "total": "TOTAL",
+        "scholarship": "Tuition Fees",
+        "extracurricular": "Extracurricular Activities",
+        "balance": "Financial Balance",
+        "recentTransactions": "Recent Transactions",
+        "description": "Description",
+        "category": "Category",
+        "amount": "Amount",
+        "action": "Action",
+        "budget": "Monthly Budget",
+        "objective": "Calculated vs Annual Objective",
+        "progress": "Progress",
+        "remaining": "Remaining to collect",
+        "viewForecast": "View Forecast",
+        "quickReports": "Quick Reports",
+        "downloadPDF": "Download PDF",
+        "receiptPreview": "Receipt Preview"
+    },
+    "analytics": {
+        "title": "Data Explorer",
+        "badge": "High Density Analytics",
+        "subtitle": "Predictive steering and real-time monitoring of academic flows.",
+        "aiReport": "AI REPORT",
+        "exportPDF": "Export PDF",
+        "metrics": {
+            "students": "Students",
+            "attendance": "Attendance",
+            "success": "Success",
+            "withdrawals": "Withdrawals"
+        },
+        "flowEvolution": "Flow Evolution",
+        "pedagogicalPerformance": "Pedagogical Performance",
+        "globalRanking": "Global Ranking",
+        "aiAlerts": "AI Alerts",
+        "insightOfDay": "Insight of the Day"
+    },
+    "hr": {
+        "title": "HR Management",
+        "employees": "Employees",
+        "absences": "Absences",
+        "documents": "Documents",
+        "recruitment": "Recruitment",
+        "addEmployee": "Add Employee",
+        "searchEmployee": "Search employee...",
+        "experience": "years exp.",
+        "students": "students",
+        "hoursPerWeek": "h/week",
+        "status": {
+            "active": "Active",
+            "onLeave": "On Leave",
+            "inactive": "Inactive",
+            "approved": "Approved",
+            "pending": "Pending",
+            "rejected": "Rejected"
+        },
+        "types": {
+            "annual": "Annual",
+            "sick": "Sick Leave",
+            "maternity": "Maternity",
+            "exceptional": "Exceptional",
+            "unpaid": "Unpaid"
+        }
     }
 }

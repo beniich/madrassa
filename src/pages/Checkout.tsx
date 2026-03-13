@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +12,7 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { StripeProvider } from "@/components/payment/StripeProvider";
 
 const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -22,9 +24,24 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
 
   const getPlanDetails = () => {
     switch (plan) {
-      case 'pro': return { id: 'price_pro', name: 'Pro', price: '499 $', features: ['Élèves illimités', 'IA avancée', 'Support prioritaire'] };
-      case 'enterprise': return { id: 'price_enterprise', name: 'Institution', price: 'Sur devis', features: ['Multi-établissements', 'Dev sur-mesure', 'Support 24/7'] };
-      default: return { id: 'price_free', name: 'Starter', price: '0 $', features: ['Jusqu\'à 100 élèves', 'Gestion des absences', 'Notes et bulletins'] };
+      case 'pro': return { 
+        id: 'price_pro', 
+        name: t('pricing.pro.name'), 
+        price: t('pricing.pro.price'), 
+        features: t('pricing.pro.features', { returnObjects: true }) as string[] 
+      };
+      case 'enterprise': return { 
+        id: 'price_enterprise', 
+        name: t('pricing.enterprise.name'), 
+        price: t('pricing.enterprise.price'), 
+        features: t('pricing.enterprise.features', { returnObjects: true }) as string[] 
+      };
+      default: return { 
+        id: 'price_free', 
+        name: t('pricing.starter.name'), 
+        price: t('pricing.starter.price'), 
+        features: t('pricing.starter.features', { returnObjects: true }) as string[] 
+      };
     }
   };
 
@@ -44,7 +61,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
         const { clientSecret } = await paymentService.createPaymentIntent(details.id);
 
         if (!clientSecret) {
-          throw new Error("Impossible d'initialiser le paiement");
+          throw new Error(t('checkout.errors.initFailed'));
         }
 
         // 2. Confirm payment with Stripe
@@ -61,7 +78,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
         });
 
         if (stripeError) {
-          setError(stripeError.message || "Une erreur est survenue lors du paiement.");
+          setError(stripeError.message || t('checkout.errors.paymentFailed'));
           setIsLoading(false);
           return;
         }
@@ -82,13 +99,14 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
       }
 
       toast({
-        title: "Inscription réussie",
-        description: `Bienvenue ! Votre établissement ${schoolName} est maintenant configuré.`,
+        title: t('checkout.success.title'),
+        description: t('checkout.success.description', { schoolName }),
       });
       navigate('/dashboard');
 
-    } catch (err: any) {
-      setError(err.message || "Une erreur est survenue. Veuillez réessayer.");
+    } catch (err: unknown) {
+      const error = err as { message?: string };
+      setError(error.message || t('checkout.errors.generic'));
     } finally {
       setIsLoading(false);
     }
@@ -99,22 +117,22 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
       {/* Checkout Form */}
       <Card className="bg-white border-none shadow-2xl rounded-3xl overflow-hidden order-2 md:order-1">
         <CardHeader className="pt-8 pb-4">
-          <CardTitle className="text-3xl font-black italic tracking-tighter text-gray-900 border-b-4 border-primary inline-block pb-2">Paiement</CardTitle>
+          <CardTitle className="text-3xl font-black italic tracking-tighter text-gray-900 border-b-4 border-primary inline-block pb-2">{t('checkout.title')}</CardTitle>
           <CardDescription className="text-gray-500 font-bold uppercase tracking-widest text-xs mt-2">
-            Complétez votre inscription
+            {t('checkout.subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-8 space-y-6 text-gray-900">
           <form onSubmit={handlePayment} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="schoolName" className="font-black text-xs uppercase tracking-widest text-gray-400">Nom de l'établissement</Label>
+              <Label htmlFor="schoolName" className="font-black text-xs uppercase tracking-widest text-gray-400">{t('checkout.schoolName')}</Label>
               <Input 
                 id="schoolName" 
                 required 
                 value={schoolName}
                 onChange={(e) => setSchoolName(e.target.value)}
                 className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl transition-all" 
-                placeholder="École Internationale" 
+                placeholder={t('checkout.schoolPlaceholder')} 
               />
             </div>
             
@@ -127,7 +145,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
 
             {isPaid && (
               <div className="space-y-4 pt-4 border-t border-gray-100">
-                <Label className="font-black text-xs uppercase tracking-widest text-gray-400">Informations de paiement</Label>
+                <Label className="font-black text-xs uppercase tracking-widest text-gray-400">{t('checkout.paymentInfo')}</Label>
                 <div className="p-4 bg-gray-50 border border-gray-200 rounded-xl focus-within:border-primary transition-all">
                   <CardElement options={{
                     style: {
@@ -148,13 +166,13 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
               disabled={isLoading || (isPaid && !stripe)}
               className="w-full mt-6 h-14 bg-[#222222] hover:bg-black text-white rounded-xl font-black uppercase tracking-widest shadow-lg transition-transform hover:-translate-y-1"
             >
-              {isLoading ? 'Traitement en cours...' : (isPaid ? `Payer ${details.price}` : 'Valider mon inscription')}
+              {isLoading ? t('checkout.processing') : (isPaid ? t('checkout.payAmount', { price: details.price }) : t('checkout.validate'))}
               {!isLoading && <ArrowRight className="ml-2 w-5 h-5 text-primary" />}
             </Button>
 
             <div className="flex items-center justify-center gap-2 mt-4 text-xs font-bold text-gray-400">
               <ShieldCheck className="w-4 h-4 text-green-500" />
-              Paiement 100% sécurisé via Stripe
+              {t('checkout.securePayment')}
             </div>
           </form>
         </CardContent>
@@ -165,13 +183,13 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
         <Card className="bg-[#111111] border-2 border-primary shadow-2xl rounded-3xl overflow-hidden relative">
           <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-primary to-orange-400" />
           <CardHeader className="border-b border-white/10 pb-6">
-            <CardDescription className="text-gray-400 font-bold uppercase tracking-widest text-xs">Résumé de la commande</CardDescription>
-            <CardTitle className="text-3xl font-black text-white mt-2">Plan <span className="text-primary uppercase tracking-tight italic">{details.name}</span></CardTitle>
+            <CardDescription className="text-gray-400 font-bold uppercase tracking-widest text-xs">{t('checkout.summary.title')}</CardDescription>
+            <CardTitle className="text-3xl font-black text-white mt-2">{t('checkout.summary.plan', { name: details.name })}</CardTitle>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
             <div className="flex items-end gap-2 text-white">
               <span className="text-5xl font-black italic tracking-tighter">{details.price}</span>
-              <span className="text-gray-400 text-sm font-bold mb-2">/mois</span>
+              <span className="text-gray-400 text-sm font-bold mb-2">{t('pricing.starter.unit')}</span>
             </div>
             
             <ul className="space-y-4 pt-4 border-t border-white/10">

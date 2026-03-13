@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 const Login: React.FC = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { signInWithGoogle, isAuthenticated } = useAuth();
     const { toast } = useToast();
@@ -29,25 +31,26 @@ const Login: React.FC = () => {
             await signInWithGoogle();
 
             toast({
-                title: 'Connexion réussie',
-                description: 'Bienvenue sur SchoolGenius !',
+                title: t('auth.login.success'),
+                description: t('auth.login.loginSuccess'),
             });
 
             navigate('/dashboard');
-        } catch (error: any) {
+        } catch (error: unknown) {
+            const err = error as { code?: string };
             console.error('Login error:', error);
-            let errorMessage = 'Une erreur est survenue lors de la connexion.';
+            let errorMessage = t('auth.login.genericError');
 
             if (error.code === 'auth/popup-closed-by-user') {
-                errorMessage = 'La fenêtre de connexion a été fermée.';
+                errorMessage = t('auth.login.popupClosed');
             } else if (error.code === 'auth/network-request-failed') {
-                errorMessage = 'Erreur réseau. Vérifiez votre connexion internet.';
+                errorMessage = t('auth.login.networkError');
             }
 
             setError(errorMessage);
             toast({
                 variant: 'destructive',
-                title: 'Erreur de connexion',
+                title: t('auth.login.loginError'),
                 description: errorMessage,
             });
         } finally {
@@ -78,7 +81,7 @@ const Login: React.FC = () => {
                     <div>
                         <CardTitle className="text-3xl font-bold text-gray-900">SchoolGenius</CardTitle>
                         <CardDescription className="text-base mt-2">
-                            Connectez-vous pour accéder à votre espace
+                            {t('auth.login.subtitle')}
                         </CardDescription>
                     </div>
                 </CardHeader>
@@ -102,7 +105,7 @@ const Login: React.FC = () => {
                         {isLoading ? (
                             <>
                                 <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                                Connexion en cours...
+                                {t('auth.login.signingIn')}
                             </>
                         ) : (
                             <>
@@ -124,7 +127,7 @@ const Login: React.FC = () => {
                                         d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                                     />
                                 </svg>
-                                Se connecter avec Google
+                                {t('auth.login.googleSignIn')}
                             </>
                         )}
                     </Button>
@@ -135,17 +138,17 @@ const Login: React.FC = () => {
                             <span className="w-full border-t" />
                         </div>
                         <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-white px-2 text-gray-500">Authentification sécurisée</span>
+                            <span className="bg-white px-2 text-gray-500">{t('auth.login.secureAuth')}</span>
                         </div>
                     </div>
 
                     {/* Info */}
                     <div className="text-center text-sm text-gray-600">
-                        <p>En vous connectant, vous acceptez nos</p>
+                        <p>{t('auth.login.termsPrefix')}</p>
                         <p className="mt-1">
-                            <a href="#" className="text-purple-600 hover:underline">Conditions d'utilisation</a>
-                            {' et '}
-                            <a href="#" className="text-purple-600 hover:underline">Politique de confidentialité</a>
+                            <a href="#" className="text-purple-600 hover:underline">{t('auth.login.termsLink')}</a>
+                            {` ${t('auth.login.and')} `}
+                            <a href="#" className="text-purple-600 hover:underline">{t('auth.login.privacyLink')}</a>
                         </p>
                     </div>
                 </CardContent>
@@ -153,7 +156,7 @@ const Login: React.FC = () => {
 
             {/* Footer */}
             <div className="absolute bottom-8 left-0 right-0 text-center text-white/80 text-sm">
-                <p>© 2024 SchoolGenius. Tous droits réservés.</p>
+                <p>© 2024 SchoolGenius. {t('auth.footer.rights')}</p>
             </div>
         </div>
     );

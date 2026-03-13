@@ -3,13 +3,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet, useLocation } from 'react-router-dom';
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ConfigProvider } from "@/contexts/ConfigContext";
 import { MainLayout } from '@/components/layout/MainLayout';
 import { CustomCursor } from '@/components/common/CustomCursor';
 import { Suspense, lazy } from 'react';
 import { Loader2 } from 'lucide-react';
+import { TopBarProgress } from '@/components/common/TopBarProgress';
 
 // Lazy Loading des pages pour une navigation instantanée
 const Index = lazy(() => import('@/pages/Index'));
@@ -49,6 +50,73 @@ const PageLoader = () => (
   </div>
 );
 
+const AppLayout = () => {
+  return (
+    <>
+      <TopBarProgress />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
+    </>
+  );
+};
+
+const ProtectedLayout = () => {
+  return (
+    <MainLayout>
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
+    </MainLayout>
+  );
+};
+
+const router = createBrowserRouter([
+  {
+    element: <AppLayout />,
+    children: [
+      // Public Routes
+      { path: "/", element: <Index /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+      { path: "/pricing", element: <Pricing /> },
+      { path: "/checkout", element: <Checkout /> },
+      { path: "/about", element: <About /> },
+      { path: "/contact", element: <Contact /> },
+      { path: "/features", element: <Features /> },
+      { path: "/blog", element: <Blog /> },
+      { path: "/documentation", element: <Documentation /> },
+      
+      // Protected Routes Wrapper
+      {
+        element: <ProtectedLayout />,
+        children: [
+          { path: "/dashboard", element: <Dashboard /> },
+          { path: "/students", element: <Students /> },
+          { path: "/teachers", element: <Teachers /> },
+          { path: "/classes", element: <Classes /> },
+          { path: "/analytics", element: <Analytics /> },
+          { path: "/calendar", element: <Calendar /> },
+          { path: "/attendance", element: <Attendance /> },
+          { path: "/exams", element: <Exams /> },
+          { path: "/invoicing", element: <Invoicing /> },
+          { path: "/documents", element: <Documents /> },
+          { path: "/schedule", element: <Schedule /> },
+          { path: "/messages", element: <Messages /> },
+          { path: "/settings", element: <Settings /> },
+          { path: "/admin/settings", element: <AdminSettings /> },
+          { path: "/admin/palette", element: <SchoolPalette /> },
+          { path: "/powerbi", element: <PowerBIDashboard /> },
+          { path: "/hr-management", element: <HRManagement /> },
+          { path: "/googlesheets", element: <GoogleSheetsPage /> },
+          { path: "/profile", element: <Profile /> },
+          { path: "*", element: <NotFound /> },
+        ]
+      }
+    ]
+  }
+]);
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -60,51 +128,7 @@ function App() {
             <CustomCursor />
             <Toaster />
             <Sonner />
-            <Router>
-              <Suspense fallback={<PageLoader />}>
-                <Routes>
-                  {/* Route publique sans MainLayout */}
-                  <Route path="/" element={<Index />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/features" element={<Features />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/documentation" element={<Documentation />} />
-                  
-                  {/* Routes protégées avec MainLayout */}
-                  <Route path="/*" element={
-                    <MainLayout>
-                      <Routes>
-                        <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/students" element={<Students />} />
-                        <Route path="/teachers" element={<Teachers />} />
-                        <Route path="/classes" element={<Classes />} />
-                        <Route path="/analytics" element={<Analytics />} />
-                        <Route path="/calendar" element={<Calendar />} />
-                        <Route path="/attendance" element={<Attendance />} />
-                        <Route path="/exams" element={<Exams />} />
-                        <Route path="/invoicing" element={<Invoicing />} />
-                        <Route path="/documents" element={<Documents />} />
-                        <Route path="/schedule" element={<Schedule />} />
-                        <Route path="/messages" element={<Messages />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/admin/settings" element={<AdminSettings />} />
-                        <Route path="/admin/palette" element={<SchoolPalette />} />
-                        <Route path="/powerbi" element={<PowerBIDashboard />} />
-                        <Route path="/hr-management" element={<HRManagement />} />
-                        <Route path="/googlesheets" element={<GoogleSheetsPage />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="*" element={<NotFound />} />
-                      </Routes>
-                    </MainLayout>
-                  } />
-                </Routes>
-              </Suspense>
-            </Router>
+            <RouterProvider router={router} />
           </TooltipProvider>
         </AuthProvider>
       </ConfigProvider>

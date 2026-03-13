@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   BarChart3,
   TrendingUp,
@@ -31,6 +32,7 @@ import { cn } from "@/lib/utils";
 // ============================================================================
 
 const AIReportModal = ({ onClose }: { onClose: () => void }) => {
+  const { t } = useTranslation();
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-2xl animate-in fade-in duration-500">
       <div className="relative max-w-2xl w-full bg-white rounded-[3.5rem] shadow-[0_32px_80px_rgba(0,0,0,0.3)] overflow-hidden border-none animate-in zoom-in-95 duration-500">
@@ -45,11 +47,15 @@ const AIReportModal = ({ onClose }: { onClose: () => void }) => {
                 <BrainCircuit className="h-8 w-8 text-primary" />
               </div>
               <div>
-                <h2 className="text-3xl font-black text-gray-900 tracking-tighter italic leading-none">Rapport Stratégique IA</h2>
+                <h2 className="text-3xl font-black text-gray-900 tracking-tighter italic leading-none">{t('analytics.aiReport')}</h2>
                 <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mt-3 italic">Généré le {new Date().toLocaleDateString()} • Alpha 5.0</p>
               </div>
             </div>
-            <button onClick={onClose} className="h-12 w-12 bg-secondary/50 hover:bg-secondary rounded-2xl flex items-center justify-center text-gray-900 transition-all active:scale-95">
+            <button 
+              onClick={onClose} 
+              className="h-12 w-12 bg-secondary/50 hover:bg-secondary rounded-2xl flex items-center justify-center text-gray-900 transition-all active:scale-95"
+              title="Close"
+            >
               <X className="h-6 w-6" />
             </button>
           </div>
@@ -120,6 +126,7 @@ const SUBJECT_PERFORMANCE = [
 ];
 
 export const Analytics = () => {
+  const { t } = useTranslation();
   const [period, setPeriod] = useState('month');
   const [showAIReport, setShowAIReport] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -149,11 +156,11 @@ export const Analytics = () => {
         </div>
         <div className="relative z-10 space-y-4">
             <Badge className="bg-primary/20 text-primary border-primary/30 font-black text-[10px] uppercase tracking-[0.4em] px-5 py-1.5 rounded-full">
-                ANALYTICS HAUTE DENSITÉ
+                {t('analytics.badge')}
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic leading-none">Explorateur <span className="text-primary">de Données</span></h1>
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic leading-none">{t('analytics.title')}</h1>
             <p className="text-gray-400 font-medium text-sm max-w-md leading-relaxed">
-                Pilotage prédictif et monitoring en temps réel des flux académiques mondiaux.
+                {t('analytics.subtitle')}
             </p>
         </div>
 
@@ -182,7 +189,7 @@ export const Analytics = () => {
               setTimeout(() => setShowAIReport(true), 1500);
             }}
           >
-            <BrainCircuit className="w-6 h-6 group-hover:rotate-12 transition-transform" /> RAPPORT IA
+            <BrainCircuit className="w-6 h-6 group-hover:rotate-12 transition-transform" /> {t('analytics.aiReport')}
           </Button>
 
           <Button 
@@ -199,10 +206,10 @@ export const Analytics = () => {
       {/* Metrics Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {[
-          { label: 'Effectifs', val: '258', sub: '+3.2%', up: true, icon: Users, color: 'text-primary', bg: 'bg-primary/5' },
-          { label: 'Présence', val: '93%', sub: '+2.1%', up: true, icon: TrendingUp, color: 'text-[#222222]', bg: 'bg-secondary/50' },
-          { label: 'Réussite', val: '14.2', sub: '+0.3', up: true, icon: Award, color: 'text-primary', bg: 'bg-primary/5' },
-          { label: 'Désistements', val: '12', sub: '-1.5%', up: false, icon: Clock, color: 'text-[#222222]', bg: 'bg-secondary/50' },
+          { label: t('analytics.metrics.students'), val: '258', sub: '+3.2%', up: true, icon: Users, color: 'text-primary', bg: 'bg-primary/5' },
+          { label: t('analytics.metrics.attendance'), val: '93%', sub: '+2.1%', up: true, icon: TrendingUp, color: 'text-[#222222]', bg: 'bg-secondary/50' },
+          { label: t('analytics.metrics.success'), val: '14.2', sub: '+0.3', up: true, icon: Award, color: 'text-primary', bg: 'bg-primary/5' },
+          { label: t('analytics.metrics.withdrawals'), val: '12', sub: '-1.5%', up: false, icon: Clock, color: 'text-[#222222]', bg: 'bg-secondary/50' },
         ].map((m, i) => (
           <Card key={i} className="p-8 border-none shadow-xl bg-white hover:translate-y-[-8px] transition-all duration-500 rounded-[2.5rem] group relative overflow-hidden">
              <div className={cn("absolute top-0 right-0 w-32 h-32 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity rounded-bl-full bg-[#222222]")}></div>
@@ -226,7 +233,7 @@ export const Analytics = () => {
         <Card className="p-10 border-none shadow-2xl bg-white rounded-[3.5rem] overflow-hidden relative">
           <div className="flex items-center justify-between mb-12">
             <div>
-              <h3 className="text-2xl font-black text-gray-900 tracking-tighter italic leading-none">Évolution Flux</h3>
+              <h3 className="text-2xl font-black text-gray-900 tracking-tighter italic leading-none">{t('analytics.flowEvolution')}</h3>
               <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mt-3">Analyse d'Assiduité Mensuelle</p>
             </div>
             <div className="flex items-center gap-3 bg-secondary/30 px-5 py-2.5 rounded-2xl">
@@ -245,7 +252,7 @@ export const Analytics = () => {
                 <div className="h-5 bg-secondary/30 rounded-2xl overflow-hidden p-1 border border-secondary shadow-inner">
                   <div 
                     className="h-full bg-gradient-to-r from-[#222222] to-primary rounded-xl transition-all duration-1000 ease-out relative flex items-center justify-end group-hover:shadow-[0_0_20px_rgba(255,109,31,0.3)]"
-                    style={{ width: isLoaded ? `${data.attendance}%` : '0%' }}
+                    style={{ width: isLoaded ? `${data.attendance}%` : '0%' } as React.CSSProperties}
                   >
                     <div className="absolute right-2 w-1.5 h-1.5 bg-white/40 rounded-full animate-pulse"></div>
                   </div>
@@ -261,7 +268,7 @@ export const Analytics = () => {
           
           <div className="relative z-10 h-full flex flex-col">
             <h3 className="text-2xl font-black tracking-tighter italic mb-10 flex items-center gap-4 leading-none">
-              Performance <span className="text-primary italic">Pédagogique</span> <Sparkles className="h-6 w-6 text-primary group-hover:rotate-12 transition-transform" />
+              {t('analytics.pedagogicalPerformance')} <Sparkles className="h-6 w-6 text-primary group-hover:rotate-12 transition-transform" />
             </h3>
 
             <div className="space-y-8 flex-1 flex flex-col justify-center">
@@ -282,9 +289,9 @@ export const Analytics = () => {
                     </div>
                   </div>
                   <div className="h-2.5 bg-white/5 rounded-full overflow-hidden p-0.5 border border-white/5 shadow-inner">
-                    <div 
+                    <div
                       className={`h-full bg-gradient-to-r ${subject.color} rounded-full transition-all duration-1000 flex items-center justify-end relative shadow-lg group-hover/item:shadow-primary/40`}
-                      style={{ width: isLoaded ? `${(subject.average / 20) * 100}%` : '0%' }}
+                      style={{ width: `var(--progress-width, 0%)`, '--progress-width': isLoaded ? `${(subject.average / 20) * 100}%` : '0%' } as React.CSSProperties}
                     >
                         <div className="absolute right-1 w-1 h-1 bg-white/30 rounded-full animate-pulse"></div>
                     </div>
@@ -305,7 +312,7 @@ export const Analytics = () => {
                   <div className="h-14 w-14 bg-secondary/30 rounded-2xl flex items-center justify-center">
                     <PieChart className="h-7 w-7 text-primary" />
                   </div>
-                  <h3 className="text-2xl font-black text-gray-900 tracking-tighter italic leading-none uppercase">Classement Global</h3>
+                  <h3 className="text-2xl font-black text-gray-900 tracking-tighter italic leading-none uppercase">{t('analytics.globalRanking')}</h3>
                </div>
                <Badge className="bg-emerald-50 text-emerald-600 border-none font-black italic text-[10px] tracking-widest px-4 py-2">OPTIMAL</Badge>
             </div>
@@ -341,7 +348,7 @@ export const Analytics = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full scale-110 group-hover:scale-125 transition-transform"></div>
             
             <h3 className="text-2xl font-black tracking-tighter italic mb-8 flex items-center gap-3 leading-none relative z-10">
-              Alertes IA <Zap className="h-6 w-6 fill-primary text-primary group-hover:rotate-12 transition-transform" />
+              {t('analytics.aiAlerts')} <Zap className="h-6 w-6 fill-primary text-primary group-hover:rotate-12 transition-transform" />
             </h3>
             
             <div className="space-y-5 relative z-10">
@@ -376,7 +383,7 @@ export const Analytics = () => {
                <TrendingUp className="h-6 w-6" />
              </div>
              <div className="relative z-10">
-               <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2 italic">Insight du Jour</p>
+               <p className="text-[10px] font-black text-primary uppercase tracking-[0.2em] mb-2 italic">{t('analytics.insightOfDay')}</p>
                <p className="text-sm font-black text-[#222222] leading-relaxed italic">
                  Le taux de réussite est corrélé à <span className="text-primary tracking-tighter text-lg">84%</span> avec l'assiduité du lundi.
                </p>

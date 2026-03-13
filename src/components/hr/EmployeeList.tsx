@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -23,6 +24,7 @@ interface Employee {
 
 // Données mockées étendues
 export const EmployeeList: React.FC = () => {
+    const { t, i18n } = useTranslation();
     const [employees, setEmployees] = useState<HRMember[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -68,12 +70,7 @@ export const EmployeeList: React.FC = () => {
     };
 
     const getStatusLabel = (status: string) => {
-        switch (status) {
-            case 'active': return 'Actif';
-            case 'inactive': return 'Inactif';
-            case 'onLeave': return 'En congé';
-            default: return 'Inconnu';
-        }
+        return t(`hr.status.${status}`, { defaultValue: status });
     };
 
     return (
@@ -84,7 +81,7 @@ export const EmployeeList: React.FC = () => {
                 {/* Filters Header */}
                 <div className="p-6 bg-white border-b border-gray-100 space-y-4">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-black italic tracking-tight text-gray-900">Annuaire Staff</h2>
+                        <h2 className="text-xl font-black italic tracking-tight text-gray-900">{t('hr.employees')}</h2>
                         <Button className="bg-[#222222] hover:bg-black text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-black/10 transition-all active:scale-95">
                             <Plus className="w-4 h-4 mr-2" /> Nouveau Profil
                         </Button>
@@ -104,7 +101,7 @@ export const EmployeeList: React.FC = () => {
                         <div className="flex gap-2 w-full md:w-auto">
                             <Select value={filterDepartment} onValueChange={setFilterDepartment}>
                                 <SelectTrigger className="w-full md:w-[180px] border-none bg-white font-bold h-10 rounded-xl shadow-sm">
-                                    <SelectValue placeholder="Département" />
+                                    <SelectValue placeholder={t('hr.category')} />
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectItem value="all">Tous Départements</SelectItem>
@@ -189,7 +186,7 @@ export const EmployeeList: React.FC = () => {
             {selectedEmployee && (
                 <div className="w-1/3 bg-white flex flex-col border-l border-gray-100 animate-in slide-in-from-right-8 duration-300 min-w-[320px]">
                     <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-[#222222] text-white">
-                        <h3 className="font-black italic tracking-tight">Fiche Collaborateur</h3>
+                        <h3 className="font-black italic tracking-tight">{t('hr.title')}</h3>
                         <Button 
                             variant="ghost" 
                             size="icon" 
@@ -249,7 +246,7 @@ export const EmployeeList: React.FC = () => {
                             </div>
 
                             <div>
-                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Profil Professionnel</h4>
+                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Professional Profile</h4>
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-4 group">
                                         <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-[#222222] transition-colors">
@@ -267,7 +264,7 @@ export const EmployeeList: React.FC = () => {
                                         <div>
                                             <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Date d'embauche</p>
                                             <p className="text-sm font-bold text-gray-900">
-                                                {new Date(selectedEmployee.hireDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                {new Date(selectedEmployee.hireDate).toLocaleDateString(i18n.language === 'fr' ? 'fr-FR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                                             </p>
                                         </div>
                                     </div>
@@ -290,7 +287,7 @@ export const EmployeeList: React.FC = () => {
                     {/* Action Panel */}
                     <div className="p-6 bg-gray-50 border-t border-gray-100 flex gap-3">
                         <Button className="flex-1 bg-white hover:bg-gray-100 text-gray-900 border border-gray-200 rounded-xl shadow-sm font-black text-[10px] uppercase tracking-widest">
-                            <Edit className="w-4 h-4 mr-2" /> Éditer
+                            <Edit className="w-4 h-4 mr-2" /> {t('common.edit')}
                         </Button>
                         <Button className="w-12 h-10 bg-white hover:bg-red-50 text-red-500 hover:text-red-600 border border-red-100 rounded-xl shadow-sm p-0 flex items-center justify-center">
                             <Trash2 className="w-4 h-4" />

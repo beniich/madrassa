@@ -32,7 +32,7 @@ All colors MUST be HSL.
     --muted-foreground: 0 0% 40%;
 
     --accent: 21 100% 56%;
-    --accent-foreground: 0 0% 100%;
+    --accent-foreground: 280 100% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -134,6 +134,47 @@ All colors MUST be HSL.
     --sidebar-border: 0 0% 15%;
     --sidebar-accent: 0 0% 15%;
     --font-sans: var(--font-caterpillar);
+  }
+
+  .dark-violet {
+    /* Base text & backgrounds */
+    --background: 283 50% 98%; /* Tinted light background for better contrast than pure #f7e8fd */
+    --foreground: 283 84% 10%; /* #23042f */
+
+    /* Cards and popovers */
+    --card: 0 0% 100%;
+    --card-foreground: 283 84% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 283 84% 10%;
+
+    /* Primary brand color - #ad16e9 */
+    --primary: 283 83% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary/Muted colors - #dea2f6 for secondary, #f7e8fd for muted */
+    --secondary: 283 82% 80%;
+    --secondary-foreground: 283 84% 10%;
+    --muted: 283 83% 95%; /* #f7e8fd */
+    --muted-foreground: 283 83% 40%; /* #8b11bb */
+
+    /* Accents & rings */
+    --accent: 283 83% 50%; /* #ad16e9 */
+    --accent-foreground: 0 0% 100%;
+    --ring: 283 83% 50%;
+
+    /* Borders and inputs - softer violets */
+    --border: 283 82% 80%; /* #dea2f6 */
+    --input: 283 82% 80%; /* #dea2f6 */
+
+    /* Sidebar components - Dark Violet Deep */
+    --sidebar-background: 283 83% 7%; /* #180321 */
+    --sidebar-foreground: 283 83% 95%; /* #f7e8fd */
+    --sidebar-primary: 283 83% 50%; /* #ad16e9 */
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-border: 283 83% 15%; /* darker than #23042f */
+    --sidebar-accent: 283 83% 20%; /* #45095d */
+    --sidebar-accent-foreground: 283 83% 80%; /* #dea2f6 */
+    --sidebar-ring: 283 83% 50%;
   }
 }
 

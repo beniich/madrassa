@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useInvoices } from "@/hooks/useOfflineData";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,7 @@ interface Invoice {
 // ============================================================================
 
 const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () => void }) => {
+    const { t } = useTranslation();
     const printRef = useRef<HTMLDivElement>(null);
 
     const handlePrint = () => {
@@ -74,7 +76,7 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
             <Card className="max-w-md w-full bg-white overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 rounded-[2rem]">
                 <div className="p-6 bg-gray-50/50 border-b flex justify-between items-center print:hidden">
                     <h3 className="font-black italic flex items-center gap-2 text-gray-700 uppercase tracking-tighter text-sm">
-                        <Receipt className="h-4 w-4 text-purple-600" /> Prévisualisation Reçu
+                        <Receipt className="h-4 w-4 text-purple-600" /> {t('finance.receiptPreview')}
                     </h3>
                     <button onClick={onClose} title="Fermer" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
                         <X className="h-5 w-5 text-gray-400" />
@@ -160,6 +162,7 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
 // ============================================================================
 
 const InvoicingPage = () => {
+    const { t } = useTranslation();
     const [selectedStatus, setSelectedStatus] = useState<string>("all");
     const [showNewInvoice, setShowNewInvoice] = useState(false);
     const [showReceipt, setShowReceipt] = useState(false);
@@ -172,9 +175,9 @@ const InvoicingPage = () => {
 
     // Stats réelles basées sur les données
     const stats = [
-      { id: '1', title: "CA Annuel", value: "145,000 $", icon: DollarSign, trend: "+12%", trendUp: true, color: "text-blue-600", bg: "bg-blue-50" },
-      { id: '2', title: "En attente", value: "24,500 $", icon: AlertCircle, trend: "-5%", trendUp: false, color: "text-amber-600", bg: "bg-amber-50" },
-      { id: '3', title: "Recouvrement", value: "92%", icon: TrendingUp, trend: "+3%", trendUp: true, color: "text-emerald-600", bg: "bg-emerald-50" },
+      { id: '1', title: t('finance.annualCA'), value: "145,000 $", icon: DollarSign, trend: "+12%", trendUp: true, color: "text-blue-600", bg: "bg-blue-50" },
+      { id: '2', title: t('finance.pending'), value: "24,500 $", icon: AlertCircle, trend: "-5%", trendUp: false, color: "text-amber-600", bg: "bg-amber-50" },
+      { id: '3', title: t('finance.recovery'), value: "92%", icon: TrendingUp, trend: "+3%", trendUp: true, color: "text-emerald-600", bg: "bg-emerald-50" },
     ];
 
     const filteredInvoices = invoices?.filter(inv => {
@@ -224,9 +227,9 @@ const InvoicingPage = () => {
               </div>
               <div className="relative z-10 space-y-2">
                   <Badge className="bg-emerald-50 text-emerald-600 border-emerald-100 font-black text-[9px] uppercase tracking-[0.2em] px-3 mb-2">
-                      TRÉSORERIE & COMPTABILITÉ
+                      {t('finance.subtitle')}
                   </Badge>
-                  <h1 className="text-4xl font-black text-gray-900 tracking-tight italic">Facturation & Flux</h1>
+                  <h1 className="text-4xl font-black text-gray-900 tracking-tight italic">{t('finance.title')}</h1>
                   <p className="text-gray-500 font-medium text-sm flex items-center gap-2">
                       Suivi financier, émission de factures et encaissements multi-canaux
                   </p>
@@ -312,9 +315,9 @@ const InvoicingPage = () => {
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Référence</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Profil Élève</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Échéance</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Montant</th>
+                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">{t('finance.amount')}</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-center">Status</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right">Registre</th>
+                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-right">{t('finance.action')}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-50">
@@ -429,7 +432,7 @@ const InvoicingPage = () => {
                         <div>
                             <h4 className="font-black text-2xl tracking-tight italic">Guichet Mobile Offline</h4>
                             <p className="text-gray-400 font-medium text-sm mt-2 leading-relaxed">
-                                Le système synchronise automatiquement les paiements différés dès rétablissement de la liaison satellite.
+                                The system automatically synchronizes deferred payments as soon as satellite link is restored.
                             </p>
                         </div>
                         <div className="flex gap-3">
@@ -458,9 +461,9 @@ const InvoicingPage = () => {
                                 <SparklesIcon className="h-5 w-5 text-amber-200" />
                                 <span className="text-[10px] font-black uppercase tracking-widest text-white/70">Intelligence Prédictive</span>
                             </div>
-                            <h4 className="font-black text-2xl tracking-tight italic leading-tight">Analytique Recouvrement</h4>
+                            <h4 className="font-black text-2xl tracking-tight italic leading-tight">{t('analytics.aiAlerts')}</h4>
                             <p className="text-amber-50 font-medium text-sm leading-relaxed">
-                                L'algorithme a identifié 3 familles nécessitant un accompagnement. Envoyez un rappel personnalisé par notification push.
+                                Our algorithm identified accounts requiring support. Send a personalized reminder via push notification.
                             </p>
                         </div>
                         <Button 
@@ -484,7 +487,7 @@ const InvoicingPage = () => {
                                 <Coins className="h-10 w-10 text-purple-500" />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-black text-gray-900 italic tracking-tight">Valider l'Encaissement</h3>
+                                <h3 className="text-2xl font-black text-gray-900 italic tracking-tight">{t('finance.title')}</h3>
                                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">
                                     FACT N°#{currentInvoice.localId.substring(0,8).toUpperCase()} • {currentInvoice.studentId}
                                 </p>
@@ -576,7 +579,7 @@ const InvoicingPage = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">Valeur Nominale ($)</label>
+                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">{t('finance.amount')} ($)</label>
                                         <Input type="number" placeholder="0.00" className="h-14 bg-gray-50 border-none rounded-2xl font-black italic text-sm px-6" />
                                     </div>
                                 </div>
