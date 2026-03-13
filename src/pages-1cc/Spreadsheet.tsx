@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { InteractiveSpreadsheet, Column, Row } from "@/components/InteractiveSpreadsheet";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks-1cc/use-toast";

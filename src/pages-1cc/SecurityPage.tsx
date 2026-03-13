@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MultiTenantHeader } from "@/components/MultiTenantHeader";
 import { AuditLogViewer } from "@/components/audit/AuditLogViewer";
 import { SecurityOverview } from "@/components/audit/SecurityOverview";

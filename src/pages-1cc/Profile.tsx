@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card } from "@/components/ui-1cc/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui-1cc/avatar";
 import { Badge } from "@/components/ui-1cc/badge";

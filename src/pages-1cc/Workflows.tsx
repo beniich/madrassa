@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui-1cc/button";
 import { Card } from "@/components/ui-1cc/card";
 import { Plus, Play, MoreVertical, Edit, Trash } from "lucide-react";

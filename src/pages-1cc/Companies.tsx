@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { CustomerTable } from "@/components/CustomerTable";
 import { Button } from "@/components/ui-1cc/button";
 import { CustomerDialog } from "@/components/CustomerDialog";

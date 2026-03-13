@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { StaffCard } from "@/components/hospital/StaffCard";
 import { Button } from "@/components/ui-1cc/button";
 import { Input } from "@/components/ui-1cc/input";

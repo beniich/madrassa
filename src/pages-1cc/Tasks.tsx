@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { TaskKanban } from "@/components/TaskKanban";
 import { TaskCalendar } from "@/components/TaskCalendar";
 import { TaskList } from "@/components/TaskList";

@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { InvoiceEditor } from "@/components/finance/InvoiceEditor";
 
 const BillingPage = () => {

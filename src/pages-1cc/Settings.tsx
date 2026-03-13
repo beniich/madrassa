@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card } from "@/components/ui-1cc/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";
 import { Input } from "@/components/ui-1cc/input";

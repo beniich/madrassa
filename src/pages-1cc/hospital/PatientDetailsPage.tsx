@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useHospitalStore } from "@/stores/useHospitalStore";
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui-1cc/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";

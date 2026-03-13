@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { AgendaView } from "@/components/hospital/AgendaView";
 import { Button } from "@/components/ui-1cc/button";
 import { Plus, Filter } from "lucide-react";

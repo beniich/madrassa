@@ -1,5 +1,5 @@
 
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MultiTenantHeader } from "@/components/MultiTenantHeader";
 import { WalletCard } from "@/components/finance/WalletCard";
 import { TransactionHistory } from "@/components/finance/TransactionHistory";

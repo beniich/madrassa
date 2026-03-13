@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { DepartmentGrid } from "@/components/hospital/DepartmentGrid";
 import { mockDepartments, mockHospitalBeds } from "@/lib/mockData";
 import { BedDouble, Filter, RefreshCw } from "lucide-react";

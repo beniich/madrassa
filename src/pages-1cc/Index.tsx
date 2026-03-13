@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MetricCard } from "@/components/MetricCard";
 import { CustomerTable } from "@/components/CustomerTable";
 import { RecentActivity } from "@/components/RecentActivity";

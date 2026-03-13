@@ -1,4 +1,4 @@
-import { DashboardLayout } from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { HospitalStats } from "@/components/dashboard/hospital/HospitalStats";
 import { BedOccupancyWidget } from "@/components/dashboard/hospital/BedOccupancyWidget";
 import { RecentDocuments } from "@/components/dashboard/RecentDocuments";
