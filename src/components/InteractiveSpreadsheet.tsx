@@ -7,3 +7,5 @@ export function InteractiveSpreadsheet(props: any) {
     </div>
   );
 }
+
+export default InteractiveSpreadsheet;

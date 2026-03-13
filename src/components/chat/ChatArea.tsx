@@ -7,3 +7,5 @@ export function ChatArea(props: any) {
     </div>
   );
 }
+
+export default ChatArea;

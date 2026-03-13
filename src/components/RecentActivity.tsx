@@ -7,3 +7,5 @@ export function RecentActivity(props: any) {
     </div>
   );
 }
+
+export default RecentActivity;

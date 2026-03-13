@@ -7,3 +7,5 @@ export function SecurityOverview(props: any) {
     </div>
   );
 }
+
+export default SecurityOverview;

@@ -7,3 +7,5 @@ export function CustomerTable(props: any) {
     </div>
   );
 }
+
+export default CustomerTable;

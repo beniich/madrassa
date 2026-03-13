@@ -7,3 +7,5 @@ export function MessagePreview(props: any) {
     </div>
   );
 }
+
+export default MessagePreview;

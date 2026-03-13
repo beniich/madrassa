@@ -7,3 +7,5 @@ export function MetricCard(props: any) {
     </div>
   );
 }
+
+export default MetricCard;

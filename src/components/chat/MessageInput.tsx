@@ -7,3 +7,5 @@ export function MessageInput(props: any) {
     </div>
   );
 }
+
+export default MessageInput;

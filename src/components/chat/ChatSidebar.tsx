@@ -7,3 +7,5 @@ export function ChatSidebar(props: any) {
     </div>
   );
 }
+
+export default ChatSidebar;

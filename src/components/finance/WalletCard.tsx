@@ -7,3 +7,5 @@ export function WalletCard(props: any) {
     </div>
   );
 }
+
+export default WalletCard;

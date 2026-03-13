@@ -7,3 +7,5 @@ export function AdmissionsChart(props: any) {
     </div>
   );
 }
+
+export default AdmissionsChart;

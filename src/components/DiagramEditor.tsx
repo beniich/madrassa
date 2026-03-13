@@ -7,3 +7,5 @@ export function DiagramEditor(props: any) {
     </div>
   );
 }
+
+export default DiagramEditor;

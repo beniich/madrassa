@@ -7,3 +7,5 @@ export function AuditLogViewer(props: any) {
     </div>
   );
 }
+
+export default AuditLogViewer;

@@ -7,3 +7,5 @@ export function WorkflowSidebar(props: any) {
     </div>
   );
 }
+
+export default WorkflowSidebar;

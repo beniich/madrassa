@@ -7,3 +7,5 @@ export function AIAssistantWidget(props: any) {
     </div>
   );
 }
+
+export default AIAssistantWidget;

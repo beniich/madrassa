@@ -7,3 +7,5 @@ export function TransactionHistory(props: any) {
     </div>
   );
 }
+
+export default TransactionHistory;

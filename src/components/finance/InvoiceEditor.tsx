@@ -7,3 +7,5 @@ export function InvoiceEditor(props: any) {
     </div>
   );
 }
+
+export default InvoiceEditor;

@@ -7,3 +7,5 @@ export function TaskTimeline(props: any) {
     </div>
   );
 }
+
+export default TaskTimeline;

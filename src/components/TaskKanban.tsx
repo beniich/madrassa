@@ -7,3 +7,5 @@ export function TaskKanban(props: any) {
     </div>
   );
 }
+
+export default TaskKanban;

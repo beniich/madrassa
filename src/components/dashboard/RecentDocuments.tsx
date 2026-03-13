@@ -7,3 +7,5 @@ export function RecentDocuments(props: any) {
     </div>
   );
 }
+
+export default RecentDocuments;

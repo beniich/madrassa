@@ -7,3 +7,5 @@ export function DealsPipeline(props: any) {
     </div>
   );
 }
+
+export default DealsPipeline;

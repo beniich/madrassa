@@ -7,3 +7,5 @@ export function RecordView(props: any) {
     </div>
   );
 }
+
+export default RecordView;

@@ -7,3 +7,5 @@ export function BedDashboard(props: any) {
     </div>
   );
 }
+
+export default BedDashboard;

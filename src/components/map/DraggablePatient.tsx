@@ -7,3 +7,5 @@ export function DraggablePatient(props: any) {
     </div>
   );
 }
+
+export default DraggablePatient;

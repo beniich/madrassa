@@ -7,3 +7,5 @@ export function Navbar(props: any) {
     </div>
   );
 }
+
+export default Navbar;

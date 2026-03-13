@@ -7,3 +7,5 @@ export function NodeConfigPanel(props: any) {
     </div>
   );
 }
+
+export default NodeConfigPanel;

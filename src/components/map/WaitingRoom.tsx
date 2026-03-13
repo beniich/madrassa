@@ -7,3 +7,5 @@ export function WaitingRoom(props: any) {
     </div>
   );
 }
+
+export default WaitingRoom;

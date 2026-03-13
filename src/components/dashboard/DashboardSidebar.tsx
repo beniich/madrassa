@@ -144,3 +144,4 @@ const DashboardSidebar = () => {
 };
 
 export default DashboardSidebar;
+export { DashboardSidebar };

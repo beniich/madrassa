@@ -151,3 +151,4 @@ const DashboardTopBar = () => {
 };
 
 export default DashboardTopBar;
+export { DashboardTopBar };

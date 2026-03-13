@@ -7,3 +7,5 @@ export function HospitalStats(props: any) {
     </div>
   );
 }
+
+export default HospitalStats;

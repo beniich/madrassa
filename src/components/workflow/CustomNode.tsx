@@ -7,3 +7,5 @@ export function CustomNode(props: any) {
     </div>
   );
 }
+
+export default CustomNode;

@@ -7,3 +7,5 @@ export function TaskDialog(props: any) {
     </div>
   );
 }
+
+export default TaskDialog;

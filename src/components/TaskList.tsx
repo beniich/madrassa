@@ -7,3 +7,5 @@ export function TaskList(props: any) {
     </div>
   );
 }
+
+export default TaskList;

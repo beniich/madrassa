@@ -7,3 +7,5 @@ export function TableView(props: any) {
     </div>
   );
 }
+
+export default TableView;

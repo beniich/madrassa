@@ -7,3 +7,5 @@ export function TaskCalendar(props: any) {
     </div>
   );
 }
+
+export default TaskCalendar;

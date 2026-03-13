@@ -7,3 +7,5 @@ export function ProductDialog(props: any) {
     </div>
   );
 }
+
+export default ProductDialog;

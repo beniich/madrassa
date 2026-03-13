@@ -7,3 +7,5 @@ export function Footer(props: any) {
     </div>
   );
 }
+
+export default Footer;

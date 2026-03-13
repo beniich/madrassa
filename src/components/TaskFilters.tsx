@@ -7,3 +7,5 @@ export function TaskFilters(props: any) {
     </div>
   );
 }
+
+export default TaskFilters;

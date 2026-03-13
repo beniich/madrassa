@@ -7,3 +7,5 @@ export function MapCanvas(props: any) {
     </div>
   );
 }
+
+export default MapCanvas;

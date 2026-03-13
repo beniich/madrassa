@@ -7,3 +7,5 @@ export function CustomerKYC(props: any) {
     </div>
   );
 }
+
+export default CustomerKYC;

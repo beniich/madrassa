@@ -7,3 +7,5 @@ export function BedOccupancyWidget(props: any) {
     </div>
   );
 }
+
+export default BedOccupancyWidget;
