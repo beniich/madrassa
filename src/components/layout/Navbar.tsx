@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, GraduationCap, Sparkles } from "lucide-react";
+import { LanguageSwitcher } from "../common/LanguageSwitcher";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,7 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <LanguageSwitcher />
             <a href="/login">
               <Button variant="ghost">Connexion</Button>
             </a>
@@ -78,6 +80,10 @@ const Navbar = () => {
                   {link.name}
                 </a>
               ))}
+              <div className="flex items-center justify-between py-2 px-1 border-t border-border">
+                <span className="text-sm font-medium text-muted-foreground">Langue</span>
+                <LanguageSwitcher />
+              </div>
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
                 <a href="/login" className="w-full">
                   <Button variant="ghost" className="w-full">Connexion</Button>

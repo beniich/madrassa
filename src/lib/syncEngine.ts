@@ -187,11 +187,15 @@ class SyncEngine {
             await this.updateEntitySyncStatus(action.entity, action.entityId, 'synced');
 
         } catch (error) {
+            const nextRetryCount = action.retryCount + 1;
+            const status = nextRetryCount >= this.maxRetries ? 'error' : 'pending';
+            
             await db.syncActions.update(action.id!, {
-                status: 'error',
-                retryCount: action.retryCount + 1,
+                status,
+                retryCount: nextRetryCount,
                 errorMessage: String(error),
             });
+            console.error(`[SyncEngine] Action ${action.id} failed (Attempt ${nextRetryCount}/${this.maxRetries}):`, error);
             throw error;
         }
     }

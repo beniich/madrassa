@@ -47,7 +47,7 @@ class PaymentService {
           id: 'pi_demo_' + Math.random().toString(36).substr(2, 9),
           clientSecret: 'pi_demo_secret_' + Math.random().toString(36).substr(2, 9),
           amount: 49900,
-          currency: 'mad'
+          currency: 'usd'
         };
       }
 
@@ -58,7 +58,7 @@ class PaymentService {
         id: 'pi_demo_' + Math.random().toString(36).substr(2, 9),
         clientSecret: 'pi_demo_secret_' + Math.random().toString(36).substr(2, 9),
         amount: 49900,
-        currency: 'mad'
+        currency: 'usd'
       };
     }
   }

@@ -188,7 +188,7 @@ export const Dashboard = () => {
         />
         <StatCard 
           title="REVENUS ESTIMÉS" 
-          value={`${revenue}€`} 
+          value={`${revenue} $`} 
           sub="Balance financière" 
           change={15} 
           up={false} 

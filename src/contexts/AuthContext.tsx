@@ -34,6 +34,7 @@ interface AuthContextType {
     isLoading: boolean;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<boolean>;
+    signInWithGoogle: () => Promise<void>;
     logout: () => void;
     hasPermission: (permission: Permission) => boolean;
 }
@@ -140,6 +141,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const signInWithGoogle = async () => {
+        try {
+            const { signInWithPopup } = await import('firebase/auth');
+            const { googleProvider } = await import('../lib/firebase');
+            await signInWithPopup(auth, googleProvider);
+        } catch (error) {
+            console.error('[Auth] Google sign in failed:', error);
+            throw error;
+        }
+    };
+
     const logout = async () => {
         try {
             await signOut(auth);
@@ -161,6 +173,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 isLoading,
                 isAuthenticated: !!user,
                 login,
+                signInWithGoogle,
                 logout,
                 hasPermission,
             }}

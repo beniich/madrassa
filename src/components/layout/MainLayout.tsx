@@ -7,6 +7,7 @@
 import { useState, ReactNode } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { SyncStatusBanner } from '../dashboard/SyncStatusBanner';
 
 interface MainLayoutProps {
   children: ReactNode;
@@ -32,6 +33,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           {children}
         </div>
       </main>
+
+      <SyncStatusBanner />
     </div>
   );
 };

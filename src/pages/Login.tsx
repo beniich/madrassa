@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { GraduationCap, Loader2, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
+import { LanguageSwitcher } from '@/components/common/LanguageSwitcher';
 
 const Login: React.FC = () => {
     const navigate = useNavigate();
@@ -57,6 +58,11 @@ const Login: React.FC = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 p-4">
             <div className="absolute inset-0 bg-black/10" />
+            
+            {/* Top Bar with Language Switcher */}
+            <div className="absolute top-4 right-4 z-20">
+                <LanguageSwitcher />
+            </div>
 
             {/* Login Card */}
             <Card className="relative z-10 w-full max-w-md shadow-2xl">

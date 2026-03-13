@@ -21,8 +21,11 @@ import {
     Coins,
     ChevronRight,
     ArrowUpRight,
-    LucideIcon
+    LucideIcon,
+    Sparkles
 } from "lucide-react";
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
@@ -51,6 +54,19 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
 
     const handlePrint = () => {
         window.print();
+    };
+
+    const handleDownloadPDF = async () => {
+        if (!printRef.current) return;
+        const canvas = await html2canvas(printRef.current, { scale: 2 });
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`recu_${invoice.localId.substring(0, 8)}.pdf`);
+        toast.success("PDF généré avec succès !");
     };
 
     return (
@@ -98,18 +114,18 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
                         <div className="h-px bg-gray-200 w-full opacity-50"></div>
                         <div className="flex justify-between text-sm">
                             <span className="text-gray-600 font-black italic">Frais de scolarité - T1</span>
-                            <span className="font-black text-gray-900">{invoice.amount.toLocaleString()} DH</span>
+                            <span className="font-black text-gray-900">{invoice.amount.toLocaleString()} $</span>
                         </div>
                         <div className="flex justify-between text-sm">
                             <span className="text-gray-600 font-black italic">Activités Para-scolaires</span>
-                            <span className="font-black text-gray-900">0 DH</span>
+                            <span className="font-black text-gray-900">0 $</span>
                         </div>
                         <div className="h-2 bg-gray-200/50 w-full rounded-full overflow-hidden">
                              <div className="h-full bg-purple-600 w-1/3"></div>
                         </div>
                         <div className="flex justify-between text-2xl font-black text-purple-700 tracking-tighter pt-2">
                             <span>TOTAL</span>
-                            <span>{invoice.amount.toLocaleString()} DH</span>
+                            <span>{invoice.amount.toLocaleString()} $</span>
                         </div>
                     </div>
 
@@ -127,7 +143,10 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
                     <Button variant="ghost" className="flex-1 h-12 rounded-2xl font-black text-xs uppercase tracking-widest" onClick={onClose}>
                         FERMER
                     </Button>
-                    <Button className="flex-1 h-12 rounded-2xl bg-gray-900 hover:bg-black text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-gray-200" onClick={handlePrint}>
+                    <Button className="flex-1 h-12 rounded-2xl bg-gray-900 hover:bg-black text-white font-black text-xs uppercase tracking-widest gap-2 shadow-xl shadow-gray-200" onClick={handleDownloadPDF}>
+                        <Download className="h-4 w-4" /> PDF
+                    </Button>
+                    <Button className="flex-1 h-12 rounded-2xl bg-primary hover:bg-primary/90 text-[#222222] font-black text-xs uppercase tracking-widest gap-2" onClick={handlePrint}>
                         <Printer className="h-4 w-4" /> IMPRIMER
                     </Button>
                 </div>
@@ -153,8 +172,8 @@ const InvoicingPage = () => {
 
     // Stats réelles basées sur les données
     const stats = [
-      { id: '1', title: "CA Annuel", value: "145,000 DH", icon: DollarSign, trend: "+12%", trendUp: true, color: "text-blue-600", bg: "bg-blue-50" },
-      { id: '2', title: "En attente", value: "24,500 DH", icon: AlertCircle, trend: "-5%", trendUp: false, color: "text-amber-600", bg: "bg-amber-50" },
+      { id: '1', title: "CA Annuel", value: "145,000 $", icon: DollarSign, trend: "+12%", trendUp: true, color: "text-blue-600", bg: "bg-blue-50" },
+      { id: '2', title: "En attente", value: "24,500 $", icon: AlertCircle, trend: "-5%", trendUp: false, color: "text-amber-600", bg: "bg-amber-50" },
       { id: '3', title: "Recouvrement", value: "92%", icon: TrendingUp, trend: "+3%", trendUp: true, color: "text-emerald-600", bg: "bg-emerald-50" },
     ];
 
@@ -340,7 +359,7 @@ const InvoicingPage = () => {
                                             {new Date(inv.dueDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
                                         </td>
                                         <td className="px-8 py-6">
-                                            <span className="text-lg font-black text-gray-900 italic tracking-tighter">{inv.amount.toLocaleString()} DH</span>
+                                            <span className="text-lg font-black text-gray-900 italic tracking-tighter">{inv.amount.toLocaleString()} $</span>
                                         </td>
                                         <td className="px-8 py-6 text-center">
                                             <Badge className={cn(
@@ -380,8 +399,12 @@ const InvoicingPage = () => {
                                                 <Button 
                                                     variant="ghost" 
                                                     size="icon" 
-                                                    title="Télécharger"
+                                                    title="Télécharger PDF"
                                                     className="h-10 w-10 rounded-xl text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg"
+                                                    onClick={() => {
+                                                        setCurrentInvoice(inv);
+                                                        setShowReceipt(true);
+                                                    }}
                                                 >
                                                     <Download className="h-4 w-4" />
                                                 </Button>
@@ -471,7 +494,7 @@ const InvoicingPage = () => {
                         <div className="p-8 bg-gray-900 rounded-[2rem] flex flex-col items-center justify-center space-y-1 relative overflow-hidden">
                             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/20 to-transparent"></div>
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-500 relative z-10">SOLDE À RÉGLER</span>
-                            <span className="text-4xl font-black text-white italic tracking-tighter relative z-10">{currentInvoice.amount.toLocaleString()} DH</span>
+                            <span className="text-4xl font-black text-white italic tracking-tighter relative z-10">{currentInvoice.amount.toLocaleString()} $</span>
                         </div>
 
                         <div className="grid grid-cols-2 gap-6">
@@ -553,7 +576,7 @@ const InvoicingPage = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">Valeur Nominale (DH)</label>
+                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">Valeur Nominale ($)</label>
                                         <Input type="number" placeholder="0.00" className="h-14 bg-gray-50 border-none rounded-2xl font-black italic text-sm px-6" />
                                     </div>
                                 </div>

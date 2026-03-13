@@ -28,7 +28,7 @@ export const Pricing: React.FC = () => {
               <CardTitle className="text-2xl font-black uppercase tracking-tight text-gray-900">Starter</CardTitle>
               <CardDescription className="text-gray-500 font-bold text-xs uppercase tracking-widest mt-2">Pour les petites écoles</CardDescription>
               <div className="mt-6 flex justify-center items-baseline text-gray-900">
-                <span className="text-5xl font-black italic tracking-tighter">0 MAD</span>
+                <span className="text-5xl font-black italic tracking-tighter">0 $</span>
                 <span className="text-gray-500 ml-1 text-sm font-bold">/mois</span>
               </div>
             </CardHeader>
@@ -62,7 +62,7 @@ export const Pricing: React.FC = () => {
               <CardTitle className="text-2xl font-black uppercase tracking-tight text-white">Pro</CardTitle>
               <CardDescription className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-2">Pour les écoles moyennes</CardDescription>
               <div className="mt-6 flex justify-center items-baseline text-white">
-                <span className="text-5xl font-black italic tracking-tighter text-primary">499 MAD</span>
+                <span className="text-5xl font-black italic tracking-tighter text-primary">499 $</span>
                 <span className="text-gray-400 ml-1 text-sm font-bold">/mois</span>
               </div>
             </CardHeader>

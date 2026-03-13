@@ -2,26 +2,10 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Clock, CheckCircle2, XCircle, AlertCircle, Plus, ChevronRight, PieChart, BarChart2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, CheckCircle2, XCircle, AlertCircle, Plus, ChevronRight, PieChart, BarChart2, Loader2 } from 'lucide-react';
 import { ResponsiveContainer, PieChart as RePieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
-
-interface LeaveRequest {
-    id: string;
-    employee: string;
-    type: string;
-    startDate: string;
-    endDate: string;
-    days: number;
-    status: 'pending' | 'approved' | 'rejected';
-    department: string;
-}
-
-const mockRequests: LeaveRequest[] = [
-    { id: '1', employee: 'Sanae Rami', type: 'Congé Annuel', startDate: '2026-04-15', endDate: '2026-04-30', days: 12, status: 'pending', department: 'Administration' },
-    { id: '2', employee: 'Omar Tazi', type: 'Maladie', startDate: '2026-03-10', endDate: '2026-03-12', days: 2, status: 'approved', department: 'Sciences' },
-    { id: '3', employee: 'Nadia Alaoui', type: 'Maternité', startDate: '2026-05-01', endDate: '2026-08-01', days: 90, status: 'approved', department: 'Mathématiques' },
-    { id: '4', employee: 'Hassan Chraibi', type: 'Sans Solde', startDate: '2026-03-25', endDate: '2026-03-27', days: 3, status: 'rejected', department: 'Informatique' },
-];
+import { hrService, LeaveRequest } from '@/services/hrService';
+import { toast } from 'sonner';
 
 const LEAVE_TYPES = [
     { name: 'Annuel', value: 45 },
@@ -43,7 +27,34 @@ const MONTHLY_ABSENCE = [
 const COLORS = ['#FFCD00', '#222222', '#FACC15', '#454545', '#71717A'];
 
 export const LeaveManagement: React.FC = () => {
-    const [requests, setRequests] = useState<LeaveRequest[]>(mockRequests);
+    const [requests, setRequests] = useState<LeaveRequest[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    React.useEffect(() => {
+        loadRequests();
+    }, []);
+
+    const loadRequests = async () => {
+        setIsLoading(true);
+        try {
+            const data = await hrService.getLeaveRequests();
+            setRequests(data);
+        } catch (error) {
+            toast.error("Erreur lors du chargement des demandes");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleUpdateStatus = async (id: string, status: 'approved' | 'rejected') => {
+        try {
+            await hrService.updateLeaveStatus(id, status);
+            toast.success(`Demande ${status === 'approved' ? 'approuvée' : 'refusée'}`);
+            loadRequests();
+        } catch (error) {
+            toast.error("Erreur lors de la mise à jour");
+        }
+    };
 
     const getStatusStyle = (status: string) => {
         switch (status) {
@@ -158,56 +169,78 @@ export const LeaveManagement: React.FC = () => {
                     </div>
                 </div>
                 <div className="divide-y divide-gray-50">
-                    {requests.map((req) => (
-                        <div key={req.id} className="p-6 hover:bg-gray-50/50 transition-colors flex items-center justify-between group">
-                            <div className="flex items-center gap-6 flex-1">
-                                <div className="hidden sm:flex flex-col items-center justify-center p-3 bg-gray-50 rounded-2xl border border-gray-100 min-w-[80px]">
-                                    <span className="text-2xl font-black italic text-gray-900 leading-none">{req.days}</span>
-                                    <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Jours</span>
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-1.5">
-                                        <h4 className="font-black italic text-gray-900 text-lg">{req.employee}</h4>
-                                        <Badge variant="outline" className="border-gray-200 text-gray-500 font-bold text-[10px] uppercase tracking-widest bg-white">
-                                            {req.department}
-                                        </Badge>
-                                    </div>
-                                    <div className="flex items-center gap-5 text-xs">
-                                        <div className="flex items-center gap-1.5 text-gray-500 font-bold">
-                                            <AlertCircle className="w-3.5 h-3.5 text-gray-400" />
-                                            {req.type}
-                                        </div>
-                                        <div className="flex items-center gap-1.5 text-gray-500 font-bold">
-                                            <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
-                                            {new Date(req.startDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })} 
-                                            <span className="text-gray-300 mx-1">→</span> 
-                                            {new Date(req.endDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-6">
-                                <div className="flex flex-col items-end gap-2">
-                                    <div className="flex items-center gap-2">
-                                        <StatusIcon status={req.status} />
-                                        <Badge className={getStatusStyle(req.status)}>
-                                            {req.status === 'approved' ? 'Approuvé' : req.status === 'pending' ? 'En Attente' : 'Refusé'}
-                                        </Badge>
-                                    </div>
-                                    {req.status === 'pending' && (
-                                        <div className="flex gap-2">
-                                            <button className="text-[10px] font-black uppercase tracking-widest text-[#222222] hover:text-emerald-600 transition-colors underline decoration-2 underline-offset-4">Approuver</button>
-                                            <span className="text-gray-300">•</span>
-                                            <button className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors">Refuser</button>
-                                        </div>
-                                    )}
-                                </div>
-                                <button aria-label="Voir les détails" className="w-10 h-10 rounded-xl bg-gray-50 hover:bg-primary hover:text-white text-gray-400 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
-                            </div>
+                    {isLoading ? (
+                        <div className="flex flex-col items-center justify-center py-20 gap-4">
+                            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+                            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Accès Cloud RH...</p>
                         </div>
-                    ))}
+                    ) : requests.length === 0 ? (
+                        <div className="text-center py-20">
+                            <AlertCircle className="w-12 h-12 text-gray-200 mx-auto mb-4" />
+                            <p className="text-gray-500 font-bold italic tracking-tighter">Aucune demande détectée</p>
+                        </div>
+                    ) : (
+                        requests.map((req) => (
+                            <div key={req.id} className="p-6 hover:bg-gray-50/50 transition-colors flex items-center justify-between group">
+                                <div className="flex items-center gap-6 flex-1">
+                                    <div className="hidden sm:flex flex-col items-center justify-center p-3 bg-gray-50 rounded-2xl border border-gray-100 min-w-[80px]">
+                                        <span className="text-2xl font-black italic text-gray-900 leading-none">{req.days}</span>
+                                        <span className="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Jours</span>
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-center gap-3 mb-1.5">
+                                            <h4 className="font-black italic text-gray-900 text-lg">{req.employee}</h4>
+                                            <Badge variant="outline" className="border-gray-200 text-gray-500 font-bold text-[10px] uppercase tracking-widest bg-white">
+                                                {req.department}
+                                            </Badge>
+                                        </div>
+                                        <div className="flex items-center gap-5 text-xs">
+                                            <div className="flex items-center gap-1.5 text-gray-500 font-bold">
+                                                <AlertCircle className="w-3.5 h-3.5 text-gray-400" />
+                                                {req.type}
+                                            </div>
+                                            <div className="flex items-center gap-1.5 text-gray-500 font-bold">
+                                                <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
+                                                {new Date(req.startDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })} 
+                                                <span className="text-gray-300 mx-1">→</span> 
+                                                {new Date(req.endDate).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-4 lg:gap-6">
+                                    <div className="flex flex-col items-end gap-2">
+                                        <div className="flex items-center gap-2">
+                                            <StatusIcon status={req.status} />
+                                            <Badge className={getStatusStyle(req.status)}>
+                                                {req.status === 'approved' ? 'Approuvé' : req.status === 'pending' ? 'En Attente' : 'Refusé'}
+                                            </Badge>
+                                        </div>
+                                        {req.status === 'pending' && (
+                                            <div className="flex gap-2">
+                                                <button 
+                                                    onClick={() => handleUpdateStatus(req.id, 'approved')}
+                                                    className="text-[10px] font-black uppercase tracking-widest text-[#222222] hover:text-emerald-600 transition-colors underline decoration-2 underline-offset-4"
+                                                >
+                                                    Approuver
+                                                </button>
+                                                <span className="text-gray-300">•</span>
+                                                <button 
+                                                    onClick={() => handleUpdateStatus(req.id, 'rejected')}
+                                                    className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-rose-500 transition-colors"
+                                                >
+                                                    Refuser
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <button aria-label="Voir les détails" className="w-10 h-10 rounded-xl bg-gray-50 hover:bg-primary hover:text-white text-gray-400 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                        <ChevronRight className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
                 <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
                     <button className="text-[10px] font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">

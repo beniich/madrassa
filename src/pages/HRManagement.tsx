@@ -9,20 +9,39 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
-    Search, 
-    Plus, 
-    MoreVertical, 
-    Folder, 
-    File, 
-    Download, 
-    Trash2, 
-    Share2, 
-    Filter,
-    ArrowUpDown
+    ArrowUpDown,
+    Loader2
 } from 'lucide-react';
+import { documentsService, SchoolFolder, SchoolFile } from '@/services/documentsService';
+import { toast } from 'sonner';
 
 const HRManagement: React.FC = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
+    const [folders, setFolders] = useState<SchoolFolder[]>([]);
+    const [recentFiles, setRecentFiles] = useState<SchoolFile[]>([]);
+    const [isLoadingDocs, setIsLoadingDocs] = useState(false);
+
+    React.useEffect(() => {
+        if (activeTab === 'documents') {
+            loadDocuments();
+        }
+    }, [activeTab]);
+
+    const loadDocuments = async () => {
+        setIsLoadingDocs(true);
+        try {
+            const [f, recents] = await Promise.all([
+                documentsService.getFolders(),
+                documentsService.getFiles('folder-général') // Mocking a default view for recents
+            ]);
+            setFolders(f);
+            setRecentFiles(recents);
+        } catch (error) {
+            toast.error("Erreur documents");
+        } finally {
+            setIsLoadingDocs(false);
+        }
+    };
 
     return (
         <div className="container mx-auto max-w-7xl py-8 px-4 space-y-8">
@@ -97,24 +116,29 @@ const HRManagement: React.FC = () => {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                            {[
-                                { name: "Contrats de travail", count: 142, icon: Folder, color: "text-blue-500", bg: "bg-blue-50" },
-                                { name: "Bulletins de paie", count: 865, icon: Folder, color: "text-amber-500", bg: "bg-amber-50" },
-                                { name: "Certificats médicaux", count: 28, icon: Folder, color: "text-red-500", bg: "bg-red-50" },
-                                { name: "Formations & Diplômes", count: 94, icon: Folder, color: "text-emerald-500", bg: "bg-emerald-50" },
-                            ].map((folder, idx) => (
-                                <Card key={idx} className="border-gray-100 hover:border-primary/20 hover:shadow-md transition-all cursor-pointer group rounded-2xl">
-                                    <CardContent className="p-4 flex items-center gap-4">
-                                        <div className={`w-12 h-12 ${folder.bg} rounded-xl flex items-center justify-center transition-transform group-hover:scale-110`}>
-                                            <folder.icon className={`w-6 h-6 ${folder.color}`} />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-black italic text-sm tracking-tighter">{folder.name}</h4>
-                                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.count} fichiers</p>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
+                            {isLoadingDocs ? (
+                                <div className="col-span-full py-10 flex justify-center">
+                                    <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                                </div>
+                            ) : folders.length === 0 ? (
+                                <div className="col-span-full p-8 text-center bg-gray-50 rounded-2xl text-gray-400 font-bold italic">
+                                    Aucun dossier structuré
+                                </div>
+                            ) : (
+                                folders.map((folder, idx) => (
+                                    <Card key={folder.id} className="border-gray-100 hover:border-primary/20 hover:shadow-md transition-all cursor-pointer group rounded-2xl">
+                                        <CardContent className="p-4 flex items-center gap-4">
+                                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center transition-transform group-hover:scale-110">
+                                                <Folder className="w-6 h-6 text-primary" />
+                                            </div>
+                                            <div>
+                                                <h4 className="font-black italic text-sm tracking-tighter truncate w-32">{folder.name}</h4>
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} fichiers</p>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                ))
+                            )}
                         </div>
 
                         <Card className="border-gray-100 rounded-3xl overflow-hidden shadow-sm">
@@ -141,14 +165,8 @@ const HRManagement: React.FC = () => {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-50">
-                                            {[
-                                                { name: "Contrat_Ahmed_Benali.pdf", owner: "Ahmed Benali", date: "Il y a 2h", size: "1.2 MB" },
-                                                { name: "Bulletin_Mars_2026.pdf", owner: "Système", date: "Aujourd'hui", size: "450 KB" },
-                                                { name: "Certificat_Medical_Sophie.jpg", owner: "Sophie Martin", date: "Hier", size: "2.8 MB" },
-                                                { name: "Diplome_Master_Youssef.pdf", owner: "Youssef Alaoui", date: "10 Mars 2026", size: "5.4 MB" },
-                                                { name: "Reglement_Interieur_V2.pdf", owner: "Direction", date: "08 Mars 2026", size: "860 KB" },
-                                            ].map((file, idx) => (
-                                                <tr key={idx} className="hover:bg-gray-50/50 transition-colors group">
+                                            {recentFiles.map((file) => (
+                                                <tr key={file.id} className="hover:bg-gray-50/50 transition-colors group">
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center gap-3">
                                                             <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
@@ -165,7 +183,7 @@ const HRManagement: React.FC = () => {
                                                             <span className="text-xs font-bold text-gray-500">{file.owner}</span>
                                                         </div>
                                                     </td>
-                                                    <td className="px-6 py-4 text-xs font-bold text-gray-400">{file.date}</td>
+                                                    <td className="px-6 py-4 text-xs font-bold text-gray-400">{file.updatedAt}</td>
                                                     <td className="px-6 py-4 text-xs font-bold text-gray-400">{file.size}</td>
                                                     <td className="px-6 py-4 text-right">
                                                         <div className="flex justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -175,7 +193,12 @@ const HRManagement: React.FC = () => {
                                                             <Button variant="ghost" size="icon" className="w-8 h-8 text-gray-400 hover:text-primary">
                                                                 <Share2 className="w-4 h-4" />
                                                             </Button>
-                                                            <Button variant="ghost" size="icon" className="w-8 h-8 text-gray-400 hover:text-red-500">
+                                                            <Button 
+                                                                variant="ghost" 
+                                                                size="icon" 
+                                                                onClick={() => documentsService.deleteDocument(file.id).then(loadDocuments)}
+                                                                className="w-8 h-8 text-gray-400 hover:text-red-500"
+                                                            >
                                                                 <Trash2 className="w-4 h-4" />
                                                             </Button>
                                                         </div>

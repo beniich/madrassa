@@ -1,9 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Search, Plus, Eye, Edit, Trash2, Mail, Phone, Calendar, Briefcase, MapPin, X, ChevronRight, User } from 'lucide-react';
+import { Search, Plus, Eye, Edit, Trash2, Mail, Phone, Calendar, Briefcase, MapPin, X, ChevronRight, User, Loader2, FileText } from 'lucide-react';
+import { hrService, HRMember } from '@/services/hrService';
+import { toast } from 'sonner';
 
 interface Employee {
     id: string;
@@ -20,30 +22,41 @@ interface Employee {
 }
 
 // Données mockées étendues
-const mockEmployees: Employee[] = [
-    { id: '1', name: 'Ahmed Benali', role: 'Enseignant Principal', department: 'Mathématiques', email: 'ahmed@school.com', phone: '+212 6 12 34 56 78', status: 'active', joinDate: '2023-01-15', avatar: 'AB', address: '123 Rue de la Paix, Casablanca', contractType: 'CDI' },
-    { id: '2', name: 'Fatima Zahra', role: 'Professeur', department: 'Français', email: 'fatima@school.com', phone: '+212 6 23 45 67 89', status: 'active', joinDate: '2022-09-01', avatar: 'FZ', address: '45 Avenue Hassan II, Rabat', contractType: 'CDD' },
-    { id: '3', name: 'Youssef Alami', role: 'Directeur Adjoint', department: 'Administration', email: 'youssef@school.com', phone: '+212 6 34 56 78 90', status: 'active', joinDate: '2021-03-20', avatar: 'YA', address: '8 Bd Zerktouni, Marrakech', contractType: 'CDI' },
-    { id: '4', name: 'Samira Idrissi', role: 'Enseignante', department: 'Sciences', email: 'samira@school.com', phone: '+212 6 45 67 89 01', status: 'onLeave', joinDate: '2023-06-10', avatar: 'SI', address: 'Résidence les Fleurs, Tanger', contractType: 'CDD' },
-    { id: '5', name: 'Karim Bennani', role: 'Enseignant', department: 'Informatique', email: 'karim@school.com', phone: '+212 6 56 78 90 12', status: 'active', joinDate: '2022-11-05', avatar: 'KB', address: 'Quartier des Hôpitaux, Fès', contractType: 'CDI' },
-];
-
 export const EmployeeList: React.FC = () => {
+    const [employees, setEmployees] = useState<HRMember[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterDepartment, setFilterDepartment] = useState('all');
     const [filterStatus, setFilterStatus] = useState('all');
-    const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
+    const [selectedEmployee, setSelectedEmployee] = useState<HRMember | null>(null);
+
+    React.useEffect(() => {
+        loadEmployees();
+    }, []);
+
+    const loadEmployees = async () => {
+        setIsLoading(true);
+        try {
+            const data = await hrService.getHRMembers();
+            setEmployees(data);
+        } catch (error) {
+            toast.error("Erreur lors du chargement du staff");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     // Filtrage des données
     const filteredEmployees = useMemo(() => {
-        return mockEmployees.filter((emp) => {
-            const matchesSearch = emp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        return employees.filter((emp) => {
+            const fullName = `${emp.firstName} ${emp.lastName}`.toLowerCase();
+            const matchesSearch = fullName.includes(searchTerm.toLowerCase()) ||
                 emp.email.toLowerCase().includes(searchTerm.toLowerCase());
-            const matchesDepartment = filterDepartment === 'all' || emp.department === filterDepartment;
+            const matchesDepartment = filterDepartment === 'all' || emp.subject === filterDepartment;
             const matchesStatus = filterStatus === 'all' || emp.status === filterStatus;
             return matchesSearch && matchesDepartment && matchesStatus;
         });
-    }, [searchTerm, filterDepartment, filterStatus]);
+    }, [employees, searchTerm, filterDepartment, filterStatus]);
 
     const getStatusStyle = (status: string) => {
         switch (status) {
@@ -140,17 +153,16 @@ export const EmployeeList: React.FC = () => {
                                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-black text-lg transition-transform group-hover:scale-105 shadow-inner ${
                                         selectedEmployee?.id === emp.id ? 'bg-primary text-[#222222]' : 'bg-gray-100 text-gray-600'
                                     }`}>
-                                        {emp.avatar || emp.name.charAt(0)}
+                                        {emp.photo || emp.firstName.charAt(0) + emp.lastName.charAt(0)}
                                     </div>
                                     <div className="min-w-0 flex-1">
                                         <div className="flex items-center gap-3 mb-1">
-                                            <h3 className="font-black italic text-gray-900 truncate">{emp.name}</h3>
+                                            <h3 className="font-black italic text-gray-900 truncate">{emp.firstName} {emp.lastName}</h3>
                                             <Badge className={getStatusStyle(emp.status)}>{getStatusLabel(emp.status)}</Badge>
                                         </div>
                                         <div className="flex items-center gap-4 text-xs font-bold text-gray-500 truncate mt-0.5">
-                                            <span className="flex items-center gap-1"><Briefcase className="w-3 h-3 text-gray-300" /> {emp.role}</span>
+                                            <span className="flex items-center gap-1"><Briefcase className="w-3 h-3 text-gray-300" /> {emp.subject}</span>
                                             <span className="w-1 h-1 rounded-full bg-gray-300 hidden sm:block"></span>
-                                            <span className="flex items-center gap-1 hidden sm:flex"><MapPin className="w-3 h-3 text-gray-300" /> {emp.department}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -191,10 +203,10 @@ export const EmployeeList: React.FC = () => {
                     <div className="flex-1 overflow-auto p-8">
                         <div className="text-center mb-10">
                             <div className="w-24 h-24 mx-auto bg-primary rounded-[2rem] flex items-center justify-center font-black text-4xl text-[#222222] shadow-[0_0_30px_rgba(255,205,0,0.3)] mb-6 -rotate-3 transition-transform hover:rotate-0">
-                                {selectedEmployee.avatar || selectedEmployee.name.charAt(0)}
+                                {selectedEmployee.photo || selectedEmployee.firstName.charAt(0) + selectedEmployee.lastName.charAt(0)}
                             </div>
-                            <h2 className="text-2xl font-black italic tracking-tighter text-gray-900 leading-none mb-2">{selectedEmployee.name}</h2>
-                            <p className="text-primary font-black uppercase text-[10px] tracking-widest">{selectedEmployee.role}</p>
+                            <h2 className="text-2xl font-black italic tracking-tighter text-gray-900 leading-none mb-2">{selectedEmployee.firstName} {selectedEmployee.lastName}</h2>
+                            <p className="text-primary font-black uppercase text-[10px] tracking-widest">{selectedEmployee.subject}</p>
                             <div className="mt-4 flex justify-center">
                                 <Badge className={getStatusStyle(selectedEmployee.status)}>{getStatusLabel(selectedEmployee.status)}</Badge>
                             </div>
@@ -239,13 +251,13 @@ export const EmployeeList: React.FC = () => {
                             <div>
                                 <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Profil Professionnel</h4>
                                 <div className="space-y-4">
-                                     <div className="flex items-center gap-4 group">
+                                    <div className="flex items-center gap-4 group">
                                         <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-[#222222] transition-colors">
                                             <Briefcase className="w-4 h-4 text-gray-400 group-hover:text-primary transition-colors" />
                                         </div>
                                         <div>
-                                            <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Département</p>
-                                            <p className="text-sm font-bold text-gray-900">{selectedEmployee.department}</p>
+                                            <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Matière / Rôle</p>
+                                            <p className="text-sm font-bold text-gray-900">{selectedEmployee.subject}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4 group">
@@ -255,7 +267,7 @@ export const EmployeeList: React.FC = () => {
                                         <div>
                                             <p className="text-[10px] uppercase font-black text-gray-400 tracking-widest leading-none mb-1">Date d'embauche</p>
                                             <p className="text-sm font-bold text-gray-900">
-                                                {new Date(selectedEmployee.joinDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                                                {new Date(selectedEmployee.hireDate).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
                                             </p>
                                         </div>
                                     </div>

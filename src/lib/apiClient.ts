@@ -6,7 +6,9 @@
  * - Base URL configurable via env variable
  */
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5000/api';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? (import.meta.env.PROD 
+    ? (console.warn('[API] VITE_API_BASE_URL is missing in production! Fallback used.'), 'http://localhost:5000/api')
+    : 'http://localhost:5000/api');
 
 // ─────────────────────────────────────────
 // Helpers

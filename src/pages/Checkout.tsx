@@ -22,9 +22,9 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
 
   const getPlanDetails = () => {
     switch (plan) {
-      case 'pro': return { id: 'price_pro', name: 'Pro', price: '499 MAD', features: ['Élèves illimités', 'IA avancée', 'Support prioritaire'] };
+      case 'pro': return { id: 'price_pro', name: 'Pro', price: '499 $', features: ['Élèves illimités', 'IA avancée', 'Support prioritaire'] };
       case 'enterprise': return { id: 'price_enterprise', name: 'Institution', price: 'Sur devis', features: ['Multi-établissements', 'Dev sur-mesure', 'Support 24/7'] };
-      default: return { id: 'price_free', name: 'Starter', price: '0 MAD', features: ['Jusqu\'à 100 élèves', 'Gestion des absences', 'Notes et bulletins'] };
+      default: return { id: 'price_free', name: 'Starter', price: '0 $', features: ['Jusqu\'à 100 élèves', 'Gestion des absences', 'Notes et bulletins'] };
     }
   };
 

@@ -23,9 +23,9 @@ const FinanceModule = () => {
         {/* Stats Summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { title: "Revenu Total", amount: "42,500€", trend: "+12.5%", icon: TrendingUp, color: "text-emerald-600", bg: "bg-emerald-50", arrow: ArrowUpRight },
-            { title: "Dépenses", amount: "18,200€", trend: "-2.4%", icon: TrendingDown, color: "text-rose-600", bg: "bg-rose-50", arrow: ArrowDownRight },
-            { title: "Bénéfice Net", amount: "24,300€", trend: "+8.1%", icon: DollarSign, color: "text-blue-600", bg: "bg-blue-50", arrow: ArrowUpRight },
+            { title: "Revenu Total", amount: "42,500 $", trend: "+12.5%", icon: TrendingUp, color: "text-emerald-600", bg: "bg-emerald-50", arrow: ArrowUpRight },
+            { title: "Dépenses", amount: "18,200 $", trend: "-2.4%", icon: TrendingDown, color: "text-rose-600", bg: "bg-rose-50", arrow: ArrowDownRight },
+            { title: "Bénéfice Net", amount: "24,300 $", trend: "+8.1%", icon: DollarSign, color: "text-blue-600", bg: "bg-blue-50", arrow: ArrowUpRight },
           ].map((stat, idx) => (
             <Card key={idx} className="border-none shadow-sm rounded-2xl overflow-hidden">
                <CardContent className="p-6">
@@ -78,11 +78,11 @@ const FinanceModule = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-50">
                     {[
-                      { desc: "Scolarité - Ahmed Benali", cat: "Revenu", date: "Aujourd'hui", amount: "+450€", status: "emerald" },
-                      { desc: "Loyer Local A", cat: "Dépense", date: "Hier", amount: "-1,200€", status: "rose" },
-                      { desc: "Frais Internet", cat: "Dépense", date: "10 Mar", amount: "-45€", status: "rose" },
-                      { desc: "Donation Fondation", cat: "Autre", date: "08 Mar", amount: "+500€", status: "blue" },
-                      { desc: "Salaire Personnel", cat: "Salaire", date: "05 Mar", amount: "-8,500€", status: "rose" },
+                      { desc: "Scolarité - Ahmed Benali", cat: "Revenu", date: "Aujourd'hui", amount: "+450 $", status: "emerald" },
+                      { desc: "Loyer Local A", cat: "Dépense", date: "Hier", amount: "-1,200 $", status: "rose" },
+                      { desc: "Frais Internet", cat: "Dépense", date: "10 Mar", amount: "-45 $", status: "rose" },
+                      { desc: "Donation Fondation", cat: "Autre", date: "08 Mar", amount: "+500 $", status: "blue" },
+                      { desc: "Salaire Personnel", cat: "Salaire", date: "05 Mar", amount: "-8,500 $", status: "rose" },
                     ].map((item, idx) => (
                       <tr key={idx} className="hover:bg-gray-50/50 transition-colors group">
                         <td className="px-6 py-4 font-black italic text-sm tracking-tighter text-slate-700">{item.desc}</td>
@@ -127,7 +127,7 @@ const FinanceModule = () => {
                 </div>
                 <div className="pt-2">
                   <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 mb-1">Reste à percevoir</p>
-                  <p className="text-xl font-black italic tracking-tighter font-mono">12,450.00€</p>
+                  <p className="text-xl font-black italic tracking-tighter font-mono">12,450.00 $</p>
                 </div>
                 <Button className="w-full bg-white text-indigo-600 hover:bg-indigo-50 font-black text-[10px] uppercase tracking-widest h-10 rounded-xl">
                   Voir prévisions
