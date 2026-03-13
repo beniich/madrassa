@@ -25,12 +25,23 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-popover', 'lucide-react'],
-          charts: ['recharts', 'chart.js', 'react-chartjs-2'],
-          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
-          stripe: ['@stripe/stripe-js', '@stripe/react-stripe-js']
+        manualChunks: (id) => {
+          // NEVER split react/react-dom/react-router — causes white pages
+          if (id.includes('node_modules/recharts') || id.includes('node_modules/chart.js') || id.includes('node_modules/react-chartjs-2')) {
+            return 'vendor-charts';
+          }
+          if (id.includes('node_modules/@stripe')) {
+            return 'vendor-stripe';
+          }
+          if (id.includes('node_modules/firebase')) {
+            return 'vendor-firebase';
+          }
+          if (id.includes('node_modules/ag-grid')) {
+            return 'vendor-aggrid';
+          }
+          if (id.includes('node_modules/lottie') || id.includes('node_modules/lottie-react')) {
+            return 'vendor-lottie';
+          }
         }
       }
     },
