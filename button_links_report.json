@@ -6,22 +6,40 @@
     "text": ""
   },
   {
-    "file": "src\\pages\\Attendance.tsx",
+    "file": "src\\pages\\Analytics.tsx",
     "type": "Button (onClick)",
-    "dest": "() => handleMark(record.studentId, record.classId, 'present')",
-    "text": "P"
+    "dest": "onClose",
+    "text": "S'APPROPRIER LES CONSEILS"
+  },
+  {
+    "file": "src\\pages\\Analytics.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n              toast.info(\"L'IA analyse les données actuelles...\");\r\n              setTimeout(() => setShowAIReport(true), 1500);",
+    "text": "{t('analytics.aiReport')}"
+  },
+  {
+    "file": "src\\pages\\Analytics.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleExport",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Analytics.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => toast.info(\"Ouverture du registre d'alertes IA...\")",
+    "text": "LOGS GÉNÉRAUX"
   },
   {
     "file": "src\\pages\\Attendance.tsx",
     "type": "Button (onClick)",
-    "dest": "() => handleMark(record.studentId, record.classId, 'late')",
-    "text": "R"
+    "dest": "toggleScanner",
+    "text": "{isScanning ? \"SCANNER ACTIF\" "
   },
   {
     "file": "src\\pages\\Attendance.tsx",
     "type": "Button (onClick)",
-    "dest": "() => handleMark(record.studentId, record.classId, 'absent')",
-    "text": "A"
+    "dest": "handleBatchMark",
+    "text": "TOUT PRÉSENT"
   },
   {
     "file": "src\\pages\\Communication.tsx",
@@ -36,10 +54,244 @@
     "text": "Classe"
   },
   {
+    "file": "src\\pages\\Contact.tsx",
+    "type": "a (Ancre)",
+    "dest": "mailto:contact@schoolgenius.fr",
+    "text": "contact@schoolgenius.fr"
+  },
+  {
+    "file": "src\\pages\\Contact.tsx",
+    "type": "a (Ancre)",
+    "dest": "tel:+33123456789",
+    "text": "01 23 45 67 89"
+  },
+  {
+    "file": "src\\pages\\Dashboard.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleAIScan",
+    "text": "Assistant IA\r\n                "
+  },
+  {
     "file": "src\\pages\\DashboardHome.tsx",
     "type": "Button (onClick)",
     "dest": "handleGenerateOfflineAlerts",
     "text": "Scanner anomalies (IA Offline)"
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => onView(doc.id)",
+    "text": "VOIR"
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => onDownload(doc.id)",
+    "text": "DL"
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowUpload(true)",
+    "text": "IMPORTER"
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setViewMode('grid')",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setViewMode('list')",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Documents.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => { setSelectedFolder('all'); setSearchQuery('');",
+    "text": "VOIR TOUT"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "onClose",
+    "text": "Annuler"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => window.print()",
+    "text": "IMPRIMER LE BULLETIN"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "onClose",
+    "text": "Annuler"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSave",
+    "text": "VALIDER LES NOTES"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowReportCard(true)",
+    "text": "Bulletins"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowNewExam(true)",
+    "text": "Nouvel Examen"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowNewExam(true)",
+    "text": "Ajouter un Examen"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                        setCurrentExam(exam);\r\n                                        setShowNotesEntry(true);",
+    "text": "SAISIR NOTES"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowNewExam(false)",
+    "text": "Annuler"
+  },
+  {
+    "file": "src\\pages\\Exams.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                    toast.success(\"Examen planifié avec succès !\");\r\n                                    setShowNewExam(false);",
+    "text": "CONFIRMER LA CRÉATION"
+  },
+  {
+    "file": "src\\pages\\GoogleSheetsPage.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleLoadSheet",
+    "text": "Charger la feuille"
+  },
+  {
+    "file": "src\\pages\\GoogleSheetsPage.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                    setActiveSheetUrl('');\r\n                                    setSheetUrl('');",
+    "text": "Réinitialiser"
+  },
+  {
+    "file": "src\\pages\\HRManagement.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => documentsService.deleteDocument(file.id).then(loadDocuments)",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "onClose",
+    "text": "FERMER"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleDownloadPDF",
+    "text": "PDF"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "handlePrint",
+    "text": "IMPRIMER"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => toast.info(\"Exportation du grand livre...\")",
+    "text": "RAPPORTS"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowNewInvoice(true)",
+    "text": "NOUVELLE FACTURE"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleOpenPayment(inv)",
+    "text": "PAYER"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                                            setCurrentInvoice(inv);\r\n                                                            setShowReceipt(true);",
+    "text": "REÇU"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                                        setCurrentInvoice(inv);\r\n                                                        setShowReceipt(true);",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => toast.info(\"Accès terminal d'encaissement...\")",
+    "text": "CASH EXPRESS"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => toast.info(\"Initialisation du scanner haute définition...\")",
+    "text": "SCAN CHÈQUE"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => toast.success(\"Rappels transmis via API multi-canal !\")",
+    "text": "ENVOYER LES NOTIFICATIONS"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowPaymentModal(false)",
+    "text": "ANNULER L'OPÉRATION"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowNewInvoice(false)",
+    "text": "ANNULER"
+  },
+  {
+    "file": "src\\pages\\Invoicing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => {\r\n                                    toast.success(\"Registre financier mis à jour !\", { icon: <SparklesIcon className=\"h-4 w-4 text-amber-500\" />",
+    "text": "CONFIRMER L'ÉMISSION"
+  },
+  {
+    "file": "src\\pages\\Login.tsx",
+    "type": "a (Ancre)",
+    "dest": "#",
+    "text": "{t('auth.login.termsLink')}"
+  },
+  {
+    "file": "src\\pages\\Login.tsx",
+    "type": "a (Ancre)",
+    "dest": "#",
+    "text": "{t('auth.login.privacyLink')}"
+  },
+  {
+    "file": "src\\pages\\Login.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleGoogleSignIn",
+    "text": "{isLoading ? (\r\n              "
   },
   {
     "file": "src\\pages\\modules\\AIAssistantModule.tsx",
@@ -78,22 +330,262 @@
     "text": "Return to Home"
   },
   {
-    "file": "src\\pages\\Settings.tsx",
+    "file": "src\\pages\\PowerBIDashboard.tsx",
     "type": "Button (onClick)",
-    "dest": "triggerFileInput",
-    "text": "{isUploadingLogo ? (\r\n        "
+    "dest": "handleLoadReport",
+    "text": "Charger le rapport"
+  },
+  {
+    "file": "src\\pages\\PowerBIDashboard.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowReport(false)",
+    "text": "Retour à la configuration"
+  },
+  {
+    "file": "src\\pages\\Pricing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleSelectPlan('starter')",
+    "text": "{t('pricing.starter.cta')}"
+  },
+  {
+    "file": "src\\pages\\Pricing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleSelectPlan('pro')",
+    "text": "{t('pricing.pro.cta')}"
+  },
+  {
+    "file": "src\\pages\\Pricing.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleSelectPlan('enterprise')",
+    "text": "{t('pricing.enterprise.cta')}"
+  },
+  {
+    "file": "src\\pages\\Profile.tsx",
+    "type": "Button (onClick)",
+    "dest": "logout",
+    "text": "QUITTER"
+  },
+  {
+    "file": "src\\pages\\Register.tsx",
+    "type": "a (Ancre)",
+    "dest": "/login",
+    "text": "{t('auth.register.login')}"
   },
   {
     "file": "src\\pages\\Settings.tsx",
     "type": "Button (onClick)",
-    "dest": "handleRemoveLogo",
-    "text": "{t('settings.removeLogo')}"
+    "dest": "() => setShowPresets(true)",
+    "text": "Préréglages"
   },
   {
     "file": "src\\pages\\Settings.tsx",
     "type": "Button (onClick)",
-    "dest": "handleSaveName",
-    "text": "{isSaving ? (\r\n               "
+    "dest": "() => importInputRef.current?.click()",
+    "text": "{t('settings.actions.import')}"
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSaveAll",
+    "text": "{isSaving ?  : saveSuccess ?  "
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => fileInputRef.current?.click()",
+    "text": "Changer"
+  },
+  {
+    "file": "src\\pages\\Settings.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => removeLogo().then(() => { setLogoPreview(''); refreshConfig();",
+    "text": "Supprimer"
+  },
+  {
+    "file": "src\\pages\\Students.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => document.getElementById('import-input')?.click()",
+    "text": "IMPORT"
+  },
+  {
+    "file": "src\\pages\\Students.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setShowAddModal(true)",
+    "text": "NOUVEL ÉLÈVE"
+  },
+  {
+    "file": "src\\pages\\Students.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleView(student.localId)",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Students.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleEdit(student.localId)",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Students.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleDeleteStudent(student.localId)",
+    "text": ""
+  },
+  {
+    "file": "src\\pages\\Teachers.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleOpenAdd",
+    "text": "NOUVEL AGENT"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleQuickAction('Résumer le dossier')",
+    "text": "Résumé"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleQuickAction('Vérifier les allergies')",
+    "text": "Allergies"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleQuickAction('Résumer le dossier patient')",
+    "text": "Résumer"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleQuickAction('Vérifier les allergies')",
+    "text": "Allergies"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleQuickAction('Suggérer une prescription')",
+    "text": "Prescription"
+  },
+  {
+    "file": "src\\components\\ai\\MedicalAIChat.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setMessages([{\r\n                            role: 'assistant',\r\n                            content: 'Conversation réinitialisée. Comment puis-je vous aider ?',\r\n                            timestamp: new Date()",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\ai-documents\\APIConfigPanel.tsx",
+    "type": "a (Ancre)",
+    "dest": "https://platform.openai.com/api-keys",
+    "text": "platform.openai.com/api-keys"
+  },
+  {
+    "file": "src\\components\\ai-documents\\APIConfigPanel.tsx",
+    "type": "a (Ancre)",
+    "dest": "https://console.anthropic.com/",
+    "text": "console.anthropic.com"
+  },
+  {
+    "file": "src\\components\\ai-documents\\APIConfigPanel.tsx",
+    "type": "a (Ancre)",
+    "dest": "https://makersuite.google.com/app/apikey",
+    "text": "makersuite.google.com/app/apik"
+  },
+  {
+    "file": "src\\components\\ai-documents\\APIConfigPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "saveConfig",
+    "text": "Sauvegarder"
+  },
+  {
+    "file": "src\\components\\ai-documents\\APIConfigPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "testConnection",
+    "text": "Tester"
+  },
+  {
+    "file": "src\\components\\ai-documents\\LetterAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "generateWithAI",
+    "text": "{loading ? '⏳ Génération...' :"
+  },
+  {
+    "file": "src\\components\\ai-documents\\LetterAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "improveLetter",
+    "text": "🚀 Améliorer"
+  },
+  {
+    "file": "src\\components\\ai-documents\\LetterAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "correctLetter",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\ai-documents\\LetterAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "saveLetter",
+    "text": "Sauvegarder"
+  },
+  {
+    "file": "src\\components\\ai-documents\\LetterAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "exportPDF",
+    "text": "Export PDF"
+  },
+  {
+    "file": "src\\components\\ai-documents\\PresentationAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "generateWithAI",
+    "text": "{loading ? '⏳ Génération...' :"
+  },
+  {
+    "file": "src\\components\\ai-documents\\PresentationAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "addSlideAI",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\ai-documents\\PresentationAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "savePresentation",
+    "text": "Sauvegarder"
+  },
+  {
+    "file": "src\\components\\ai-documents\\PresentationAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "updateSlides",
+    "text": "Actualiser"
+  },
+  {
+    "file": "src\\components\\ai-documents\\PresentationAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "exportPresentation",
+    "text": "Export"
+  },
+  {
+    "file": "src\\components\\ai-documents\\SpreadsheetAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "generateWithAI",
+    "text": "{loading ? '⏳ Génération...' :"
+  },
+  {
+    "file": "src\\components\\ai-documents\\SpreadsheetAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "addRow",
+    "text": "Ajouter ligne"
+  },
+  {
+    "file": "src\\components\\ai-documents\\SpreadsheetAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "saveSpreadsheet",
+    "text": "Sauvegarder"
+  },
+  {
+    "file": "src\\components\\ai-documents\\SpreadsheetAI.tsx",
+    "type": "Button (onClick)",
+    "dest": "exportCSV",
+    "text": "Export CSV"
   },
   {
     "file": "src\\components\\dashboard\\CenterPane.tsx",
@@ -144,6 +636,138 @@
     "text": ""
   },
   {
+    "file": "src\\components\\dashboard\\QuickActions.tsx",
+    "type": "Button (onClick)",
+    "dest": "action.onClick",
+    "text": "{action.label}"
+  },
+  {
+    "file": "src\\components\\dashboard\\SyncStatusBanner.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSync",
+    "text": "{isSyncing ? 'Sync...' : 'Sync"
+  },
+  {
+    "file": "src\\components\\hospital\\AgendaView.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setCurrentDate(addDays(currentDate, -1))",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\hospital\\AgendaView.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setCurrentDate(new Date())",
+    "text": "Aujourd'hui"
+  },
+  {
+    "file": "src\\components\\hospital\\AgendaView.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setCurrentDate(addDays(currentDate, 1))",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\hospital\\AgendaView.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleConnectGoogle",
+    "text": "{isSyncing ?  : }\r\n           "
+  },
+  {
+    "file": "src\\components\\hospital\\LeaveRequestDialog.tsx",
+    "type": "Button (onClick)",
+    "dest": "onClose",
+    "text": "Annuler"
+  },
+  {
+    "file": "src\\components\\hospital\\LeaveRequestDialog.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSubmit",
+    "text": "Soumettre la Demande"
+  },
+  {
+    "file": "src\\components\\hospital\\LeaveRequestsManager.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleApprove(request)",
+    "text": "Valider"
+  },
+  {
+    "file": "src\\components\\hospital\\LeaveRequestsManager.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => handleReject(request)",
+    "text": "Refuser"
+  },
+  {
+    "file": "src\\components\\hospital\\PayrollSummary.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => currentStaff && generateStaffPayrollPDF(currentStaff, latestPayroll)",
+    "text": "PDF"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffCard.tsx",
+    "type": "Button (onClick)",
+    "dest": "onEdit",
+    "text": ""
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleCancel",
+    "text": "Annuler"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSave",
+    "text": "Enregistrer"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsEditMode(true)",
+    "text": "Modifier"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => generateStaffFullFilePDF(staff, { timeEntries: timeEntries.filter(e => e.staffId === staff.id)",
+    "text": "Exporter Dossier"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => generateWorkCertificatePDF(staff)",
+    "text": "Générer Certificat"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => generateEmploymentContractPDF(staff)",
+    "text": "Générer Contrat (Type)"
+  },
+  {
+    "file": "src\\components\\hospital\\StaffDetailsSheet.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setIsLeaveDialogOpen(true)",
+    "text": "Demander un Congé"
+  },
+  {
+    "file": "src\\components\\hospital\\TimeTrackingPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleCheckIn",
+    "text": "Arrivée"
+  },
+  {
+    "file": "src\\components\\hospital\\TimeTrackingPanel.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleCheckOut",
+    "text": "Départ"
+  },
+  {
+    "file": "src\\components\\hr\\EmployeeList.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => setSelectedEmployee(null)",
+    "text": ""
+  },
+  {
     "file": "src\\components\\landing\\Footer.tsx",
     "type": "a (Ancre)",
     "dest": "/",
@@ -188,12 +812,6 @@
   {
     "file": "src\\components\\layout\\Header.tsx",
     "type": "Link",
-    "dest": "/notifications",
-    "text": "setShowNotifications(false)}\r\n"
-  },
-  {
-    "file": "src\\components\\layout\\Header.tsx",
-    "type": "Link",
     "dest": "/profile",
     "text": "setShowProfile(false)}\r\n      "
   },
@@ -218,8 +836,14 @@
   {
     "file": "src\\components\\layout\\Navbar.tsx",
     "type": "a (Ancre)",
-    "dest": "/dashboard",
-    "text": "Démo gratuite 🚀"
+    "dest": "/login",
+    "text": "Connexion"
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "/register",
+    "text": "S'inscrire 🚀"
   },
   {
     "file": "src\\components\\layout\\Navbar.tsx",
@@ -230,8 +854,14 @@
   {
     "file": "src\\components\\layout\\Navbar.tsx",
     "type": "a (Ancre)",
-    "dest": "/dashboard",
-    "text": "Démo gratuite 🚀"
+    "dest": "/login",
+    "text": "Connexion"
+  },
+  {
+    "file": "src\\components\\layout\\Navbar.tsx",
+    "type": "a (Ancre)",
+    "dest": "/register",
+    "text": "S'inscrire 🚀"
   },
   {
     "file": "src\\components\\layout\\Sidebar.tsx",
@@ -256,6 +886,30 @@
     "type": "Link",
     "dest": "item.path",
     "text": "{!collapsed && (\r\n            "
+  },
+  {
+    "file": "src\\components\\patients\\PatientTimeline.tsx",
+    "type": "Button (onClick)",
+    "dest": "onAddEvent",
+    "text": "Ajouter"
+  },
+  {
+    "file": "src\\components\\payment\\StripePayment.tsx",
+    "type": "Button (onClick)",
+    "dest": "handleSubmit",
+    "text": "{isProcessing ? (\r\n           "
+  },
+  {
+    "file": "src\\components\\profile\\AboutTab.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => (isEditing ? handleSave() : setIsEditing(true))",
+    "text": "{isEditing ? (\r\n              "
+  },
+  {
+    "file": "src\\components\\profile\\ProfileHeader.tsx",
+    "type": "Button (onClick)",
+    "dest": "() => document.getElementById('banner-upload')?.click()",
+    "text": "Changer bannière"
   },
   {
     "file": "src\\components\\ui\\carousel.tsx",
@@ -274,5 +928,29 @@
     "type": "Button (onClick)",
     "dest": "(event) => {\r\n          onClick?.(event);\r\n          toggleSidebar();",
     "text": "Toggle Sidebar"
+  },
+  {
+    "file": "src\\components\\ui-1cc\\carousel.tsx",
+    "type": "Button (onClick)",
+    "dest": "scrollPrev",
+    "text": "Previous slide"
+  },
+  {
+    "file": "src\\components\\ui-1cc\\carousel.tsx",
+    "type": "Button (onClick)",
+    "dest": "scrollNext",
+    "text": "Next slide"
+  },
+  {
+    "file": "src\\components\\ui-1cc\\sidebar.tsx",
+    "type": "Button (onClick)",
+    "dest": "(event) => {\r\n          onClick?.(event);\r\n          toggleSidebar();",
+    "text": "Toggle Sidebar"
+  },
+  {
+    "file": "src\\components\\ui-1cc\\SignaturePad.tsx",
+    "type": "Button (onClick)",
+    "dest": "clear",
+    "text": "Effacer"
   }
 ]

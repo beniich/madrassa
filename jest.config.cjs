@@ -6,7 +6,7 @@ module.exports = {
   },
   collectCoverageFrom: ['src/**/*.{js,ts}', '!src/**/*.d.ts', '!src/**/index.ts'],
   coverageReporters: ['text', 'lcov', 'html'],
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)'],
+  testMatch: ['**/__tests__/**/!(*.vitest.)*.[jt]s?(x)', '**/!(*.vitest.)*?(*.)+(spec|test).[jt]s?(x)'],
   transform: { '^.+\\.tsx?$': 'ts-jest' },
   verbose: true,
   testTimeout: 10000,
