@@ -22,4 +22,18 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-dialog', '@radix-ui/react-popover', 'lucide-react'],
+          charts: ['recharts', 'chart.js', 'react-chartjs-2'],
+          firebase: ['firebase/app', 'firebase/auth', 'firebase/firestore'],
+          stripe: ['@stripe/stripe-js', '@stripe/react-stripe-js']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 1000
+  }
 }));
