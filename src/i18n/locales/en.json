@@ -167,111 +167,111 @@
             "financeAccessDesc": "View payments and invoices",
             "systemConfig": "System Configuration",
             "systemConfigDesc": "Full access to settings"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Welcome to SchoolGenius",
+            "subtitle": "Sign in to access your space",
+            "googleSignIn": "Sign in with Google",
+            "signingIn": "Signing in...",
+            "secureAuth": "Secure Authentication",
+            "termsPrefix": "By signing in, you agree to our",
+            "termsLink": "Terms of Use",
+            "and": "and",
+            "privacyLink": "Privacy Policy",
+            "success": "Success",
+            "loginSuccess": "Login successful. Welcome!",
+            "loginError": "Login Error",
+            "genericError": "An error occurred during login.",
+            "popupClosed": "Sign-in window was closed.",
+            "networkError": "Network error. Please check your internet connection."
         },
-        "auth": {
-            "login": {
-                "title": "Welcome to SchoolGenius",
-                "subtitle": "Sign in to access your space",
-                "googleSignIn": "Sign in with Google",
-                "signingIn": "Signing in...",
-                "secureAuth": "Secure Authentication",
-                "termsPrefix": "By signing in, you agree to our",
-                "termsLink": "Terms of Use",
-                "and": "and",
-                "privacyLink": "Privacy Policy",
-                "success": "Success",
-                "loginSuccess": "Login successful. Welcome!",
-                "loginError": "Login Error",
-                "genericError": "An error occurred during login.",
-                "popupClosed": "Sign-in window was closed.",
-                "networkError": "Network error. Please check your internet connection."
-            },
-            "footer": {
-                "rights": "All rights reserved."
-            }
+        "footer": {
+            "rights": "All rights reserved."
+        }
+    },
+    "register": {
+        "title": "Join Us",
+        "subtitle": "Create your SchoolGenius account",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "school": "Institution",
+        "schoolPlaceholder": "Your school name",
+        "email": "Email",
+        "password": "Password",
+        "creatingAccount": "Creating account...",
+        "createAccount": "Create my account",
+        "alreadyHaveAccount": "Already have an account?",
+        "login": "Sign In"
+    },
+    "pricing": {
+        "title": "Simple Pricing",
+        "subtitle": "Choose the plan that fits your institution's needs",
+        "starter": {
+            "name": "Starter",
+            "description": "For small schools",
+            "price": "0 $",
+            "unit": "/month",
+            "features": [
+                "Up to 100 students",
+                "Absence management",
+                "Grades and reports",
+                "Email support"
+            ],
+            "cta": "Get Started"
         },
-        "register": {
-            "title": "Join Us",
-            "subtitle": "Create your SchoolGenius account",
-            "firstName": "First Name",
-            "lastName": "Last Name",
-            "school": "Institution",
-            "schoolPlaceholder": "Your school name",
-            "email": "Email",
-            "password": "Password",
-            "creatingAccount": "Creating account...",
-            "createAccount": "Create my account",
-            "alreadyHaveAccount": "Already have an account?",
-            "login": "Sign In"
+        "pro": {
+            "name": "Pro",
+            "description": "For medium-sized schools",
+            "price": "499 $",
+            "unit": "/month",
+            "popular": "Popular",
+            "features": [
+                "Unlimited students",
+                "Advanced AI features",
+                "Billing management",
+                "Parent/Student app",
+                "Priority support"
+            ],
+            "cta": "Choose Pro"
         },
-        "pricing": {
-            "title": "Simple Pricing",
-            "subtitle": "Choose the plan that fits your institution's needs",
-            "starter": {
-                "name": "Starter",
-                "description": "For small schools",
-                "price": "0 $",
-                "unit": "/month",
-                "features": [
-                    "Up to 100 students",
-                    "Absence management",
-                    "Grades and reports",
-                    "Email support"
-                ],
-                "cta": "Get Started"
-            },
-            "pro": {
-                "name": "Pro",
-                "description": "For medium-sized schools",
-                "price": "499 $",
-                "unit": "/month",
-                "popular": "Popular",
-                "features": [
-                    "Unlimited students",
-                    "Advanced AI features",
-                    "Billing management",
-                    "Parent/Student app",
-                    "Priority support"
-                ],
-                "cta": "Choose Pro"
-            },
-            "enterprise": {
-                "name": "Institution",
-                "description": "Customized",
-                "price": "On Quote",
-                "features": [
-                    "Multi-institution",
-                    "Full white label",
-                    "Custom developments",
-                    "Dedicated server",
-                    "24/7 support"
-                ],
-                "cta": "Contact Us"
-            }
+        "enterprise": {
+            "name": "Institution",
+            "description": "Customized",
+            "price": "On Quote",
+            "features": [
+                "Multi-institution",
+                "Full white label",
+                "Custom developments",
+                "Dedicated server",
+                "24/7 support"
+            ],
+            "cta": "Contact Us"
+        }
+    },
+    "checkout": {
+        "title": "Payment",
+        "subtitle": "Complete your registration",
+        "schoolName": "Institution Name",
+        "schoolNamePlaceholder": "International School",
+        "paymentInfo": "Payment Information",
+        "processing": "Processing...",
+        "payAmount": "Pay {{price}}",
+        "validate": "Validate my registration",
+        "securePayment": "100% secure payment via Stripe",
+        "summary": {
+            "title": "Order Summary",
+            "plan": "Plan {{name}}"
         },
-        "checkout": {
-            "title": "Payment",
-            "subtitle": "Complete your registration",
-            "schoolName": "Institution Name",
-            "schoolPlaceholder": "International School",
-            "paymentInfo": "Payment Information",
-            "processing": "Processing...",
-            "payAmount": "Pay {{price}}",
-            "validate": "Validate my registration",
-            "securePayment": "100% secure payment via Stripe",
-            "summary": {
-                "title": "Order Summary",
-                "plan": "Plan {{name}}"
-            },
-            "success": {
-                "title": "Registration Successful",
-                "description": "Welcome! Your institution {{schoolName}} is now configured."
-            },
-            "errors": {
-                "initFailed": "Impossible to initialize payment",
-                "paymentFailed": "An error occurred during payment.",
-                "generic": "An error occurred. Please try again."
-            }
+        "success": {
+            "title": "Registration Successful",
+            "description": "Welcome! Your institution {{schoolName}} is now configured."
+        },
+        "errors": {
+            "initFailed": "Impossible to initialize payment",
+            "paymentFailed": "An error occurred during payment.",
+            "generic": "An error occurred. Please try again."
         }
     },
     "roles": {

@@ -167,111 +167,111 @@
             "financeAccessDesc": "Voir les paiements et factures",
             "systemConfig": "Configuration système",
             "systemConfigDesc": "Accès complet aux paramètres"
+        }
+    },
+    "auth": {
+        "login": {
+            "title": "Bienvenue sur SchoolGenius",
+            "subtitle": "Connectez-vous pour accéder à votre espace",
+            "googleSignIn": "Se connecter avec Google",
+            "signingIn": "Connexion en cours...",
+            "secureAuth": "Authentification sécurisée",
+            "termsPrefix": "En vous connectant, vous acceptez nos",
+            "termsLink": "Conditions d'utilisation",
+            "and": "et",
+            "privacyLink": "Politique de confidentialité",
+            "success": "Succès",
+            "loginSuccess": "Connexion réussie. Bienvenue !",
+            "loginError": "Erreur de connexion",
+            "genericError": "Une erreur est survenue lors de la connexion.",
+            "popupClosed": "La fenêtre de connexion a été fermée.",
+            "networkError": "Erreur réseau. Vérifiez votre connexion internet."
         },
-        "auth": {
-            "login": {
-                "title": "Bienvenue sur SchoolGenius",
-                "subtitle": "Connectez-vous pour accéder à votre espace",
-                "googleSignIn": "Se connecter avec Google",
-                "signingIn": "Connexion en cours...",
-                "secureAuth": "Authentification sécurisée",
-                "termsPrefix": "En vous connectant, vous acceptez nos",
-                "termsLink": "Conditions d'utilisation",
-                "and": "et",
-                "privacyLink": "Politique de confidentialité",
-                "success": "Succès",
-                "loginSuccess": "Connexion réussie. Bienvenue !",
-                "loginError": "Erreur de connexion",
-                "genericError": "Une erreur est survenue lors de la connexion.",
-                "popupClosed": "La fenêtre de connexion a été fermée.",
-                "networkError": "Erreur réseau. Vérifiez votre connexion internet."
-            },
-            "footer": {
-                "rights": "Tous droits réservés."
-            }
+        "footer": {
+            "rights": "Tous droits réservés."
+        }
+    },
+    "register": {
+        "title": "Rejoignez-nous",
+        "subtitle": "Créez votre compte SchoolGenius",
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "school": "Établissement",
+        "schoolPlaceholder": "Nom de votre école",
+        "email": "Email",
+        "password": "Mot de passe",
+        "creatingAccount": "Création en cours...",
+        "createAccount": "Créer mon compte",
+        "alreadyHaveAccount": "Vous avez déjà un compte ?",
+        "login": "Connectez-vous"
+    },
+    "pricing": {
+        "title": "Tarifications Simples",
+        "subtitle": "Choisissez le plan qui correspond aux besoins de votre établissement",
+        "starter": {
+            "name": "Starter",
+            "description": "Pour les petites écoles",
+            "price": "0 $",
+            "unit": "/mois",
+            "features": [
+                "Jusqu'à 100 élèves",
+                "Gestion des absences",
+                "Notes et bulletins",
+                "Support par email"
+            ],
+            "cta": "Commencer"
         },
-        "register": {
-            "title": "Rejoignez-nous",
-            "subtitle": "Créez votre compte SchoolGenius",
-            "firstName": "Prénom",
-            "lastName": "Nom",
-            "school": "Établissement",
-            "schoolPlaceholder": "Nom de votre école",
-            "email": "Email",
-            "password": "Mot de passe",
-            "creatingAccount": "Création en cours...",
-            "createAccount": "Créer mon compte",
-            "alreadyHaveAccount": "Vous avez déjà un compte ?",
-            "login": "Connectez-vous"
+        "pro": {
+            "name": "Pro",
+            "description": "Pour les écoles moyennes",
+            "price": "499 $",
+            "unit": "/mois",
+            "popular": "Populaire",
+            "features": [
+                "Élèves illimités",
+                "Fonctionnalités IA avancées",
+                "Gestion de facturation",
+                "Application parent/élève",
+                "Support prioritaire"
+            ],
+            "cta": "Choisir Pro"
         },
-        "pricing": {
-            "title": "Tarifications Simples",
-            "subtitle": "Choisissez le plan qui correspond aux besoins de votre établissement",
-            "starter": {
-                "name": "Starter",
-                "description": "Pour les petites écoles",
-                "price": "0 $",
-                "unit": "/mois",
-                "features": [
-                    "Jusqu'à 100 élèves",
-                    "Gestion des absences",
-                    "Notes et bulletins",
-                    "Support par email"
-                ],
-                "cta": "Commencer"
-            },
-            "pro": {
-                "name": "Pro",
-                "description": "Pour les écoles moyennes",
-                "price": "499 $",
-                "unit": "/mois",
-                "popular": "Populaire",
-                "features": [
-                    "Élèves illimités",
-                    "Fonctionnalités IA avancées",
-                    "Gestion de facturation",
-                    "Application parent/élève",
-                    "Support prioritaire"
-                ],
-                "cta": "Choisir Pro"
-            },
-            "enterprise": {
-                "name": "Institution",
-                "description": "Sur-mesure",
-                "price": "Sur devis",
-                "features": [
-                    "Multi-établissements",
-                    "Marque blanche totale",
-                    "Développements sur-mesure",
-                    "Serveur dédié",
-                    "Support 24/7"
-                ],
-                "cta": "Contacter"
-            }
+        "enterprise": {
+            "name": "Institution",
+            "description": "Sur-mesure",
+            "price": "Sur devis",
+            "features": [
+                "Multi-établissements",
+                "Marque blanche totale",
+                "Développements sur-mesure",
+                "Serveur dédié",
+                "Support 24/7"
+            ],
+            "cta": "Contacter"
+        }
+    },
+    "checkout": {
+        "title": "Paiement",
+        "subtitle": "Complétez votre inscription",
+        "schoolName": "Nom de l'établissement",
+        "schoolPlaceholder": "École Internationale",
+        "paymentInfo": "Informations de paiement",
+        "processing": "Traitement en cours...",
+        "payAmount": "Payer {{price}}",
+        "validate": "Valider mon inscription",
+        "securePayment": "Paiement 100% sécurisé via Stripe",
+        "summary": {
+            "title": "Résumé de la commande",
+            "plan": "Plan {{name}}"
         },
-        "checkout": {
-            "title": "Paiement",
-            "subtitle": "Complétez votre inscription",
-            "schoolName": "Nom de l'établissement",
-            "schoolPlaceholder": "École Internationale",
-            "paymentInfo": "Informations de paiement",
-            "processing": "Traitement en cours...",
-            "payAmount": "Payer {{price}}",
-            "validate": "Valider mon inscription",
-            "securePayment": "Paiement 100% sécurisé via Stripe",
-            "summary": {
-                "title": "Résumé de la commande",
-                "plan": "Plan {{name}}"
-            },
-            "success": {
-                "title": "Inscription réussie",
-                "description": "Bienvenue ! Votre établissement {{schoolName}} est maintenant configuré."
-            },
-            "errors": {
-                "initFailed": "Impossible d'initialiser le paiement",
-                "paymentFailed": "Une erreur est survenue lors du paiement.",
-                "generic": "Une erreur est survenue. Veuillez réessayer."
-            }
+        "success": {
+            "title": "Inscription réussie",
+            "description": "Bienvenue ! Votre établissement {{schoolName}} est maintenant configuré."
+        },
+        "errors": {
+            "initFailed": "Impossible d'initialiser le paiement",
+            "paymentFailed": "Une erreur est survenue lors du paiement.",
+            "generic": "Une erreur est survenue. Veuillez réessayer."
         }
     },
     "roles": {
