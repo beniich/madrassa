@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ─── Établissement scolaire ───────────────────────────────────
+model School {
+  id        String   @id @default(cuid())
+  name      String
+  code      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users  User[]
+  style  SchoolStyle?
+  hrMembers HRMember[]
+}
+
+// ─── Utilisateurs ─────────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("TEACHER") // SUPER_ADMIN, ADMIN, DIRECTOR, TEACHER, PARENT
+  schoolId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  school School @relation(fields: [schoolId], references: [id])
+
+  @@index([email])
+  @@index([schoolId])
+}
+
+// ─── Paramètres de style d'un établissement ───────────────────
+model SchoolStyle {
+  id           String  @id @default(cuid())
+  schoolId     String  @unique
+
+  // Thème
+  colorTheme   String  @default("blue")
+  primaryColor String  @default("#2563EB")
+  sidebarColor String  @default("#1E293B")
+  successColor String  @default("#16A34A")
+  warningColor String  @default("#D97706")
+  dangerColor  String  @default("#E11D48")
+  adminColor   String  @default("#7C3AED")
+
+  // Typographie
+  fontFamily   String  @default("nunito")
+
+  // Mise en page
+  borderRadius String  @default("md")
+  darkMode     Boolean @default(false)
+
+  // Branding
+  logoUrl      String?
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  school  School         @relation(fields: [schoolId], references: [id])
+  history StyleHistory[]
+}
+
+// ─── Historique des modifications ────────────────────────────
+model StyleHistory {
+  id            String   @id @default(cuid())
+  styleId       String
+  changedBy     String   // userId
+  changedByName String
+  changes       String   // Stocké sous forme de JSON string pour SQLite compatibility
+  createdAt     DateTime @default(now())
+
+  style SchoolStyle @relation(fields: [styleId], references: [id])
+
+  @@index([styleId])
+}
+
+// ─── Ressources Humaines ──────────────────────────────────────
+model HRMember {
+  id           String   @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String   @unique
+  phone        String?
+  subject      String?  // Matière enseignée
+  classes      String?  // IDs des classes (comma separated for SQLite)
+  status       String   @default("active") // active, onLeave, inactive
+  hireDate     DateTime @default(now())
+  schoolId     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  leaves       LeaveRequest[]
+  school       School @relation(fields: [schoolId], references: [id])
+
+  @@index([schoolId])
+}
+
+model LeaveRequest {
+  id          String   @id @default(cuid())
+  employeeId  String
+  type        String   // Maladie, Congé, etc.
+  startDate   DateTime
+  endDate     DateTime
+  days        Int
+  status      String   @default("pending") // pending, approved, rejected
+  department  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  employee    HRMember @relation(fields: [employeeId], references: [id])
+}
