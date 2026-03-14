@@ -1,238 +1,168 @@
-import { useState, useEffect, useCallback } from "react";
+import { MessageSquare, TrendingUp, FileText, Calendar, Bot, Send, CheckCircle2, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui-1cc/card";
 import { Button } from "@/components/ui-1cc/button";
-import { Badge } from "@/components/ui-1cc/badge";
-import { supabase } from "@/integrations/supabase/client";
-import { useToast } from "@/hooks-1cc/use-toast";
-import { Sparkles, TrendingUp, Users, Package, BarChart3, CheckCircle2, Clock } from "lucide-react";
-
-interface Recommendation {
-  id: string;
-  type: string;
-  title: string;
-  description: string;
-  priority: string;
-  is_read: boolean;
-  created_at: string;
-  data: Record<string, unknown>;
-}
+import { Input } from "@/components/ui-1cc/input";
 
 const AIAssistant = () => {
-  const { toast } = useToast();
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [generating, setGenerating] = useState(false);
-
-  const fetchRecommendations = useCallback(async () => {
-    try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from('ai_recommendations')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setRecommendations((data as any[])?.slice(0, 10).map(item => ({
-        ...item,
-        data: item.data as Record<string, unknown>
-      })) || []);
-    } catch (error) {
-      console.error('Error fetching recommendations:', error);
-      toast({
-        title: "Erreur",
-        description: "Impossible de charger les recommandations",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  }, [toast]);
-
-  useEffect(() => {
-    fetchRecommendations();
-  }, [fetchRecommendations]);
-
-  const generateRecommendations = async () => {
-    setGenerating(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('ai-recommendations');
-
-      if (error) throw error;
-
-      toast({
-        title: "Recommandations générées",
-        description: `${data.recommendations.length} nouvelles recommandations créées`,
-      });
-
-      fetchRecommendations();
-    } catch (error) {
-      console.error('Error generating recommendations:', error);
-      toast({
-        title: "Erreur",
-        description: (error as Error).message || "Impossible de générer les recommandations",
-        variant: "destructive",
-      });
-    } finally {
-      setGenerating(false);
-    }
-  };
-
-  const markAsRead = async (id: string) => {
-    try {
-      const { error } = await supabase
-        .from('ai_recommendations')
-        .update({ is_read: true })
-        .eq('id', id);
-
-      if (error) throw error;
-
-      setRecommendations(prev =>
-        prev.map(rec => rec.id === id ? { ...rec, is_read: true } : rec)
-      );
-    } catch (error) {
-      console.error('Error marking as read:', error);
-    }
-  };
-
-  const getTypeIcon = (type: string) => {
-    const icons = {
-      client_contact: Users,
-      deal_priority: TrendingUp,
-      product_suggestion: Package,
-      analytics_insight: BarChart3
-    };
-    return icons[type as keyof typeof icons] || Sparkles;
-  };
-
-  const getPriorityColor = (priority: string) => {
-    const colors = {
-      urgent: "bg-destructive/10 text-destructive",
-      high: "bg-warning/10 text-warning",
-      medium: "bg-info/10 text-info",
-      low: "bg-muted"
-    };
-    return colors[priority as keyof typeof colors] || "bg-muted";
-  };
-
-  const getTypeLabel = (type: string) => {
-    const labels = {
-      client_contact: "Contact Client",
-      deal_priority: "Opportunité Prioritaire",
-      product_suggestion: "Suggestion Produit",
-      analytics_insight: "Insight Analytics"
-    };
-    return labels[type as keyof typeof labels] || type;
-  };
-
-  if (loading) {
-    return (
-      <>
-        <div className="flex items-center justify-center h-full">
-          <div className="text-lg text-muted-foreground">Chargement...</div>
-        </div>
-      </>
-    );
-  }
-
   return (
-    <>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-              <Sparkles className="h-8 w-8 text-primary" />
-              Assistant IA
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              Recommandations intelligentes pour optimiser vos ventes
-            </p>
+    <div className="space-y-8 max-w-7xl mx-auto pb-12 animate-in fade-in duration-500">
+      <div>
+        <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
+          <Sparkles className="h-8 w-8 text-[#e11d48]" />
+          AI Hub Entreprise
+        </h1>
+        <p className="text-muted-foreground mt-2 text-lg">
+          L'intelligence artificielle au service de votre établissement scolaire.
+        </p>
+      </div>
+
+      {/* Features Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Card 1 */}
+        <Card className="p-6 bg-[#fcfaf5] border-[#eae4d3] shadow-sm hover:shadow-md transition-shadow rounded-2xl">
+          <div className="flex items-start gap-4">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-sm">
+              <MessageSquare className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold mb-2 text-foreground/90">Assistant Pédagogique</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Préparez vos cours en quelques minutes, générez des exercices adaptés au niveau de chaque élève.
+              </p>
+              <div className="bg-[#f5f1e8] text-sm text-foreground/80 p-3.5 rounded-xl border border-[#e5dec9] font-mono shadow-inner">
+                « Génère-moi 5 exercices de maths niveau 3ème sur les équations »
+              </div>
+            </div>
           </div>
-          <Button
-            onClick={generateRecommendations}
-            disabled={generating}
-            className="gap-2"
-          >
-            <Sparkles className="h-4 w-4" />
-            {generating ? "Génération en cours..." : "Générer Recommandations"}
-          </Button>
+        </Card>
+
+        {/* Card 2 */}
+        <Card className="p-6 bg-[#fcfaf5] border-[#eae4d3] shadow-sm hover:shadow-md transition-shadow rounded-2xl">
+          <div className="flex items-start gap-4">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-sm">
+              <TrendingUp className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold mb-2 text-foreground/90">Analyse Prédictive</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Détectez les élèves en difficulté AVANT qu'il ne soit trop tard. L'IA analyse notes, absences et comportement.
+              </p>
+              <div className="bg-[#f5f1e8] text-sm text-foreground/80 p-3.5 rounded-xl border border-[#e5dec9] flex flex-col sm:flex-row gap-2 font-mono shadow-inner">
+                <span className="text-orange-500 font-bold flex-shrink-0">⚠️ Alerte :</span> 
+                <span>Lucas montre des signes de décrochage (-15% cette semaine)</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Card 3 */}
+        <Card className="p-6 bg-[#fcfaf5] border-[#eae4d3] shadow-sm hover:shadow-md transition-shadow rounded-2xl">
+          <div className="flex items-start gap-4">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-sm">
+              <FileText className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold mb-2 text-foreground/90">Bulletins Automatiques</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Fini les heures à rédiger des appréciations ! L'IA génère des commentaires personnalisés et pertinents.
+              </p>
+              <div className="bg-[#f5f1e8] text-sm text-foreground/80 p-3.5 rounded-xl border border-[#e5dec9] font-mono shadow-inner">
+                « Marie fait preuve d'une excellente progression en français... »
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        {/* Card 4 */}
+        <Card className="p-6 bg-[#fcfaf5] border-[#eae4d3] shadow-sm hover:shadow-md transition-shadow rounded-2xl">
+          <div className="flex items-start gap-4">
+            <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-sm">
+              <Calendar className="h-6 w-6 text-white" />
+            </div>
+            <div className="flex-1">
+              <h3 className="text-xl font-bold mb-2 text-foreground/90">Emploi du Temps IA</h3>
+              <p className="text-muted-foreground mb-4 leading-relaxed">
+                Génération optimisée qui respecte toutes les contraintes : profs, salles, matières, pauses...
+              </p>
+              <div className="bg-[#f5f1e8] text-sm text-foreground/80 p-3.5 rounded-xl border border-[#e5dec9] flex items-center gap-2 font-mono shadow-inner">
+                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                <span>Emploi du temps optimisé généré en 2.3 secondes</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Chat Interface */}
+      <Card className="bg-[#f7f5ef] border-[#eae4d3] shadow-lg overflow-hidden flex flex-col rounded-3xl">
+        {/* Header */}
+        <div className="px-6 py-5 border-b border-[#eae4d3] flex items-center gap-4 bg-[#f2ebd9]/40 backdrop-blur-sm">
+          <div className="p-2.5 rounded-2xl bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-sm">
+            <Bot className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-foreground">SchoolGenius AI</h2>
+            <div className="flex items-center gap-2 text-sm font-medium text-emerald-600 mt-0.5">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              En ligne • Répond en ~2s
+            </div>
+          </div>
         </div>
 
-        {recommendations.length === 0 ? (
-          <Card className="p-12 text-center">
-            <Sparkles className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-semibold mb-2">Aucune recommandation</h3>
-            <p className="text-muted-foreground mb-4">
-              Générez des recommandations IA pour optimiser votre activité
-            </p>
-            <Button onClick={generateRecommendations} disabled={generating} className="gap-2">
-              <Sparkles className="h-4 w-4" />
-              Générer Recommandations
-            </Button>
-          </Card>
-        ) : (
-          <div className="space-y-4">
-            {recommendations.map((rec) => {
-              const Icon = getTypeIcon(rec.type);
-              return (
-                <Card
-                  key={rec.id}
-                  className={`p-6 transition-all hover:shadow-md ${rec.is_read ? 'opacity-60' : ''
-                    }`}
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Badge variant="outline">{getTypeLabel(rec.type)}</Badge>
-                            <Badge className={getPriorityColor(rec.priority)}>
-                              {rec.priority.toUpperCase()}
-                            </Badge>
-                            {rec.is_read && (
-                              <Badge variant="outline" className="gap-1">
-                                <CheckCircle2 className="h-3 w-3" />
-                                Lu
-                              </Badge>
-                            )}
-                          </div>
-                          <h3 className="text-lg font-semibold">{rec.title}</h3>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <Clock className="h-4 w-4" />
-                          {new Date(rec.created_at).toLocaleDateString('fr-FR')}
-                        </div>
-                      </div>
-
-                      <p className="text-muted-foreground mb-4">{rec.description}</p>
-
-                      {!rec.is_read && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => markAsRead(rec.id)}
-                          className="gap-2"
-                        >
-                          <CheckCircle2 className="h-4 w-4" />
-                          Marquer comme lu
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </Card>
-              );
-            })}
+        {/* Chat Area */}
+        <div className="p-6 md:p-8 flex-1 min-h-[450px] space-y-8 flex flex-col justify-end">
+          {/* User Message */}
+          <div className="flex justify-end w-full">
+            <div className="bg-[#f97316] text-white px-6 py-4 rounded-3xl rounded-tr-md max-w-[90%] md:max-w-[70%] shadow-md text-lg font-medium leading-relaxed">
+              Génère-moi un contrôle de SVT sur la photosynthèse pour mes 6èmes 🌱
+            </div>
           </div>
-        )}
-      </div>
-    </>
+
+          {/* AI Response Container */}
+          <div className="flex flex-col gap-3 w-full max-w-[90%] md:max-w-[75%]">
+            <div className="bg-[#eeeade] p-6 rounded-3xl rounded-tl-md border border-[#e2d8c9] shadow-sm">
+              <p className="text-lg mb-5 text-foreground/90 font-medium">Voici un contrôle adapté au niveau 6ème ! 📝</p>
+              
+              {/* Inner generated card */}
+              <div className="bg-[#fcfaf5] rounded-2xl border border-[#e2d8c9] p-5 shadow-sm space-y-4 mb-5">
+                <h4 className="font-bold text-foreground text-lg">CONTRÔLE SVT - La Photosynthèse</h4>
+                <div className="text-foreground/80 space-y-2.5 text-base">
+                  <p className="flex justify-between"><span>Exercice 1 : Légende le schéma</span> <span className="text-muted-foreground">(5pts)</span></p>
+                  <p className="flex justify-between"><span>Exercice 2 : QCM</span> <span className="text-muted-foreground">(6pts)</span></p>
+                  <p className="flex justify-between"><span>Exercice 3 : Expérience</span> <span className="text-muted-foreground">(9pts)</span></p>
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm text-muted-foreground/90 font-medium">
+                <Sparkles className="h-4 w-4 text-orange-500" />
+                <span>Barème et corrigé inclus • Adapté niveau 6ème</span>
+              </div>
+            </div>
+            
+            <div className="flex items-center gap-2 text-muted-foreground/80 text-sm font-medium pl-3 mt-1">
+              <Sparkles className="h-4 w-4 text-orange-500/80" />
+              <span>L'IA peut aussi générer des exercices différenciés...</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Input Area (Mock) */}
+        <div className="p-5 bg-white border-t border-[#eae4d3]">
+          <div className="relative max-w-5xl mx-auto flex items-center gap-3">
+            <Input 
+              placeholder="Ex: Génère 3 exercices différenciés sur les fractions pour les 5ème B..." 
+              className="h-14 pl-6 pr-4 rounded-full border-[#eae4d3] bg-[#fcfaf5] shadow-sm text-base focus-visible:ring-primary/20 transition-all font-medium flex-1"
+            />
+            <Button size="icon" className="rounded-full h-14 w-14 bg-gradient-to-br from-[#e11d48] to-[#9333ea] shadow-md hover:opacity-90 flex-shrink-0">
+              <Send className="h-5 w-5 text-white ml-0.5" />
+            </Button>
+          </div>
+        </div>
+      </Card>
+    </div>
   );
 };
 
