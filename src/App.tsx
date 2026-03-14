@@ -32,6 +32,7 @@ const PowerBIDashboard = lazy(() => import('@/pages/PowerBIDashboard'));
 const HRManagement = lazy(() => import('@/pages/HRManagement'));
 const GoogleSheetsPage = lazy(() => import('@/pages/GoogleSheetsPage'));
 const Schedule = lazy(() => import('@/pages/Schedule'));
+const DbDashboard = lazy(() => import('@/components/advanced-ui/DbDashboard'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 const Login = lazy(() => import('@/pages/Login'));
 const Register = lazy(() => import('@/pages/Register'));
@@ -97,6 +98,7 @@ function App() {
                         <Route path="/powerbi" element={<PowerBIDashboard />} />
                         <Route path="/hr-management" element={<HRManagement />} />
                         <Route path="/googlesheets" element={<GoogleSheetsPage />} />
+                        <Route path="/db-admin" element={<DbDashboard />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
