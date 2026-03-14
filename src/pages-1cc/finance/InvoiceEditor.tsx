@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useFinanceStore, Invoice } from '@/stores/useFinanceStore';
 import { Button } from '@/components/ui-1cc/button';
 import { Input } from '@/components/ui-1cc/input';
@@ -134,7 +133,7 @@ export const InvoiceEditor = () => {
     };
 
     return (
-        <DashboardLayout>
+        <>
             <div className="max-w-5xl mx-auto space-y-6 pb-12">
                 <Form {...form}>
                     <div className="flex items-center justify-between sticky top-0 z-10 bg-background/80 backdrop-blur-sm py-4 border-b">
@@ -404,6 +403,6 @@ export const InvoiceEditor = () => {
                     </div>
                 </Form>
             </div>
-        </DashboardLayout>
+        </>
     );
 };

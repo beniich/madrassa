@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useWorkspaceStore, Team } from '@/stores/useWorkspaceStore';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui-1cc/card';
 import { Button } from '@/components/ui-1cc/button';
@@ -38,11 +37,11 @@ export default function TeamsPage() {
 
     if (!activeWorkspace) {
         return (
-            <DashboardLayout>
+            <>
                 <div className="flex items-center justify-center h-full">
                     <p className="text-muted-foreground">Veuillez sélectionner un workspace.</p>
                 </div>
-            </DashboardLayout>
+            </>
         )
     }
 
@@ -72,7 +71,7 @@ export default function TeamsPage() {
     }
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-8 animate-fade-in pb-12">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -186,6 +185,6 @@ export default function TeamsPage() {
                     ))}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 }

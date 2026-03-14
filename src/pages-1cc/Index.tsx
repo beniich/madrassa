@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MetricCard } from "@/components/MetricCard";
 import { CustomerTable } from "@/components/CustomerTable";
 import { RecentActivity } from "@/components/RecentActivity";
@@ -6,7 +5,7 @@ import { Users, TrendingUp, DollarSign, Target } from "lucide-react";
 
 const Index = () => {
   return (
-    <DashboardLayout>
+    <>
       <div className="p-8 space-y-8">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold text-foreground">CRM Pro - Vue d'ensemble</h1>
@@ -49,7 +48,7 @@ const Index = () => {
           </div>
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

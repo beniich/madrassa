@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card } from "@/components/ui-1cc/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
@@ -173,16 +172,16 @@ const Analytics = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-full">
           <div className="text-lg text-muted-foreground">Chargement...</div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -329,7 +328,7 @@ const Analytics = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

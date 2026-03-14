@@ -1,9 +1,8 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { DiagramEditor } from "@/components/DiagramEditor";
 
 const DiagramEditorPage = () => {
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Éditeur de Diagrammes</h1>
@@ -16,7 +15,7 @@ const DiagramEditorPage = () => {
           <DiagramEditor />
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

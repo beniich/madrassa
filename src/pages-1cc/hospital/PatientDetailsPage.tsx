@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useHospitalStore } from "@/stores/useHospitalStore";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui-1cc/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";
@@ -24,17 +23,17 @@ export default function PatientDetailsPage() {
 
     if (!patient) {
         return (
-            <DashboardLayout>
+            <>
                 <div className="flex flex-col items-center justify-center h-[50vh] space-y-4">
                     <h2 className="text-2xl font-bold">Patient introuvable</h2>
                     <Button onClick={() => navigate('/patients')}>Retour à la liste</Button>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-6 animate-fade-in pb-12">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -250,6 +249,6 @@ export default function PatientDetailsPage() {
                     </Card>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 }

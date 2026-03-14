@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { HospitalStats } from "@/components/dashboard/hospital/HospitalStats";
 import { BedOccupancyWidget } from "@/components/dashboard/hospital/BedOccupancyWidget";
 import { RecentDocuments } from "@/components/dashboard/RecentDocuments";
@@ -14,7 +13,7 @@ const Dashboard = () => {
   const { t } = useTranslation();
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6 animate-fade-in pb-10">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
@@ -53,7 +52,7 @@ const Dashboard = () => {
           <RecentDocuments />
         </div>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

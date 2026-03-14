@@ -1,5 +1,4 @@
 import React from 'react';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { KanbanBoard } from '@/components/workflow/KanbanBoard';
 import { useWorkflowStore } from '@/stores/useWorkflowStore';
 import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
@@ -14,7 +13,7 @@ export default function WorkflowPage() {
     const workflows = activeWorkspaceId ? getWorkspaceWorkflows(activeWorkspaceId) : [];
 
     return (
-        <DashboardLayout>
+        <>
             <div className="h-[calc(100vh-4rem)] flex flex-col space-y-4 pb-4">
                 {/* Header */}
                 <div className="flex justify-between items-center px-1">
@@ -52,6 +51,6 @@ export default function WorkflowPage() {
                     </div>
                 )}
             </div>
-        </DashboardLayout>
+        </>
     );
 }

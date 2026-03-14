@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { DepartmentGrid } from "@/components/hospital/DepartmentGrid";
 import { mockDepartments, mockHospitalBeds } from "@/lib/mockData";
 import { BedDouble, Filter, RefreshCw } from "lucide-react";
@@ -23,7 +22,7 @@ const BedManagementPage = () => {
     };
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-8 animate-fade-in pb-12">
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -77,7 +76,7 @@ const BedManagementPage = () => {
                     })}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

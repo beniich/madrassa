@@ -1,9 +1,8 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { DealsPipeline } from "@/components/DealsPipeline";
 
 const Deals = () => {
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">Pipeline des Ventes</h1>
@@ -13,7 +12,7 @@ const Deals = () => {
         </div>
         <DealsPipeline />
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

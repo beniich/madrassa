@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui-1cc/card';
 import { Button } from '@/components/ui-1cc/button';
 import { Input } from '@/components/ui-1cc/input';
@@ -96,7 +95,7 @@ const SecretaryView: React.FC = () => {
     };
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-6 animate-fade-in">
                 {/* Header */}
                 <div className="flex justify-between items-center">
@@ -276,7 +275,7 @@ const SecretaryView: React.FC = () => {
                     </CardContent>
                 </Card>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

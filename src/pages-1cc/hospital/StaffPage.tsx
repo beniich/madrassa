@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { StaffCard } from "@/components/hospital/StaffCard";
 import { Button } from "@/components/ui-1cc/button";
 import { Input } from "@/components/ui-1cc/input";
@@ -35,7 +34,7 @@ const StaffPage = () => {
     });
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-8 animate-fade-in pb-12">
                 <Tabs defaultValue="directory" className="space-y-6">
                     <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -132,7 +131,7 @@ const StaffPage = () => {
                     </TabsContent>
                 </Tabs>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

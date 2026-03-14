@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 import { useFinanceStore, Invoice } from '@/stores/useFinanceStore';
 import { Button } from '@/components/ui-1cc/button';
 import { Input } from '@/components/ui-1cc/input';
@@ -56,7 +55,7 @@ export const InvoicesPage = () => {
     };
 
     return (
-        <DashboardLayout>
+        <>
             <div className="h-full flex flex-col space-y-6">
                 <div className="flex items-center justify-between">
                     <div>
@@ -137,6 +136,6 @@ export const InvoicesPage = () => {
                     </Table>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };

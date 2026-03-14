@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
 import { Button } from "@/components/ui-1cc/button";
 import { Badge } from "@/components/ui-1cc/badge";
@@ -129,29 +128,29 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-full">
           <div className="text-lg text-muted-foreground">Chargement...</div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
   if (!product) {
     return (
-      <DashboardLayout>
+      <>
         <div className="text-center py-12">
           <h2 className="text-2xl font-bold mb-4">Produit non trouvé</h2>
           <Button onClick={() => navigate("/products")}>
             Retour aux produits
           </Button>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div className="flex items-center gap-4">
           <Button
@@ -311,7 +310,7 @@ const ProductDetails = () => {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

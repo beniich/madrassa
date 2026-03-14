@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card } from "@/components/ui-1cc/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui-1cc/avatar";
 import { Badge } from "@/components/ui-1cc/badge";
@@ -74,27 +73,27 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-full">
           <div className="text-lg text-muted-foreground">Chargement...</div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
   if (!profile) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-full">
           <div className="text-lg text-muted-foreground">Profil introuvable</div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <Card variant="neumorphismFlat" className="p-6">
           <div className="flex items-start gap-6">
@@ -216,7 +215,7 @@ const Profile = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

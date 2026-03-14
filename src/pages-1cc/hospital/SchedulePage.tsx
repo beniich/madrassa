@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { AgendaView } from "@/components/hospital/AgendaView";
 import { Button } from "@/components/ui-1cc/button";
 import { Plus, Filter } from "lucide-react";
@@ -7,7 +6,7 @@ import { AppointmentForm } from "@/components/hospital/AppointmentForm";
 
 const SchedulePage = () => {
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-6 animate-fade-in pb-12">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -39,7 +38,7 @@ const SchedulePage = () => {
 
                 <AgendaView />
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

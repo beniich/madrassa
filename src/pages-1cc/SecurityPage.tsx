@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MultiTenantHeader } from "@/components/MultiTenantHeader";
 import { AuditLogViewer } from "@/components/audit/AuditLogViewer";
 import { SecurityOverview } from "@/components/audit/SecurityOverview";
@@ -30,7 +29,7 @@ const SecurityPage = () => {
     };
 
     return (
-        <DashboardLayout>
+        <>
             <div className="flex flex-col min-h-screen bg-background/50">
                 <MultiTenantHeader />
 
@@ -129,7 +128,7 @@ const SecurityPage = () => {
                     </Tabs>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui-1cc/card";
 import { Input } from "@/components/ui-1cc/input";
 import { Button } from "@/components/ui-1cc/button";
@@ -22,7 +21,7 @@ const PatientsPage = () => {
     );
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-8 animate-fade-in">
                 {/* Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -127,7 +126,7 @@ const PatientsPage = () => {
                     </CardContent>
                 </Card>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

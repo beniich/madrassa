@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { CustomerTable } from "@/components/CustomerTable";
 import { Button } from "@/components/ui-1cc/button";
 import { CustomerDialog } from "@/components/CustomerDialog";
@@ -9,7 +8,7 @@ const Companies = () => {
   const [refreshKey, setRefreshKey] = useState(0);
 
   return (
-    <DashboardLayout>
+    <>
       <div className="p-8 space-y-6">
         <div className="flex items-center justify-between">
           <div>
@@ -30,7 +29,7 @@ const Companies = () => {
         </div>
         <CustomerTable key={refreshKey} />
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

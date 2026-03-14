@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { InteractiveSpreadsheet, Column, Row } from "@/components/InteractiveSpreadsheet";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks-1cc/use-toast";
@@ -57,11 +56,11 @@ const Spreadsheet = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
@@ -70,7 +69,7 @@ const Spreadsheet = () => {
   const savedRows = localStorage.getItem("spreadsheet_rows");
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold">Tableur interactif</h1>
@@ -86,7 +85,7 @@ const Spreadsheet = () => {
           onSave={handleSave}
         />
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

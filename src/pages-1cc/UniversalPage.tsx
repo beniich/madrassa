@@ -8,7 +8,6 @@ import { Button } from '@/components/ui-1cc/button';
 import { ArrowLeft, LayoutPanelLeft, List, Settings2, Share2, MoreHorizontal, Plus } from 'lucide-react';
 import { Separator } from '@/components/ui-1cc/separator';
 import { RecordPage } from '@/types/engine';
-import { DashboardLayout } from '@/components/dashboard/DashboardLayout';
 
 const UniversalPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -51,7 +50,7 @@ const UniversalPage = () => {
     // VIEW: RECORD DETAIL
     if (recordId && record) {
         return (
-            <DashboardLayout>
+            <>
                 <div className="h-full flex flex-col">
                     {/* Top Navbar for Record */}
                     <div className="h-12 border-b flex items-center px-4 justify-between bg-white dark:bg-[#191919] z-10">
@@ -81,13 +80,13 @@ const UniversalPage = () => {
                         />
                     </div>
                 </div>
-            </DashboardLayout>
+            </>
         );
     }
 
     // VIEW: DATABASE (TABLE)
     return (
-        <DashboardLayout>
+        <>
             <div className="h-full flex flex-col bg-slate-50/50 dark:bg-black/20 p-6 space-y-6">
 
                 {/* Header */}
@@ -129,7 +128,7 @@ const UniversalPage = () => {
                 </div>
 
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

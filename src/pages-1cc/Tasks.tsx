@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { TaskKanban } from "@/components/TaskKanban";
 import { TaskCalendar } from "@/components/TaskCalendar";
 import { TaskList } from "@/components/TaskList";
@@ -228,16 +227,16 @@ const Tasks = () => {
 
   if (loading) {
     return (
-      <DashboardLayout>
+      <>
         <div className="flex items-center justify-center h-64">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
-      </DashboardLayout>
+      </>
     );
   }
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -322,7 +321,7 @@ const Tasks = () => {
         task={editingTask}
         onSave={handleSaveTask}
       />
-    </DashboardLayout>
+    </>
   );
 };
 

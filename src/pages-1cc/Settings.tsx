@@ -1,4 +1,3 @@
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Card } from "@/components/ui-1cc/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui-1cc/tabs";
 import { Input } from "@/components/ui-1cc/input";
@@ -125,7 +124,7 @@ const Settings = () => {
   };
 
   return (
-    <DashboardLayout>
+    <>
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold text-foreground">{t('settings.title')}</h1>
@@ -699,7 +698,7 @@ const Settings = () => {
           </TabsContent>
         </Tabs>
       </div>
-    </DashboardLayout>
+    </>
   );
 };
 

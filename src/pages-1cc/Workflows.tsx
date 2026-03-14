@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { Button } from "@/components/ui-1cc/button";
 import { Card } from "@/components/ui-1cc/card";
 import { Plus, Play, MoreVertical, Edit, Trash } from "lucide-react";
@@ -41,7 +40,7 @@ const Workflows = () => {
     const [workflows, setWorkflows] = useState<Workflow[]>(mockWorkflows);
 
     return (
-        <DashboardLayout>
+        <>
             <div className="space-y-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
@@ -99,7 +98,7 @@ const Workflows = () => {
                     ))}
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

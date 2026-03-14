@@ -1,5 +1,4 @@
 
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { MultiTenantHeader } from "@/components/MultiTenantHeader";
 import { WalletCard } from "@/components/finance/WalletCard";
 import { TransactionHistory } from "@/components/finance/TransactionHistory";
@@ -7,7 +6,7 @@ import { CustomerKYC } from "@/components/finance/CustomerKYC";
 
 const FinancePage = () => {
     return (
-        <DashboardLayout>
+        <>
             <div className="flex flex-col min-h-screen bg-background/50">
                 <MultiTenantHeader />
 
@@ -39,7 +38,7 @@ const FinancePage = () => {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 

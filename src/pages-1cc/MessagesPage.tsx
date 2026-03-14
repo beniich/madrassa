@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/dashboard/DashboardLayout";
 import { ChatSidebar } from "@/components/chat/ChatSidebar";
 import { ChatArea } from "@/components/chat/ChatArea";
 import { MessageInput } from "@/components/chat/MessageInput";
@@ -9,7 +8,7 @@ const MessagesPage = () => {
     const [activeChannelId, setActiveChannelId] = useState<string>("all");
 
     return (
-        <DashboardLayout>
+        <>
             <div className="flex h-[calc(100vh-1rem)] overflow-hidden bg-background">
                 {/* Sidebar */}
                 <ChatSidebar
@@ -34,7 +33,7 @@ const MessagesPage = () => {
                     <MessageInput />
                 </div>
             </div>
-        </DashboardLayout>
+        </>
     );
 };
 
