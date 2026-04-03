@@ -8,6 +8,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ConfigProvider } from "@/contexts/ConfigContext";
 import { MainLayout } from '@/components/layout/MainLayout';
 import { CustomCursor } from '@/components/common/CustomCursor';
+import { AIChatPanel } from '@/components/ai/AIChatPanel';
 import { Suspense, lazy } from 'react';
 import { Loader2 } from 'lucide-react';
 
@@ -43,6 +44,7 @@ const Contact = lazy(() => import('@/pages/Contact'));
 const Features = lazy(() => import('@/pages/Features'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const Documentation = lazy(() => import('@/pages/Documentation'));
+const AIAssistant = lazy(() => import('@/pages/AIAssistant'));
 
 const PageLoader = () => (
   <div className="flex h-screen w-full items-center justify-center bg-background/50 backdrop-blur-sm fixed inset-0 z-50">
@@ -100,8 +102,10 @@ function App() {
                         <Route path="/googlesheets" element={<GoogleSheetsPage />} />
                         <Route path="/db-admin" element={<DbDashboard />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/ai-assistant" element={<AIAssistant />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
+                      <AIChatPanel />
                     </MainLayout>
                   } />
                 </Routes>

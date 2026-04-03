@@ -3,6 +3,8 @@ import cors from 'cors';
 import auditRoutes from './api/routes/audit';
 import flashbackRoutes from './api/routes/flashback';
 import cronRoutes from './api/routes/cron';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const aiRoutes = require('./api/routes/aiRoutes');
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -19,6 +21,7 @@ app.use(express.json());
 app.use('/api/audit', auditRoutes);
 app.use('/api/flashback', flashbackRoutes);
 app.use('/api/cron/jobs', cronRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

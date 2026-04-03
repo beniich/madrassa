@@ -29,7 +29,8 @@ import {
   ClipboardList,
   BookOpen,
   CheckSquare,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Sparkles
 } from 'lucide-react';
 
 interface SidebarItem {
@@ -137,6 +138,12 @@ const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Gestion RH',
     icon: Users,
     path: '/hr-management',
+  },
+  {
+    id: 'ai-assistant',
+    label: 'Assistant IA',
+    icon: Sparkles,
+    path: '/ai-assistant',
   },
 ];
 
