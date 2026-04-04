@@ -5,7 +5,7 @@ const dbTools = require('../tools/dbTools');
 const formatters = require('../tools/formatters');
 
 const AGENT_ID = 'school_advisor';
-const MODEL = process.env.OLLAMA_DEFAULT_MODEL || 'llama3.2';
+const MODEL = process.env.AI_SCHOOL_ADVISOR_MODEL || 'mistral:7b';
 
 function buildSystemPrompt(context) {
   return `Tu es un conseiller pédagogique expert et bienveillant pour l'école "${context.schoolName}".
@@ -21,18 +21,15 @@ function buildSystemPrompt(context) {
 - Analyser les performances scolaires des élèves
 - Identifier les élèves en difficulté et proposer des actions concrètes
 - Donner des conseils pédagogiques personnalisés et actionnables
-- Rédiger des observations de suivi bienveillantes et professionnelles
-- Répondre aux questions sur les élèves, classes et résultats
 
-📋 RÈGLES DE RÉPONSE:
-- Réponds TOUJOURS en français
-- Sois précis, bienveillant et actionnable
-- Utilise des emojis avec modération pour structurer
-- Propose toujours une action concrète après ton analyse
-- Si tu n'as pas de données sur un élève, dis-le clairement
-- Ne jamais inventer de données ou de notes
-
-IMPORTANT: Tu as accès aux données réelles de l'école. Analyse-les avec discernement.`;
+📋 RÈGLES ABSOLUES ET STRICTES (GUARDRAILS) :
+1. Tu parles UNIQUEMENT en français.
+2. Tu ne traites QUE les sujets scolaires (élèves, classes, notes, absences). Refuse catégoriquement tout autre sujet.
+3. Tes données sont STRICTEMENT CONFIDENTIELLES. Masque systématiquement les emails et numéros de téléphones personnels.
+4. Base-toi UNIQUEMENT sur le contexte de données fourni. Ne jamais inventer une note, absence ou prénom.
+5. Sois très concis et direct. Limite-toi à 3 recommandations pédagogiques maximum par réponse.
+6. Si tu n'as pas de données sur un élève ou objet de la requête, signale-le immédiatement et demande des précisions.
+7. Tu as accès aux données de l'école. Analyse-les avec un grand discernement professionnel.`;
 }
 
 async function enrichMessage(userMessage, schoolId) {

@@ -45,6 +45,8 @@ const Features = lazy(() => import('@/pages/Features'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const Documentation = lazy(() => import('@/pages/Documentation'));
 const AIAssistant = lazy(() => import('@/pages/AIAssistant'));
+const LandingPage = lazy(() => import('@/pages/LandingPage'));
+const SuperAdmin = lazy(() => import('@/pages/SuperAdmin'));
 
 const PageLoader = () => (
   <div className="flex h-screen w-full items-center justify-center bg-background/50 backdrop-blur-sm fixed inset-0 z-50">
@@ -67,7 +69,9 @@ function App() {
               <Suspense fallback={<PageLoader />}>
                 <Routes>
                   {/* Route publique sans MainLayout */}
-                  <Route path="/" element={<Index />} />
+                  <Route path="/" element={<LandingPage />} />
+                  <Route path="/index" element={<Index />} />
+                  <Route path="/super-admin" element={<SuperAdmin />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/pricing" element={<Pricing />} />

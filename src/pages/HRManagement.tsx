@@ -10,7 +10,15 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { 
     ArrowUpDown,
-    Loader2
+    Loader2,
+    Search,
+    Filter,
+    Plus,
+    Folder,
+    File,
+    Download,
+    Share2,
+    Trash2
 } from 'lucide-react';
 import { documentsService, SchoolFolder, SchoolFile } from '@/services/documentsService';
 import { toast } from 'sonner';
@@ -77,7 +85,7 @@ const HRManagement: React.FC = () => {
                     </TabsTrigger>
                 </TabsList>
 
-                <TabsContent value="dashboard" className="mt-6 outline-none focus-visible:ring-0">
+                <TabsContent value="dashboard" key="dashboard-tab" className="mt-6 outline-none focus-visible:ring-0">
                     <HRDashboard
                         stats={{
                             totalEmployees: 156,
@@ -88,15 +96,15 @@ const HRManagement: React.FC = () => {
                     />
                 </TabsContent>
 
-                <TabsContent value="employees" className="mt-6 outline-none focus-visible:ring-0">
+                <TabsContent value="employees" key="employees-tab" className="mt-6 outline-none focus-visible:ring-0">
                     <EmployeeList />
                 </TabsContent>
 
-                <TabsContent value="absences" className="mt-6 outline-none focus-visible:ring-0">
+                <TabsContent value="absences" key="absences-tab" className="mt-6 outline-none focus-visible:ring-0">
                     <LeaveManagement />
                 </TabsContent>
 
-                <TabsContent value="documents" className="mt-6 outline-none focus-visible:ring-0">
+                <TabsContent value="documents" key="documents-tab" className="mt-6 outline-none focus-visible:ring-0">
                     <div className="space-y-6">
                         <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
                             <div className="relative w-full md:w-96">

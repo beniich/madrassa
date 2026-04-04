@@ -8,6 +8,10 @@ const { v4: uuidv4 } = require('uuid');
 const orchestrator = require('../../core/agentOrchestrator');
 const ollamaClient = require('../../core/ollamaClient');
 const memoryManager = require('../../core/memoryManager');
+const { aiRateLimiter, enforceGuardrails } = require('../../core/aiGateway');
+const ragService = require('../../core/ai/ragService');
+const { db } = require('../../db');
+const { aiDocuments } = require('../../db/schema');
 
 // Middleware d'auth
 function authenticateToken(req, res, next) {
@@ -48,8 +52,8 @@ router.get('/agents', authenticateToken, (req, res) => {
 });
 
 // ─── POST /api/ai/chat — Chat Streaming SSE ─────────────────
-router.post('/chat', authenticateToken, async (req, res) => {
-  const { message, sessionId, agentHint } = req.body;
+router.post('/chat', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
+  const { message, sessionId, agentHint, model, isStrict } = req.body;
 
   if (!message || message.trim() === '') {
     return res.status(400).json({ error: 'Le message ne peut pas être vide' });
@@ -74,6 +78,8 @@ router.post('/chat', authenticateToken, async (req, res) => {
       userId: req.user.id,
       sessionId: sid,
       agentHint,
+      modelOverride: model,
+      isStrict: isStrict !== undefined ? isStrict : true
     });
 
     agentId = detectedAgent;
@@ -114,7 +120,7 @@ router.post('/chat', authenticateToken, async (req, res) => {
 });
 
 // ─── POST /api/ai/agent/:agentId ────────────────────────────
-router.post('/agent/:agentId', authenticateToken, async (req, res) => {
+router.post('/agent/:agentId', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
   const { agentId } = req.params;
   const { message, sessionId } = req.body;
 
@@ -214,7 +220,7 @@ router.patch('/insights/read', authenticateToken, (req, res) => {
 });
 
 // ─── POST /api/ai/document ──────────────────────────────────
-router.post('/document', authenticateToken, async (req, res) => {
+router.post('/document', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
   const { type, studentId, classId, period, extra } = req.body;
 
   const promptMap = {
@@ -270,6 +276,39 @@ router.post('/document', authenticateToken, async (req, res) => {
     res.write(`event: error\ndata: ${JSON.stringify({ error: err.message })}\n\n`);
   } finally {
     res.end();
+  }
+});
+
+// ─── POST /api/ai/ingest — Ingestion de document pour RAG ──
+router.post('/ingest', authenticateToken, async (req, res) => {
+  const { title, content, fileType, metadata } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).json({ error: 'Titre et contenu requis pour l\'ingestion.' });
+  }
+
+  try {
+    // 1. Sauvegarde métadonnées document
+    const [doc] = await db.insert(aiDocuments).values({
+      tenantId: req.schoolId,
+      title,
+      content,
+      fileType: fileType || 'txt',
+      metadata: metadata || {}
+    }).returning();
+
+    // 2. Lancer l'ingestion asynchrone (chunking + vectorisation)
+    const chunkCount = await ragService.ingestDocument(req.schoolId, doc.id, content, metadata);
+
+    res.json({ 
+      success: true, 
+      documentId: doc.id, 
+      chunkCount,
+      message: `${chunkCount} segments vectorisés avec succès.`
+    });
+  } catch (err) {
+    console.error('[AI Ingest] Erreur:', err);
+    res.status(500).json({ error: err.message });
   }
 });
 

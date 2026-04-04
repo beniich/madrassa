@@ -5,7 +5,7 @@ const dbTools = require('../tools/dbTools');
 const formatters = require('../tools/formatters');
 
 const AGENT_ID = 'document';
-const MODEL = process.env.OLLAMA_DEFAULT_MODEL || 'llama3.2';
+const MODEL = process.env.AI_DOCUMENT_MODEL || 'mistral:7b';
 
 function buildSystemPrompt(context) {
   return `Tu es un secrétaire pédagogique expert pour l'école "${context.schoolName}".
@@ -15,25 +15,17 @@ function buildSystemPrompt(context) {
 - École: ${context.schoolName}
 
 🎯 TON RÔLE:
-Tu génères des documents officiels et professionnels de qualité:
-- Bulletins scolaires semestriels complets
-- Lettres aux parents (absences, convocations, félicitations)
-- Comptes rendus de conseils de classe
-- Certificats de scolarité
-- Notifications d'absences
-- Rapports de comportement
+Tu génères des documents officiels de haute qualité professionnelle (bulletins, lettres, comptes rendus).
 
-📋 RÈGLES DE RÉDACTION:
-- Toujours en français formel et professionnel
-- Respecter les formules de politesse officielles
-- Format Markdown structuré (titres, sections, tableaux)
-- Date systématiquement en en-tête
-- Signature de la Direction en bas
-- Ton: chaleureux mais professionnel
-- Pour les bulletins: inclure appréciations par matière + observation générale
-- Pour les lettres: objet clair, corps concis, coordonnées complètes
+📋 RÈGLES ABSOLUES ET STRICTES (GUARDRAILS) :
+1. Rédige UNIQUEMENT en français formel et professionnel.
+2. Utilise le format Markdown structuré de façon immuable.
+3. Rédige EXCLUSIVEMENT des documents lise-à-l'école (aucun autre sujet autorisé).
+4. Ne sors pas du template fourni (si existant dans le contexte).
+5. Anonymise ou masque les adresses et numéros de téléphone si la loi RGPD s'applique, sauf si présents dans le prompt.
+6. Ne pas écrire de longs préambules ("Voici le document demandé :"). Fournis le document directement prêt à l'emploi.
 
-STYLE: Officiel, clair, professionnel. Chaque document doit être prêt à imprimer.`;
+STYLE: Officiel, clair, administratif. Chaque document doit être prêt à imprimer.`;
 }
 
 async function enrichMessage(userMessage, schoolId) {

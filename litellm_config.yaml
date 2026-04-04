@@ -1,0 +1,44 @@
+# =============================================================
+# LiteLLM Configuration File
+# =============================================================
+model_list:
+  # Modèle Chat Général & Analytics (très rapide)
+  - model_name: llama3.2:3b
+    litellm_params:
+      model: ollama/llama3.2
+      api_base: http://ollama:11434
+      max_tokens: 1500
+
+  # Modèle Conseil Pédagogique & Documents (meilleur raisonnement)
+  - model_name: mistral:7b
+    litellm_params:
+      model: ollama/mistral
+      api_base: http://ollama:11434
+      max_tokens: 2000
+
+  # Modèle Emploi du Temps / Requêtes ultra-courtes
+  - model_name: phi3:mini
+    litellm_params:
+      model: ollama/phi3
+      api_base: http://ollama:11434
+      max_tokens: 1000
+
+  # Embeddings (pour le RAG - Sprint 5)
+  - model_name: nomic-embed-text
+    litellm_params:
+      model: ollama/nomic-embed-text
+      api_base: http://ollama:11434
+
+  # ============================================================
+  # 👇 Optionnel : Configurer OpenAI comme Fallback (sécurité)
+  # ============================================================
+  # - model_name: gpt-4o-mini
+  #   litellm_params:
+  #     model: openai/gpt-4o-mini
+  #     api_key: os.environ/OPENAI_API_KEY
+
+litellm_settings:
+  drop_params: true                  # Supprime les paramètres non supportés par Ollama
+  set_verbose: false                 # Évite de polluer les logs
+  success_callback: ["prometheus"]   # Monitoring optionnel
+  failure_callback: ["prometheus"]

@@ -8,6 +8,7 @@ import { AIAgentCard } from '../components/ai/AIAgentCard';
 import { AIInsightWidget } from '../components/ai/AIInsightWidget';
 import {
   getAgents,
+  getModels,
   checkOllamaStatus,
   type AgentType,
   type AgentInfo,
@@ -49,6 +50,9 @@ const SUGGESTED_PROMPTS: Record<AgentType | 'all', { text: string; agent: AgentT
 };
 
 export const AIAssistant: React.FC = () => {
+  const [models, setModels] = useState<string[]>([]);
+  const [selectedModel, setSelectedModel] = useState<string>('');
+  const [isStrictMode, setIsStrictMode] = useState(true);
   const [agents, setAgents] = useState<AgentInfo[]>([]);
   const [ollamaStatus, setOllamaStatus] = useState<OllamaStatus | null>(null);
   const [selectedAgent, setSelectedAgent] = useState<AgentType | undefined>(undefined);
@@ -70,6 +74,10 @@ export const AIAssistant: React.FC = () => {
 
   useEffect(() => {
     getAgents().then(setAgents).catch(() => {});
+    getModels().then((m) => {
+      setModels(m);
+      if (m.length > 0) setSelectedModel(m[0]);
+    }).catch(() => {});
     checkOllamaStatus().then(setOllamaStatus).catch(() => {});
   }, []);
 
@@ -81,7 +89,7 @@ export const AIAssistant: React.FC = () => {
     if (!input.trim() || streaming) return;
     const msg = input;
     setInput('');
-    await sendMessage(msg, selectedAgent);
+    await sendMessage(msg, selectedAgent, selectedModel || undefined, isStrictMode);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -132,6 +140,34 @@ export const AIAssistant: React.FC = () => {
                 onClick={setSelectedAgent}
               />
             ))}
+          </div>
+        </div>
+
+        <div className="ai-sidebar__section">
+          <div className="ai-sidebar__section-title">Configuration</div>
+          <div className="ai-config-item">
+            <label className="ai-config-label">Modèle LLM</label>
+            <select 
+              className="ai-config-select"
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={!isOllamaOnline || streaming}
+            >
+              {models.map(m => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+              {models.length === 0 && <option value="">Aucun modèle détecté</option>}
+            </select>
+          </div>
+          
+          <div className="ai-config-item ai-config-item--row">
+            <label className="ai-config-label">Mode Strict (Guardrails)</label>
+            <div 
+              className={`ai-toggle ${isStrictMode ? 'ai-toggle--active' : ''}`}
+              onClick={() => !streaming && setIsStrictMode(!isStrictMode)}
+            >
+              <div className="ai-toggle__dot" />
+            </div>
           </div>
         </div>
 
@@ -281,9 +317,29 @@ export const AIAssistant: React.FC = () => {
         .ollama-status__label { font-weight: 600; }
         .ollama-status__models { font-size: 11px; opacity: 0.7; margin-top: 2px; font-family: monospace; }
         .ai-sidebar__section-title {
-          font-size: 11px; font-weight: 600; color: #6b7280;
-          text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+          font-size: 11px; font-weight: 700; color: #94a3b8;
+          text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+          display: flex; align-items: center; gap: 6px;
         }
+        .ai-config-item { margin-bottom: 14px; }
+        .ai-config-item--row { display: flex; align-items: center; justify-content: space-between; }
+        .ai-config-label { font-size: 12px; color: #64748b; font-weight: 500; margin-bottom: 6px; display: block; }
+        .ai-config-select {
+          width: 100%; padding: 8px 10px; border-radius: 8px; border: 1px solid #e2e8f0;
+          background: #f8fafc; font-size: 13px; color: #334155; outline: none; transition: all 0.15s;
+        }
+        .ai-config-select:focus { border-color: #3b82f6; background: white; }
+        .ai-toggle {
+          width: 36px; height: 20px; border-radius: 99px; background: #e2e8f0;
+          position: relative; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .ai-toggle--active { background: #3b82f6; }
+        .ai-toggle__dot {
+          width: 16px; height: 16px; border-radius: 50%; background: white;
+          position: absolute; top: 2px; left: 2px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .ai-toggle--active .ai-toggle__dot { left: 18px; }
         .ai-sidebar__agents { display: flex; flex-direction: column; gap: 6px; }
         .agent-all-btn {
           width: 100%; padding: 8px 12px; border-radius: 10px;

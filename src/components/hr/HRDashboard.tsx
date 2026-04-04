@@ -64,6 +64,12 @@ interface HRDashboardProps {
 }
 
 export const HRDashboard: React.FC<HRDashboardProps> = ({ stats = {} }) => {
+    const [isMounted, setIsMounted] = React.useState(false);
+    React.useEffect(() => {
+        setIsMounted(true);
+        return () => setIsMounted(false);
+    }, []);
+
     const {
         totalEmployees = 156,
         activeEmployees = 148,
@@ -116,27 +122,30 @@ export const HRDashboard: React.FC<HRDashboardProps> = ({ stats = {} }) => {
                         </div>
                     </CardHeader>
                     <div className="h-[300px] w-full">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <BarChart data={PRESENCE_DATA}>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
-                                <XAxis 
-                                    dataKey="month" 
-                                    axisLine={false} 
-                                    tickLine={false} 
-                                    tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} 
-                                />
-                                <YAxis 
-                                    axisLine={false} 
-                                    tickLine={false} 
-                                    tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} 
-                                />
-                                <Tooltip 
-                                    cursor={{ fill: 'rgba(255, 205, 0, 0.1)' }}
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontWeight: 'black' }}
-                                />
-                                <Bar dataKey="rate" fill="#FFCD00" radius={[4, 4, 0, 0]} barSize={40} />
-                            </BarChart>
-                        </ResponsiveContainer>
+                        {isMounted && (
+                            <ResponsiveContainer width="100%" height="100%" key="attendance-container">
+                                <BarChart data={PRESENCE_DATA}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                                    <XAxis 
+                                        dataKey="month" 
+                                        axisLine={false} 
+                                        tickLine={false} 
+                                        tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} 
+                                    />
+                                    <YAxis 
+                                        axisLine={false} 
+                                        tickLine={false} 
+                                        tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} 
+                                    />
+                                    <Tooltip 
+                                        isAnimationActive={false}
+                                        cursor={{ fill: 'rgba(255, 205, 0, 0.1)' }}
+                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontWeight: 'black' }}
+                                    />
+                                    <Bar dataKey="rate" fill="#FFCD00" radius={[4, 4, 0, 0]} barSize={40} isAnimationActive={false} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                        )}
                     </div>
                 </Card>
 
@@ -149,24 +158,27 @@ export const HRDashboard: React.FC<HRDashboardProps> = ({ stats = {} }) => {
                         </div>
                     </CardHeader>
                     <div className="h-[200px] w-full relative">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <RePieChart>
-                                <Pie
-                                    data={DEPT_DATA}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
-                                    dataKey="value"
-                                >
-                                    {DEPT_DATA.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                            </RePieChart>
-                        </ResponsiveContainer>
+                        {isMounted && (
+                            <ResponsiveContainer width="100%" height="100%" key="staff-container">
+                                <RePieChart>
+                                    <Pie
+                                        data={DEPT_DATA}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                        isAnimationActive={false}
+                                    >
+                                        {DEPT_DATA.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip isAnimationActive={false} />
+                                </RePieChart>
+                            </ResponsiveContainer>
+                        )}
                         <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
                             <span className="text-3xl font-black italic leading-none text-primary">{totalEmployees}</span>
                             <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest mt-1">Total</span>

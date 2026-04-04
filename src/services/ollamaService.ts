@@ -65,6 +65,8 @@ export interface StreamChatOptions {
   message: string;
   sessionId?: string;
   agentHint?: AgentType;
+  model?: string;
+  isStrict?: boolean;
   onToken: (token: string) => void;
   onAgent: (agent: { agentId: AgentType; agentName: string; agentIcon: string; sessionId: string }) => void;
   onDone: (sessionId: string) => void;
@@ -80,7 +82,7 @@ export async function streamChat(options: StreamChatOptions): Promise<void> {
       'Content-Type': 'application/json',
       ...getAuthHeaders(),
     },
-    body: JSON.stringify({ message, sessionId, agentHint }),
+    body: JSON.stringify({ message, sessionId, agentHint, model, isStrict }),
   });
 
   if (!res.ok) {

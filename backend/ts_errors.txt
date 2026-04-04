@@ -1,0 +1,61 @@
+﻿src/api/routes/stripe.ts(90,14): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/api/routes/superAdmin.ts(144,14): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is not assignable to parameter of type 'never'.
+src/api/routes/superAdmin.ts(148,7): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(values: { action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<...> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'tenantId' does not exist in type '{ action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<unknown> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]'.
+src/api/routes/superAdmin.ts(170,14): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "id"; tableName: "tenants"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: true; isPrimaryKey: true; isAutoincrement: false; hasRuntimeDefault: false; enumValues: undefined; baseColumn: never; identity: undefined; generated: undefined; }, {}, ...' is not assignable to parameter of type 'never'.
+src/api/routes/superAdmin.ts(173,7): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(values: { action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<...> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'tenantId' does not exist in type '{ action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<unknown> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]'.
+src/api/routes/superAdmin.ts(200,14): error TS2769: No overload matches this call.
+  Overload 1 of 3, '(left: PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>, right: string | SQLWrapper): SQL<...>', gave the following error.
+    Argument of type 'string | string[]' is not assignable to parameter of type 'string | SQLWrapper'.
+      Type 'string[]' is not assignable to type 'string | SQLWrapper'.
+  Overload 2 of 3, '(left: Aliased<string | string[]>, right: string | string[] | SQLWrapper): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'Aliased<string | string[]>'.
+      Type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is missing the following properties from type 'Aliased<string | string[]>': sql, fieldAlias
+  Overload 3 of 3, '(left: never, right: unknown): SQL<unknown>', gave the following error.
+    Argument of type 'PgColumn<{ name: "tenant_id"; tableName: "subscriptions"; dataType: "string"; columnType: "PgUUID"; data: string; driverParam: string; notNull: true; hasDefault: false; isPrimaryKey: false; isAutoincrement: false; ... 4 more ...; generated: undefined; }, {}, {}>' is not assignable to parameter of type 'never'.
+src/api/routes/superAdmin.ts(203,7): error TS2769: No overload matches this call.
+  Overload 2 of 2, '(values: { action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<...> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]): PgInsertBase<...>', gave the following error.
+    Object literal may only specify known properties, and 'tenantId' does not exist in type '{ action: string | SQL<unknown> | Placeholder<string, any>; id?: string | SQL<unknown> | Placeholder<string, any> | undefined; tenantId?: string | SQL<unknown> | Placeholder<...> | null | undefined; ... 5 more ...; ipAddress?: string | ... 3 more ... | undefined; }[]'.
+src/core/stripe/webhookHandler.ts(23,21): error TS2694: Namespace 'StripeConstructor' has no exported member 'Event'.
+src/core/stripe/webhookHandler.ts(37,53): error TS2694: Namespace 'StripeConstructor' has no exported member 'Checkout'.
+src/core/stripe/webhookHandler.ts(43,49): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/stripe/webhookHandler.ts(49,49): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/stripe/webhookHandler.ts(55,53): error TS2694: Namespace 'StripeConstructor' has no exported member 'Invoice'.
+src/core/stripe/webhookHandler.ts(61,53): error TS2694: Namespace 'StripeConstructor' has no exported member 'Invoice'.
+src/core/stripe/webhookHandler.ts(77,55): error TS2694: Namespace 'StripeConstructor' has no exported member 'Checkout'.
+src/core/stripe/webhookHandler.ts(104,57): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/stripe/webhookHandler.ts(122,57): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/stripe/webhookHandler.ts(144,53): error TS2694: Namespace 'StripeConstructor' has no exported member 'Invoice'.
+src/core/stripe/webhookHandler.ts(152,52): error TS2694: Namespace 'StripeConstructor' has no exported member 'Invoice'.
+src/core/stripe/webhookHandler.ts(160,41): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/stripe/webhookHandler.ts(161,28): error TS2694: Namespace 'StripeConstructor' has no exported member 'Subscription'.
+src/core/tenant/tenantMiddleware.ts(7,16): error TS2307: Cannot find module '../db/index' or its corresponding type declarations.
+src/core/tenant/tenantMiddleware.ts(8,40): error TS2307: Cannot find module '../db/schema' or its corresponding type declarations.
+

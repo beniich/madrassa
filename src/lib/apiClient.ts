@@ -25,10 +25,22 @@ function getToken(): string | null {
 }
 
 function buildHeaders(extra: Record<string, string> = {}): Record<string, string> {
-    const token = getToken();
+    const raw = localStorage.getItem('sg_user');
+    let token = null;
+    let tenantSlug = null;
+    
+    if (raw) {
+        try {
+            const parsed = JSON.parse(raw);
+            token = parsed?.token ?? null;
+            tenantSlug = parsed?.schoolId ?? null;
+        } catch {}
+    }
+
     return {
         'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(tenantSlug ? { 'X-Tenant-Slug': tenantSlug } : {}),
         ...extra,
     };
 }

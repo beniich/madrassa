@@ -1,0 +1,78 @@
+version: '3.8'
+
+# =============================================================
+# Madrassa AI Stack — Ollama + LiteLLM + Open WebUI
+# Usage: docker compose -f docker-compose.ai.yml up -d
+# =============================================================
+
+services:
+
+  # ─── Ollama — Moteur LLM Local ──────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    container_name: madrassa_ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_KEEP_ALIVE=24h
+      - OLLAMA_MAX_LOADED_MODELS=2
+    # Décommenter si GPU NVIDIA disponible:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # ─── LiteLLM Proxy — Abstraction Multi-Modèle ───────────────
+  litellm:
+    image: ghcr.io/berriai/litellm:main-latest
+    container_name: madrassa_litellm
+    restart: unless-stopped
+    ports:
+      - "4001:4000"
+    volumes:
+      - ./litellm_config.yaml:/app/config.yaml
+    environment:
+      - LITELLM_MASTER_KEY=${LITELLM_MASTER_KEY:-sk_litellm_madrassa_2026}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-none}
+    command: ["--config", "/app/config.yaml", "--port", "4000", "--detailed_debug"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+
+  # ─── Open WebUI — Interface Admin LLM ───────────────────────
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: madrassa_openwebui
+    restart: unless-stopped
+    ports:
+      - "3001:8080"
+    volumes:
+      - openwebui_data:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - WEBUI_SECRET_KEY=${OPENWEBUI_SECRET:-madrassa_webui_secret}
+      - ENABLE_SIGNUP=false
+    depends_on:
+      - ollama
+
+volumes:
+  ollama_data:
+    driver: local
+  openwebui_data:
+    driver: local
+
+networks:
+  default:
+    name: madrassa_ai_network

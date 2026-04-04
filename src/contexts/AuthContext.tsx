@@ -52,6 +52,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         // Try to load from cache immediately for instant UI
+        // === DEV BYPASS MODE ===
+        // Décommentez pour contourner l'authentification et accéder directement
+        
+        const DEV_BYPASS = true; // <-- ON
+        if (DEV_BYPASS) {
+            const mockUser: User = {
+                id: 'admin_bypass_id',
+                firstName: 'Super',
+                lastName: 'Admin',
+                email: 'test@madrassa.local',
+                role: 'admin',
+                schoolId: 'demo-school', // Slug d'un tenant démo
+                permissions: ROLE_PERMISSIONS['admin'],
+                token: 'mock_token_dev'
+            };
+            setUser(mockUser);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(mockUser));
+            setIsLoading(false);
+            return;
+        }
+        // =======================
+
         const cached = localStorage.getItem(STORAGE_KEY);
         if (cached) {
             try {

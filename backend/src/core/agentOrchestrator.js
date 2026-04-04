@@ -4,6 +4,7 @@
 const ollamaClient = require('./ollamaClient');
 const memoryManager = require('./memoryManager');
 const dbTools = require('./tools/dbTools');
+const ragService = require('./ai/ragService');
 
 // Chargement des agents
 const AGENTS = {
@@ -70,7 +71,7 @@ function detectIntent(message) {
 
 // ─── Dispatch Principal ──────────────────────────────────────
 
-async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint }) {
+async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint, modelOverride, isStrict = true }) {
   const history = memoryManager.getHistory(sessionId);
 
   const agentId = agentHint && AGENTS[agentHint] ? agentHint : detectIntent(userMessage);
@@ -78,7 +79,18 @@ async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint })
 
   const context = dbTools.getSchoolContext(schoolId);
 
-  const systemPrompt = agent.buildSystemPrompt(context);
+  // --- RAG: Recherche de contexte documentaire ---
+  let ragContext = '';
+  try {
+    const similarChunks = await ragService.searchSimilarChunks(schoolId, userMessage);
+    if (similarChunks.length > 0) {
+      ragContext = `\n\n[CONTEXTE DOCUMENTAIRE RÉEL]:\n${similarChunks.join('\n\n---\n\n')}`;
+    }
+  } catch (err) {
+    console.warn(`[Orchestrator] RAG échoué:`, err);
+  }
+
+  const systemPrompt = agent.buildSystemPrompt(context) + (ragContext ? `\n\n📚 Données complémentaires trouvées: ${ragContext}` : '');
 
   let enrichedUserMessage = userMessage;
   try {
@@ -99,7 +111,7 @@ async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint })
   memoryManager.saveMessage(sessionId, schoolId, userId, 'user', userMessage, agentId);
 
   const stream = await ollamaClient.chat({
-    model: agent.model,
+    model: modelOverride || agent.model,
     messages,
     stream: true,
   });

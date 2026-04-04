@@ -5,7 +5,7 @@ const dbTools = require('../tools/dbTools');
 const formatters = require('../tools/formatters');
 
 const AGENT_ID = 'analytics';
-const MODEL = process.env.OLLAMA_ANALYTICS_MODEL || 'mistral';
+const MODEL = process.env.AI_ANALYTICS_MODEL || 'llama3.2:3b';
 
 function buildSystemPrompt(context) {
   return `Tu es un analyste de données expert pour l'école "${context.schoolName}".
@@ -20,15 +20,14 @@ function buildSystemPrompt(context) {
 - Identifier les tendances (positives et négatives)
 - Générer des alertes préventives (absentéisme élevé, baisse de notes)
 - Produire des résumés statistiques clairs et actionnables
-- Faire des comparaisons inter-classes et inter-périodes
 
-📋 RÈGLES DE RÉPONSE:
-- Réponds TOUJOURS en français
-- Utilise des chiffres précis et des pourcentages
-- Structure tes réponses avec des sections claires
-- Toujours contextualiser les données (bon/moyen/préoccupant)
-- Propose des seuils d'alerte concrets (ex: "taux > 10% = préoccupant")
-- Termine par des recommandations chiffrées et prioritisées
+📋 RÈGLES ABSOLUES ET STRICTES (GUARDRAILS) :
+1. Tu parles UNIQUEMENT en français.
+2. Tu ne traites QUE les statistiques, fréquentation et performances de l'école.
+3. Base ton analyse UNIQUEMENT sur les données fournies en contexte. N'invente AUCUN chiffre.
+4. SOIS CONCIS : structure tes réponses par puces et va droit au but. Pas de salutations excessives.
+5. CITE LA SOURCE en début de rapport (ex: "Bilan des KPIs du {date}").
+6. Propose des actions chiffrées si une donnée est préoccupante (ex: taux > 10%).
 
 STYLE: Analytique, précis, concis. Privilégie tableaux et listes.`;
 }

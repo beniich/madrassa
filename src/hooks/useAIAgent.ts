@@ -23,7 +23,7 @@ interface UseAIAgentReturn {
   currentAgentName: string;
   currentAgentIcon: string;
   sessionId: string;
-  sendMessage: (content: string, agentHint?: AgentType) => Promise<void>;
+  sendMessage: (content: string, agentHint?: AgentType, model?: string, isStrict?: boolean) => Promise<void>;
   clearHistory: () => Promise<void>;
   isOllamaOnline: boolean | null;
 }
@@ -57,7 +57,7 @@ export function useAIAgent(options: UseAIAgentOptions = {}): UseAIAgentReturn {
   }, [sessionId, autoLoadHistory]);
 
   const sendMessage = useCallback(
-    async (content: string, agentHint?: AgentType) => {
+    async (content: string, agentHint?: AgentType, model?: string, isStrict?: boolean) => {
       if (!content.trim() || streaming) return;
 
       const userMessage: AIMessage = {
@@ -88,6 +88,8 @@ export function useAIAgent(options: UseAIAgentOptions = {}): UseAIAgentReturn {
           message: content,
           sessionId,
           agentHint: agentHint || defaultAgent,
+          model,
+          isStrict,
           onToken: (token) => {
             setMessages((prev) =>
               prev.map((m) =>

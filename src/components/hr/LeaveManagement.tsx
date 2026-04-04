@@ -29,9 +29,12 @@ const COLORS = ['#FFCD00', '#222222', '#FACC15', '#454545', '#71717A'];
 export const LeaveManagement: React.FC = () => {
     const [requests, setRequests] = useState<LeaveRequest[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isMounted, setIsMounted] = useState(false);
 
     React.useEffect(() => {
+        setIsMounted(true);
         loadRequests();
+        return () => setIsMounted(false);
     }, []);
 
     const loadRequests = async () => {
@@ -104,23 +107,26 @@ export const LeaveManagement: React.FC = () => {
                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Jours d'absence cumulés</p>
                     </CardHeader>
                     <div className="h-[250px] w-full relative z-10">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <AreaChart data={MONTHLY_ABSENCE}>
-                                <defs>
-                                    <linearGradient id="colorDays" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="5%" stopColor="#222222" stopOpacity={0.1}/>
-                                        <stop offset="95%" stopColor="#222222" stopOpacity={0}/>
-                                    </linearGradient>
-                                </defs>
-                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
-                                <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} />
-                                <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} />
-                                <Tooltip 
-                                    contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontWeight: 'black' }}
-                                />
-                                <Area type="monotone" dataKey="days" stroke="#222222" strokeWidth={3} fillOpacity={1} fill="url(#colorDays)" />
-                            </AreaChart>
-                        </ResponsiveContainer>
+                        {isMounted && (
+                            <ResponsiveContainer width="100%" height="100%" key="absence-evolution">
+                                <AreaChart data={MONTHLY_ABSENCE}>
+                                    <defs>
+                                        <linearGradient id="colorDays" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#222222" stopOpacity={0.1}/>
+                                            <stop offset="95%" stopColor="#222222" stopOpacity={0}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
+                                    <XAxis dataKey="month" axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} />
+                                    <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fontWeight: 900, fill: '#9CA3AF' }} />
+                                    <Tooltip 
+                                        isAnimationActive={false}
+                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)', fontWeight: 'black' }}
+                                    />
+                                    <Area type="monotone" dataKey="days" stroke="#222222" strokeWidth={3} fillOpacity={1} fill="url(#colorDays)" isAnimationActive={false} />
+                                </AreaChart>
+                            </ResponsiveContainer>
+                        )}
                     </div>
                 </Card>
 
@@ -134,25 +140,28 @@ export const LeaveManagement: React.FC = () => {
                         <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">Distribution S1</p>
                     </CardHeader>
                     <div className="h-[200px] w-full relative z-10">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <RePieChart>
-                                <Pie
-                                    data={LEAVE_TYPES}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    paddingAngle={5}
-                                    dataKey="value"
-                                    stroke="none"
-                                >
-                                    {LEAVE_TYPES.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip cursor={false} contentStyle={{ backgroundColor: '#111', border: 'none', borderRadius: '8px', color: '#fff' }} />
-                            </RePieChart>
-                        </ResponsiveContainer>
+                        {isMounted && (
+                            <ResponsiveContainer width="100%" height="100%" key="leave-types">
+                                <RePieChart>
+                                    <Pie
+                                        data={LEAVE_TYPES}
+                                        cx="50%"
+                                        cy="50%"
+                                        innerRadius={60}
+                                        outerRadius={80}
+                                        paddingAngle={5}
+                                        dataKey="value"
+                                        stroke="none"
+                                        isAnimationActive={false}
+                                    >
+                                        {LEAVE_TYPES.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                        ))}
+                                    </Pie>
+                                    <Tooltip isAnimationActive={false} cursor={false} contentStyle={{ backgroundColor: '#111', border: 'none', borderRadius: '8px', color: '#fff' }} />
+                                </RePieChart>
+                            </ResponsiveContainer>
+                        )}
                         <div className="absolute inset-0 flex items-center justify-center flex-col pointer-events-none">
                             <span className="text-xl font-black italic leading-none text-primary">100%</span>
                         </div>
