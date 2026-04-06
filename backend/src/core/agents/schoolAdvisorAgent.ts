@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // schoolAdvisorAgent.js — Conseiller Pédagogique IA
 // ============================================================
@@ -72,7 +73,7 @@ Absences:\n${formatters.formatAttendance(attendance)}`;
   return enrichedContext;
 }
 
-module.exports = {
+export default {
   id: AGENT_ID,
   name: 'Conseiller Pédagogique',
   description: 'Analyse les performances élèves et fournit des conseils pédagogiques',
@@ -81,3 +82,4 @@ module.exports = {
   buildSystemPrompt,
   enrichMessage,
 };
+

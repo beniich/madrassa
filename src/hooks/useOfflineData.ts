@@ -340,14 +340,14 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
     const schoolId = students[0]?.schoolId || 'demo_school';
 
     // Check for students with repeated absences
-    const studentAbsences: Record<string, number> = {};
+    const studentAttendance: Record<string, number> = {};
     attendance.forEach(a => {
         if (a.status === 'absent') {
-            studentAbsences[a.studentId] = (studentAbsences[a.studentId] || 0) + 1;
+            studentAttendance[a.studentId] = (studentAttendance[a.studentId] || 0) + 1;
         }
     });
 
-    for (const [studentId, count] of Object.entries(studentAbsences)) {
+    for (const [studentId, count] of Object.entries(studentAttendance)) {
         if (count >= 3) {
             const student = students.find(s => s.localId === studentId);
             if (student) {
@@ -356,7 +356,7 @@ export async function generateOfflineAlerts(): Promise<AIAlert[]> {
                     schoolId,
                     type: 'absence',
                     severity: 'warning',
-                    title: 'Absences répétées détectées',
+                    title: 'Attendance répétées détectées',
                     description: `${student.firstName} ${student.lastName} a ${count} absences ce mois.`,
                     studentId,
                     isRead: false,

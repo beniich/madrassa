@@ -42,7 +42,7 @@ const ClassesModule = () => {
           <div className="grid grid-cols-3 gap-4">
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">Élèves</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Students</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-2xl font-bold">{selectedClass.students}</p>
@@ -70,7 +70,7 @@ const ClassesModule = () => {
     },
     {
       id: "students",
-      label: "Élèves",
+      label: "Students",
       icon: Users,
       content: (
         <div className="space-y-2">

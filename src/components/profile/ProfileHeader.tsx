@@ -106,7 +106,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
                                 <p className="text-lg text-gray-600 mt-1">{role}</p>
                             </div>
                             <div className="flex gap-2">
-                                <Button variant="outline">Modifier profil</Button>
+                                <Button variant="outline">Edit profil</Button>
                                 <Button>Partager</Button>
                             </div>
                         </div>

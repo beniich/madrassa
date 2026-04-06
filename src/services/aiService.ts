@@ -87,7 +87,7 @@ class AIService {
             return {
                 answer: "L'analyse de la classe montre une progression ce mois-ci. Cependant, certains élèves présentent un risque de décrochage concernant l'assiduité.",
                 suggestions: ["Voir les élèves à risque", "Générer un plan de soutien", "Alerter les parents"],
-                sources: ["Registre d'appel", "Notes du dernier test"],
+                sources: ["Registre d'appel", "Grades du dernier test"],
             };
         }
         return {
@@ -99,7 +99,7 @@ class AIService {
     private handleMessageGeneration(context: AIContext): AIResponse {
         return {
             answer: "Voici une proposition de message :\n\n'Cher parent, nous avons remarqué une belle progression de votre enfant. Son implication en classe est exemplaire.'",
-            suggestions: ["Modifier le ton (plus formel)", "Envoyer le message", "Ajouter un rappel pour la réunion"],
+            suggestions: ["Edit le ton (plus formel)", "Envoyer le message", "Add un rappel pour la réunion"],
         };
     }
 }

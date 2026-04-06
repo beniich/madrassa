@@ -1,5 +1,5 @@
 /**
- * HR Service - Gestion des Ressources Humaines
+ * HR Service - Human Resources Management
  * Gère les enseignants et le personnel via l'endpoint /api/hr.
  */
 

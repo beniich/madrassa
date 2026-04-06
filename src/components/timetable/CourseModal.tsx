@@ -83,7 +83,7 @@ export const CourseModal = ({
             <div className="bg-white rounded-xl max-w-lg w-full">
                 <div className="p-6 border-b border-gray-200 flex items-center justify-between">
                     <h2 className="text-2xl font-bold text-gray-900">
-                        {slot ? 'Modifier le cours' : 'Nouveau cours'}
+                        {slot ? 'Edit le cours' : 'New cours'}
                     </h2>
                     <button
                         onClick={onClose}
@@ -107,7 +107,7 @@ export const CourseModal = ({
                             }
                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         >
-                            <option value="">Sélectionner...</option>
+                            <option value="">Select...</option>
                             {SUBJECTS.map((subject) => (
                                 <option key={subject.name} value={subject.name}>
                                     {subject.name}
@@ -129,7 +129,7 @@ export const CourseModal = ({
                                 setFormData({ ...formData, teacher: e.target.value })
                             }
                             className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                            placeholder="Nom de l'enseignant"
+                            placeholder="Last Name de l'enseignant"
                         />
                     </div>
 
@@ -220,7 +220,7 @@ export const CourseModal = ({
                                 <button
                                     type="button"
                                     onClick={() => {
-                                        if (confirm('Supprimer ce cours ?')) {
+                                        if (confirm('Delete ce cours ?')) {
                                             onDelete(slot.id);
                                             onClose();
                                         }
@@ -228,7 +228,7 @@ export const CourseModal = ({
                                     className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                                 >
                                     <Trash2 className="w-4 h-4" />
-                                    Supprimer
+                                    Delete
                                 </button>
                             )}
                         </div>
@@ -238,13 +238,13 @@ export const CourseModal = ({
                                 onClick={onClose}
                                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                             >
-                                Annuler
+                                Cancel
                             </button>
                             <button
                                 type="submit"
                                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
                             >
-                                {slot ? 'Modifier' : 'Ajouter'}
+                                {slot ? 'Edit' : 'Add'}
                             </button>
                         </div>
                     </div>

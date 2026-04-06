@@ -27,11 +27,11 @@ import { usePaneContext } from "./OutlookLayout";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
-  { icon: Users, label: "Élèves", href: "/dashboard/students", badge: null, roles: ['direction', 'admin', 'teacher'] },
+  { icon: Users, label: "Students", href: "/dashboard/students", badge: null, roles: ['direction', 'admin', 'teacher'] },
   { icon: GraduationCap, label: "Enseignants", href: "/dashboard/teachers", badge: null, roles: ['direction', 'admin'] },
   { icon: School, label: "Classes", href: "/dashboard/classes", badge: null, roles: ['direction', 'admin', 'teacher'] },
   { icon: Calendar, label: "Planning", href: "/dashboard/timetable", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
-  { icon: FileText, label: "Notes", href: "/dashboard/exams", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
+  { icon: FileText, label: "Grades", href: "/dashboard/exams", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: Clock, label: "Présence", href: "/dashboard/attendance", badge: "3", roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: MessageSquare, label: "Messages", href: "/dashboard/communication", badge: "5", roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: LayoutDashboard, label: "Tâches", href: "/dashboard/tasks", badge: "2", roles: ['direction', 'admin', 'teacher'] },

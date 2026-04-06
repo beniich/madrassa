@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { documentsService, SchoolFolder, SchoolFile } from '@/services/documentsService';
 import { toast } from 'sonner';
+import { LitAnimatedStat } from '@/components/common/LitAnimatedStatWrapper';
 
 const HRManagement: React.FC = () => {
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -45,7 +46,7 @@ const HRManagement: React.FC = () => {
             setFolders(f);
             setRecentFiles(recents);
         } catch (error) {
-            toast.error("Erreur documents");
+            toast.error("Error documents");
         } finally {
             setIsLoadingDocs(false);
         }
@@ -57,11 +58,20 @@ const HRManagement: React.FC = () => {
             <div>
                 <h1 className="text-3xl font-black italic tracking-tighter text-gray-900 flex items-center gap-3">
                     <Users className="w-8 h-8 text-primary" />
-                    Gestion des Ressources Humaines
+                    Human Resources Management
                 </h1>
                 <p className="text-gray-400 font-bold mt-1 text-sm uppercase tracking-widest">
-                    Gérez vos employés, les absences et les performances
+                    Manage your employees, absences, and performances
                 </p>
+            </div>
+
+            {/* Lit Web Components - Stats Banner */}
+            <div className="bg-[#111111] p-6 rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6 shadow-2xl relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 blur-3xl rounded-full" />
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 blur-3xl rounded-full" />
+                <LitAnimatedStat title="Active Employees" value={148} icon="👥" trend="up" trendValue="+5%" />
+                <LitAnimatedStat title="Attendance Rate" value={92} icon="📈" trend="neutral" trendValue="= 92%" />
+                <LitAnimatedStat title="Leave Requests" value={8} icon="⏳" trend="down" trendValue="-2" />
             </div>
 
             {/* Tabs */}
@@ -69,7 +79,7 @@ const HRManagement: React.FC = () => {
                 <TabsList className="bg-white border border-gray-100 rounded-2xl p-1 h-auto flex flex-wrap gap-1 shadow-sm w-fit">
                     <TabsTrigger value="dashboard" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <LayoutDashboard className="w-4 h-4" />
-                        Tableau de bord
+                        Dashboard
                     </TabsTrigger>
                     <TabsTrigger value="employees" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <Users className="w-4 h-4" />
@@ -77,7 +87,7 @@ const HRManagement: React.FC = () => {
                     </TabsTrigger>
                     <TabsTrigger value="absences" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <CalendarCheck className="w-4 h-4" />
-                        Congés & Absences
+                        Leaves & Attendance
                     </TabsTrigger>
                     <TabsTrigger value="documents" className="flex items-center gap-2 rounded-xl data-[state=active]:bg-[#222222] data-[state=active]:text-white data-[state=active]:shadow-xl transition-all h-10 px-5 font-black text-xs uppercase tracking-widest">
                         <FileText className="w-4 h-4" />
@@ -109,16 +119,16 @@ const HRManagement: React.FC = () => {
                         <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
                             <div className="relative w-full md:w-96">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                                <Input placeholder="Rechercher un document..." className="pl-10 rounded-xl bg-white border-gray-200" />
+                                <Input placeholder="Search document..." className="pl-10 rounded-xl bg-white border-gray-200" />
                             </div>
                             <div className="flex gap-2 w-full md:w-auto">
                                 <Button variant="outline" className="rounded-xl border-gray-200 bg-white gap-2 font-black text-[10px] uppercase tracking-widest h-10 px-4">
                                     <Filter className="w-3.5 h-3.5" />
-                                    Filtrer
+                                    Filter
                                 </Button>
                                 <Button className="rounded-xl bg-[#222222] text-white hover:bg-black gap-2 font-black text-[10px] uppercase tracking-widest h-10 px-4 shadow-xl shadow-gray-200">
                                     <Plus className="w-3.5 h-3.5" />
-                                    Nouveau
+                                    New
                                 </Button>
                             </div>
                         </div>
@@ -130,7 +140,7 @@ const HRManagement: React.FC = () => {
                                 </div>
                             ) : folders.length === 0 ? (
                                 <div className="col-span-full p-8 text-center bg-gray-50 rounded-2xl text-gray-400 font-bold italic">
-                                    Aucun dossier structuré
+                                    No structured folder
                                 </div>
                             ) : (
                                 folders.map((folder, idx) => (
@@ -141,7 +151,7 @@ const HRManagement: React.FC = () => {
                                             </div>
                                             <div>
                                                 <h4 className="font-black italic text-sm tracking-tighter truncate w-32">{folder.name}</h4>
-                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} fichiers</p>
+                                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{folder.itemCount} files</p>
                                             </div>
                                         </CardContent>
                                     </Card>
@@ -152,11 +162,11 @@ const HRManagement: React.FC = () => {
                         <Card className="border-gray-100 rounded-3xl overflow-hidden shadow-sm">
                             <CardHeader className="bg-gray-50/50 flex flex-row items-center justify-between py-4">
                                 <div className="space-y-1">
-                                    <CardTitle className="text-sm font-black italic tracking-tighter uppercase">Documents Récents</CardTitle>
-                                    <CardDescription className="text-[10px] font-bold uppercase tracking-widest">Aperçu des 10 derniers fichiers</CardDescription>
+                                    <CardTitle className="text-sm font-black italic tracking-tighter uppercase">Recent Documents</CardTitle>
+                                    <CardDescription className="text-[10px] font-bold uppercase tracking-widest">Aperçu des 10 derniers files</CardDescription>
                                 </div>
                                 <Button variant="ghost" size="sm" className="font-black text-[10px] uppercase tracking-widest text-primary">
-                                    Voir tout
+                                    See all
                                     <ArrowUpDown className="ml-2 w-3 h-3" />
                                 </Button>
                             </CardHeader>
@@ -165,10 +175,10 @@ const HRManagement: React.FC = () => {
                                     <table className="w-full text-left">
                                         <thead className="border-b border-gray-100 text-[10px] font-black uppercase tracking-widest text-gray-400">
                                             <tr>
-                                                <th className="px-6 py-4">Nom du fichier</th>
-                                                <th className="px-6 py-4">Propriétaire</th>
+                                                <th className="px-6 py-4">File Name</th>
+                                                <th className="px-6 py-4">Owner</th>
                                                 <th className="px-6 py-4">Date</th>
-                                                <th className="px-6 py-4">Taille</th>
+                                                <th className="px-6 py-4">Size</th>
                                                 <th className="px-6 py-4 text-right">Action</th>
                                             </tr>
                                         </thead>

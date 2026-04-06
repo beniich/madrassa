@@ -81,9 +81,9 @@ export const getDefaultSettings = (): Partial<AllSettings> => ({
     },
     integrations: {
         emailProvider: 'SMTP',
-        smsProvider: 'None',
+        smsProvider: 'Noe',
         storageProvider: 'Local',
-        analyticsProvider: 'None',
+        analyticsProvider: 'Noe',
         webhookUrl: '',
     },
     system: {
@@ -240,12 +240,12 @@ export const importSettings = async (file: File): Promise<Partial<AllSettings>> 
                     reject(new Error('Structure de fichier invalide.'));
                 }
             } catch (error) {
-                reject(new Error('Erreur lors de la lecture du fichier.'));
+                reject(new Error('Error lors de la lecture du fichier.'));
             }
         };
 
         reader.onerror = () => {
-            reject(new Error('Erreur lors de la lecture du fichier.'));
+            reject(new Error('Error lors de la lecture du fichier.'));
         };
 
         reader.readAsText(file);

@@ -53,7 +53,7 @@ const CommunicationPage = () => {
             toast.success("Message envoyé (synchronisation en attente)");
             setNewMessage({ subject: "", content: "", recipientType: "all", priority: "normal" });
         } catch (error) {
-            toast.error("Erreur d'envoi");
+            toast.error("Error d'envoi");
         } finally {
             setIsSending(false);
         }
@@ -146,7 +146,7 @@ const CommunicationPage = () => {
                     <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
                         <Plus className="h-6 w-6" />
                     </div>
-                    <h2 className="font-bold text-xl">Nouveau Message</h2>
+                    <h2 className="font-bold text-xl">New Message</h2>
                 </div>
 
                 <form onSubmit={handleSendMessage} className="space-y-4">

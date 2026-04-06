@@ -183,7 +183,7 @@ const TeacherCard = ({
                   onClick={() => { onDelete(teacher.localId); setShowMenu(false); }}
                   className="flex items-center gap-4 px-4 py-4 hover:bg-rose-50 rounded-2xl w-full text-left font-black text-xs uppercase tracking-widest text-rose-600 transition-colors"
                 >
-                  <Trash2 className="w-4 h-4" /> Supprimer
+                  <Trash2 className="w-4 h-4" /> Delete
                 </button>
               </div>
             </>
@@ -315,7 +315,7 @@ export const Teachers = () => {
     try {
       if (isEditing && currentId) {
         await db.teachers.where('localId').equals(currentId).modify(formData);
-        toast.success("Profil RH mis à jour");
+        toast.success("Profile RH mis à jour");
       } else {
         await addTeacher({
           schoolId: user.schoolId,
@@ -332,18 +332,18 @@ export const Teachers = () => {
           hireDate: formData.hireDate || new Date().toISOString().split('T')[0],
           photo: formData.photo
         });
-        toast.success("Nouveau dossier RH créé", { icon: <Sparkles className="h-4 w-4" /> });
+        toast.success("New dossier RH créé", { icon: <Sparkles className="h-4 w-4" /> });
       }
       setShowModal(false);
     } catch (err) {
-      toast.error("Erreur d'enregistrement");
+      toast.error("Error d'enregistrement");
     }
   };
 
   const handleDelete = (id: string) => {
     toast.error("Confirmer la suppression ?", {
       action: {
-        label: "Supprimer",
+        label: "Delete",
         onClick: async () => {
           const t = teachers.find(x => x.localId === id);
           if (t && t.id) {
@@ -372,7 +372,7 @@ export const Teachers = () => {
                        )}
                     </div>
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-primary/20 backdrop-blur-sm transition-all rounded-[2.5rem]">
-                        <span className="text-[10px] font-black text-white uppercase tracking-widest shadow-lg">Modifier Photo</span>
+                        <span className="text-[10px] font-black text-white uppercase tracking-widest shadow-lg">Edit Photo</span>
                     </div>
                     <input ref={photoInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoChange} title="Capture" />
                  </div>
@@ -388,17 +388,17 @@ export const Teachers = () => {
                         <h3 className="text-4xl font-black italic tracking-tighter text-gray-900">{isEditing ? 'Édition RH' : 'Recrutement RH'}</h3>
                         <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em] mt-2">Dossier Académique Sécurisé</p>
                     </div>
-                    <button onClick={() => setShowModal(false)} title="Fermer" className="h-12 w-12 bg-secondary/50 hover:bg-secondary rounded-2xl flex items-center justify-center text-gray-900 transition-all"><X className="w-5 h-5" /></button>
+                    <button onClick={() => setShowModal(false)} title="Close" className="h-12 w-12 bg-secondary/50 hover:bg-secondary rounded-2xl flex items-center justify-center text-gray-900 transition-all"><X className="w-5 h-5" /></button>
                  </div>
 
                  <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-2 gap-5">
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="fname">Prénom</label>
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="fname">First Name</label>
                             <Input id="fname" required value={formData.firstName} onChange={(e) => setFormData({...formData, firstName: e.target.value})} className="h-12 rounded-2xl bg-secondary/30 border-none font-bold italic focus:ring-primary/20" />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="lname">Nom de famille</label>
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="lname">Last Name de famille</label>
                             <Input id="lname" required value={formData.lastName} onChange={(e) => setFormData({...formData, lastName: e.target.value})} className="h-12 rounded-2xl bg-secondary/30 border-none font-bold italic focus:ring-primary/20" />
                         </div>
                     </div>
@@ -478,7 +478,7 @@ export const Teachers = () => {
                 <div className="relative flex-1 w-full">
                     <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-primary" />
                     <Input 
-                        placeholder="Filtrer par nom, spécialisation ou email institutionnel..." 
+                        placeholder="Filter par nom, spécialisation ou email institutionnel..." 
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="pl-16 h-16 bg-secondary/30 border-none rounded-[2rem] font-black text-sm placeholder:text-gray-400 focus:ring-primary/10"

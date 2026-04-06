@@ -74,7 +74,7 @@ export interface StreamChatOptions {
 }
 
 export async function streamChat(options: StreamChatOptions): Promise<void> {
-  const { message, sessionId, agentHint, onToken, onAgent, onDone, onError } = options;
+  const { message, sessionId, agentHint, model, isStrict, onToken, onAgent, onDone, onError } = options;
 
   const res = await fetch(`${API_BASE}/ai/chat`, {
     method: 'POST',
@@ -86,7 +86,7 @@ export async function streamChat(options: StreamChatOptions): Promise<void> {
   });
 
   if (!res.ok) {
-    onError(`Erreur HTTP: ${res.status}`);
+    onError(`Error HTTP: ${res.status}`);
     return;
   }
 
@@ -241,8 +241,18 @@ export async function generateDocument(options: GenerateDocumentOptions): Promis
 // ─── Utils ───────────────────────────────────────────────────
 
 function getAuthHeaders(): Record<string, string> {
-  const token = localStorage.getItem('auth_token') || '';
-  const schoolId = localStorage.getItem('school_id') || 'school-1';
+  const cached = localStorage.getItem('sg_user');
+  let token = '';
+  let schoolId = 'school-1';
+  
+  if (cached) {
+    try {
+      const user = JSON.parse(cached);
+      token = user.token || '';
+      schoolId = user.schoolId || 'school-1';
+    } catch { /* Ignore */ }
+  }
+
   return {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     'x-school-id': schoolId,

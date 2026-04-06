@@ -85,7 +85,7 @@ export default function SuperAdmin() {
 
       setIsAuthenticated(true);
     } catch (e) {
-      alert('Erreur de connexion au backend');
+      alert('Error de connexion au backend');
     } finally {
       setLoading(false);
     }
@@ -228,7 +228,7 @@ export default function SuperAdmin() {
               {[
                 { label: 'Établissements', value: kpis.totalTenants, icon: Building2, color: 'amber', sub: `${kpis.activeTenants} actifs` },
                 { label: 'MRR Estimé', value: `${kpis.mrrEstimated}€`, icon: DollarSign, color: 'emerald', sub: 'mensuel récurrent' },
-                { label: 'Élèves Total', value: kpis.totalStudents, icon: GraduationCap, color: 'blue', sub: 'sur la plateforme' },
+                { label: 'Students Total', value: kpis.totalStudents, icon: GraduationCap, color: 'blue', sub: 'sur la plateforme' },
                 { label: 'Enseignants', value: kpis.totalTeachers, icon: Users, color: 'purple', sub: 'enregistrés' },
                 { label: 'Classes', value: kpis.totalClasses, icon: BookOpen, color: 'pink', sub: 'actives' },
                 { label: 'Taux Actifs', value: `${kpis.totalTenants ? Math.round((kpis.activeTenants / kpis.totalTenants) * 100) : 0}%`, icon: Activity, color: 'cyan', sub: 'disponibilité' },
@@ -319,7 +319,7 @@ export default function SuperAdmin() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b border-white/10">
-                    {['Établissement', 'Plan', 'Statut', 'Classes', 'Élèves', 'Extra (€)', 'Actions'].map(h => (
+                    {['Établissement', 'Plan', 'Statut', 'Classes', 'Students', 'Extra (€)', 'Actions'].map(h => (
                       <th key={h} className="text-left px-5 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">{h}</th>
                     ))}
                   </tr>

@@ -74,7 +74,7 @@ const StudentsModule = () => {
     },
     {
       id: "grades",
-      label: "Notes",
+      label: "Grades",
       icon: FileText,
       content: (
         <div className="space-y-4">
@@ -104,7 +104,7 @@ const StudentsModule = () => {
       content: (
         <div className="space-y-4">
           <div className="flex items-center justify-between py-2 border-b">
-            <span>Absences ce trimestre</span>
+            <span>Attendance ce trimestre</span>
             <Badge variant="destructive">3 jours</Badge>
           </div>
           <div className="flex items-center justify-between py-2 border-b">
@@ -160,11 +160,11 @@ const StudentsModule = () => {
   return (
     <>
       <CenterPane
-        title="Élèves"
+        title="Students"
         searchPlaceholder="Rechercher un élève..."
         onSearch={setSearchQuery}
         onAdd={() => {}}
-        addLabel="Nouveau"
+        addLabel="New"
       >
         {filteredStudents.map((student) => (
           <ListItem

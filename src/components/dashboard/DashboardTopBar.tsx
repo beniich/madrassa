@@ -94,7 +94,7 @@ const DashboardTopBar = () => {
             <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
               <div className="flex items-center gap-2">
                 <span className="text-primary">📝</span>
-                <span className="font-medium">Notes ajoutées</span>
+                <span className="font-medium">Grades ajoutées</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Mme Dupont a saisi les notes du devoir de français
@@ -102,7 +102,7 @@ const DashboardTopBar = () => {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-center text-primary">
-              Voir toutes les notifications
+              See all notifications
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -136,7 +136,7 @@ const DashboardTopBar = () => {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
-              Paramètres
+              Settings
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-destructive" onClick={() => logout()}>

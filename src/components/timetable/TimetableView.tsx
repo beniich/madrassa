@@ -139,7 +139,7 @@ export const TimetableView = () => {
     const [modalDay, setModalDay] = useState<number>();
     const [modalHour, setModalHour] = useState<string>();
 
-    // Filtrer par classe
+    // Filter par classe
     const filteredSchedule = schedule.filter(
         (slot) => slot.class === selectedClass
     );

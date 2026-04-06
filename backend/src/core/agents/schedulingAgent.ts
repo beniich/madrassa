@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // schedulingAgent.js — Agent Gestion Planning & Absences
 // ============================================================
@@ -62,7 +63,7 @@ async function enrichMessage(userMessage, schoolId) {
   return enrichedContext;
 }
 
-module.exports = {
+export default {
   id: AGENT_ID,
   name: 'Gestionnaire Planning',
   description: 'Emplois du temps, remplacements et gestion des absences',
@@ -71,3 +72,4 @@ module.exports = {
   buildSystemPrompt,
   enrichMessage,
 };
+

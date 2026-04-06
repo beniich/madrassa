@@ -1,18 +1,25 @@
+// @ts-nocheck
 // ============================================================
 // agentOrchestrator.js — Chef d'orchestre des agents IA
 // ============================================================
-const ollamaClient = require('./ollamaClient');
-const memoryManager = require('./memoryManager');
-const dbTools = require('./tools/dbTools');
-const ragService = require('./ai/ragService');
+import * as ollamaClient from './ollamaClient';
+import * as memoryManager from './memoryManager';
+import * as dbTools from './tools/dbTools';
+import * as ragService from './ai/ragService';
 
 // Chargement des agents
-const AGENTS = {
-  school_advisor: require('./agents/schoolAdvisorAgent'),
-  analytics: require('./agents/analyticsAgent'),
-  scheduling: require('./agents/schedulingAgent'),
-  document: require('./agents/documentAgent'),
-  chat: require('./agents/chatAgent'),
+import schoolAdvisorAgent from './agents/schoolAdvisorAgent';
+import analyticsAgent from './agents/analyticsAgent';
+import schedulingAgent from './agents/schedulingAgent';
+import documentAgent from './agents/documentAgent';
+import chatAgent from './agents/chatAgent';
+
+const AGENTS: Record<string, any> = {
+  school_advisor: schoolAdvisorAgent,
+  analytics: analyticsAgent,
+  scheduling: schedulingAgent,
+  document: documentAgent,
+  chat: chatAgent,
 };
 
 // ─── Détection d'intention ──────────────────────────────────
@@ -52,9 +59,9 @@ const INTENT_PATTERNS = [
   },
 ];
 
-function detectIntent(message) {
+export function detectIntent(message: string): string {
   const lower = message.toLowerCase();
-  const scores = {};
+  const scores: Record<string, number> = {};
 
   for (const { agent, keywords } of INTENT_PATTERNS) {
     scores[agent] = keywords.filter((kw) => lower.includes(kw)).length;
@@ -71,7 +78,7 @@ function detectIntent(message) {
 
 // ─── Dispatch Principal ──────────────────────────────────────
 
-async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint, modelOverride, isStrict = true }) {
+export async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint, modelOverride, isStrict = true }: any) {
   const history = memoryManager.getHistory(sessionId);
 
   const agentId = agentHint && AGENTS[agentHint] ? agentHint : detectIntent(userMessage);
@@ -124,11 +131,11 @@ async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint, m
   };
 }
 
-function saveAssistantResponse(sessionId, schoolId, userId, content, agentId) {
+export function saveAssistantResponse(sessionId: string, schoolId: string, userId: string, content: string, agentId: string) {
   memoryManager.saveMessage(sessionId, schoolId, userId, 'assistant', content, agentId);
 }
 
-async function generateAutoInsights(schoolId) {
+export async function generateAutoInsights(schoolId: string) {
   const context = dbTools.getSchoolContext(schoolId);
   const analyticsAgent = AGENTS.analytics;
 
@@ -143,8 +150,8 @@ async function generateAutoInsights(schoolId) {
   return [];
 }
 
-function getAgentList() {
-  return Object.values(AGENTS).map((a) => ({
+export function getAgentList() {
+  return Object.values(AGENTS).map((a: any) => ({
     id: a.id,
     name: a.name,
     description: a.description,
@@ -153,10 +160,5 @@ function getAgentList() {
   }));
 }
 
-module.exports = {
-  dispatch,
-  saveAssistantResponse,
-  generateAutoInsights,
-  getAgentList,
-  detectIntent,
-};
+
+

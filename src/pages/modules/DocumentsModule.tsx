@@ -84,7 +84,7 @@ const DocumentsModule = () => {
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="bg-blue-600 text-white hover:bg-blue-700 border-none gap-2 font-semibold shadow-sm">
             <Plus size={18} />
-            Nouveau
+            New
           </Button>
           <Button variant="ghost" size="sm" className="gap-2 text-slate-600 dark:text-slate-400">
             <Upload size={18} />
@@ -245,7 +245,7 @@ const DocumentsModule = () => {
                     </div>
                     <div>
                       <p className="font-bold text-slate-500">Ce dossier est vide</p>
-                      <p className="text-sm text-slate-400">Glissez-déposez des fichiers pour les charger</p>
+                      <p className="text-sm text-slate-400">Glissez-déposez des files pour les charger</p>
                     </div>
                     <Button variant="outline" className="border-blue-200 text-blue-600 bg-white">
                       Charger un fichier
@@ -268,7 +268,7 @@ const DocumentsModule = () => {
             <span>6.5 GB sur 10 GB utilisés</span>
           </div>
           <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">245 dossiers • 1,240 fichiers</span>
+          <span className="hidden sm:inline">245 dossiers • 1,240 files</span>
         </div>
         <div className="flex items-center gap-2 text-blue-500 cursor-pointer hover:underline">
           Mettre à niveau le stockage

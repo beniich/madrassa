@@ -146,7 +146,7 @@ export default function AdminSettings() {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <span style={{ fontSize: 22 }}>🏫</span>
           <span style={{ color: "white", fontWeight: 800, fontSize: "1rem" }}>EduAdmin</span>
-          <span style={{ color: "#94A3B8", fontSize: "0.8rem", marginLeft: 8 }}>/ Paramètres</span>
+          <span style={{ color: "#94A3B8", fontSize: "0.8rem", marginLeft: 8 }}>/ Settings</span>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
           <span style={{ color: "#94A3B8", fontSize: "0.8rem" }}>Mode sombre</span>
@@ -170,7 +170,7 @@ export default function AdminSettings() {
 
         {/* Sidebar Nav */}
         <div style={{ background: card, borderRadius: radius.value, border: `1px solid ${border}`, padding: "1rem", height: "fit-content", position: "sticky", top: 72 }}>
-          <p style={{ fontSize: "0.7rem", fontWeight: 700, color: textMuted, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>Paramètres</p>
+          <p style={{ fontSize: "0.7rem", fontWeight: 700, color: textMuted, textTransform: "uppercase", letterSpacing: "0.08em", margin: "0 0 12px" }}>Settings</p>
           {[
             { id: "apparence", icon: "🎨", label: "Apparence" },
             { id: "notifications", icon: "🔔", label: "Notifications" },
@@ -338,7 +338,7 @@ export default function AdminSettings() {
                   <div style={{ background: darkMode ? "#0F172A" : "#F8FAFC", borderRadius: radius.value, padding: "1.25rem" }}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, marginBottom: 12 }}>
                       {[
-                        { label: "Élèves", value: "1 248", color: theme.primary, icon: "👨‍🎓" },
+                        { label: "Students", value: "1 248", color: theme.primary, icon: "👨‍🎓" },
                         { label: "Présents", value: "94%", color: theme.success, icon: "✅" },
                         { label: "Alertes", value: "7", color: theme.warning, icon: "⚠️" },
                       ].map((stat) => (
@@ -351,7 +351,7 @@ export default function AdminSettings() {
                     </div>
                     <div style={{ display: "flex", gap: 8 }}>
                       <button style={{ background: theme.primary, color: "white", border: "none", borderRadius: radius.value, padding: "8px 16px", fontWeight: 700, cursor: "pointer", fontSize: "0.83rem", fontFamily: font.family }}>
-                        + Ajouter un élève
+                        + Add un élève
                       </button>
                       <button style={{ background: "transparent", color: theme.primary, border: `1.5px solid ${theme.primary}`, borderRadius: radius.value, padding: "8px 16px", fontWeight: 600, cursor: "pointer", fontSize: "0.83rem", fontFamily: font.family }}>
                         Exporter
@@ -364,7 +364,7 @@ export default function AdminSettings() {
                 {previewSection === "table" && (
                   <div style={{ background: darkMode ? "#0F172A" : "#F8FAFC", borderRadius: radius.value, overflow: "hidden", border: `1px solid ${border}` }}>
                     <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", background: theme.primary, padding: "10px 16px" }}>
-                      {["Nom de l'élève", "Classe", "Note", "Statut"].map((h) => (
+                      {["Last Name de l'élève", "Classe", "Note", "Statut"].map((h) => (
                         <span key={h} style={{ color: "white", fontWeight: 700, fontSize: "0.78rem", fontFamily: font.family }}>{h}</span>
                       ))}
                     </div>
@@ -386,12 +386,12 @@ export default function AdminSettings() {
                 {/* Preview: Form */}
                 {previewSection === "form" && (
                   <div style={{ background: darkMode ? "#0F172A" : "#F8FAFC", borderRadius: radius.value, padding: "1.25rem", display: "grid", gap: 12 }}>
-                    {["Nom complet", "Email"].map((label) => (
+                    {["Last Name complet", "Email"].map((label) => (
                       <div key={label}>
                         <label style={{ fontSize: "0.78rem", fontWeight: 700, color: textMuted, display: "block", marginBottom: 4, fontFamily: font.family }}>{label}</label>
                         <input
                           readOnly
-                          placeholder={label === "Nom complet" ? "Amira Benali" : "amira@ecole.ma"}
+                          placeholder={label === "Last Name complet" ? "Amira Benali" : "amira@ecole.ma"}
                           style={{ width: "100%", padding: "8px 12px", borderRadius: radius.value, border: `1.5px solid ${border}`, background: card, color: textPrimary, fontFamily: font.family, fontSize: "0.85rem", boxSizing: "border-box" }}
                         />
                       </div>
@@ -405,7 +405,7 @@ export default function AdminSettings() {
                       </select>
                     </div>
                     <button style={{ background: theme.primary, color: "white", border: "none", borderRadius: radius.value, padding: "10px", fontWeight: 700, cursor: "pointer", fontSize: "0.88rem", fontFamily: font.family }}>
-                      Enregistrer
+                      Save
                     </button>
                   </div>
                 )}
@@ -426,7 +426,7 @@ export default function AdminSettings() {
                     boxShadow: `0 4px 14px ${theme.primary}55`,
                   }}
                 >
-                  {saved ? "✓ Sauvegardé !" : "Sauvegarder les modifications"}
+                  {saved ? "✓ Sauvegardé !" : "Save les modifications"}
                 </button>
               </div>
             </>

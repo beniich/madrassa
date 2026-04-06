@@ -53,10 +53,10 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                             {isEditing ? (
                                 <>
                                     <Save className="w-4 h-4 mr-2" />
-                                    Enregistrer
+                                    Save
                                 </>
                             ) : (
-                                'Modifier'
+                                'Edit'
                             )}
                         </Button>
                     </div>
@@ -102,7 +102,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.email || 'Non renseigné'}</p>
+                                    <p className="text-gray-700">{formData.email || 'No renseigné'}</p>
                                 )}
                             </div>
 
@@ -119,7 +119,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.phone || 'Non renseigné'}</p>
+                                    <p className="text-gray-700">{formData.phone || 'No renseigné'}</p>
                                 )}
                             </div>
 
@@ -135,7 +135,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.address || 'Non renseignée'}</p>
+                                    <p className="text-gray-700">{formData.address || 'No renseignée'}</p>
                                 )}
                             </div>
 
@@ -152,7 +152,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, website: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.website || 'Non renseigné'}</p>
+                                    <p className="text-gray-700">{formData.website || 'No renseigné'}</p>
                                 )}
                             </div>
                         </div>
@@ -167,7 +167,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                             <div className="space-y-2">
                                 <Label htmlFor="birthDate" className="flex items-center gap-2">
                                     <Calendar className="w-4 h-4" />
-                                    Date de naissance
+                                    Date of Birth
                                 </Label>
                                 {isEditing ? (
                                     <Input
@@ -177,7 +177,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, birthDate: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.birthDate || 'Non renseignée'}</p>
+                                    <p className="text-gray-700">{formData.birthDate || 'No renseignée'}</p>
                                 )}
                             </div>
 
@@ -190,7 +190,7 @@ export const AboutTab: React.FC<AboutTabProps> = ({ userData = {}, onSave }) => 
                                         onChange={(e) => setFormData({ ...formData, nationality: e.target.value })}
                                     />
                                 ) : (
-                                    <p className="text-gray-700">{formData.nationality || 'Non renseignée'}</p>
+                                    <p className="text-gray-700">{formData.nationality || 'No renseignée'}</p>
                                 )}
                             </div>
                         </div>

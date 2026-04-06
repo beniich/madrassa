@@ -84,7 +84,7 @@ const CommunicationModule = () => {
       {/* Folder Sidebar (Outlook style) */}
       <div className="w-64 border-r border-border bg-muted/10 hidden lg:flex flex-col p-4 space-y-4">
         <Button className="w-full shadow-md bg-blue-600 hover:bg-blue-700 text-white font-semibold">
-          Nouveau Message
+          New Message
         </Button>
         <div className="space-y-1">
           {folders.map((folder) => (

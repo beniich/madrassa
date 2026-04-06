@@ -86,9 +86,9 @@ export interface BillingSettings {
 
 export interface IntegrationSettings {
     emailProvider: 'SendGrid' | 'Mailgun' | 'AWS SES' | 'SMTP';
-    smsProvider: 'Twilio' | 'Vonage' | 'AWS SNS' | 'None';
+    smsProvider: 'Twilio' | 'Vonage' | 'AWS SNS' | 'Noe';
     storageProvider: 'AWS S3' | 'Google Cloud Storage' | 'Azure Blob' | 'Local';
-    analyticsProvider: 'Google Analytics' | 'Mixpanel' | 'Plausible' | 'None';
+    analyticsProvider: 'Google Analytics' | 'Mixpanel' | 'Plausible' | 'Noe';
     webhookUrl: string;
 }
 

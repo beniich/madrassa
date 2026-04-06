@@ -76,7 +76,7 @@ const PrintableReceipt = ({ invoice, onClose }: { invoice: Invoice; onClose: () 
                     <h3 className="font-black italic flex items-center gap-2 text-gray-700 uppercase tracking-tighter text-sm">
                         <Receipt className="h-4 w-4 text-purple-600" /> Prévisualisation Reçu
                     </h3>
-                    <button onClick={onClose} title="Fermer" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
+                    <button onClick={onClose} title="Close" className="p-2 hover:bg-gray-200 rounded-full transition-colors">
                         <X className="h-5 w-5 text-gray-400" />
                     </button>
                 </div>
@@ -242,7 +242,7 @@ const InvoicingPage = () => {
                   </Button>
                   <Button
                       onClick={() => setShowNewInvoice(true)}
-                      title="Créer une facture"
+                      title="Create une facture"
                       className="h-14 px-8 bg-purple-600 hover:bg-purple-700 text-white rounded-2xl font-black shadow-xl shadow-purple-100 gap-3 group"
                   >
                       <Plus className="w-5 h-5 group-hover:scale-110 transition-transform" /> NOUVELLE FACTURE
@@ -310,7 +310,7 @@ const InvoicingPage = () => {
                         <thead>
                             <tr className="bg-gray-50/50 border-b border-gray-100">
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Référence</th>
-                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Profil Élève</th>
+                                <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Profile Élève</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Échéance</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Montant</th>
                                 <th className="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400 text-center">Status</th>
@@ -385,7 +385,7 @@ const InvoicingPage = () => {
                                                 ) : (
                                                     <Button 
                                                         size="sm" 
-                                                        title="Imprimer le reçu"
+                                                        title="Print le reçu"
                                                         variant="ghost" 
                                                         className="h-10 rounded-xl border border-gray-100 text-gray-900 hover:bg-white hover:shadow-xl font-black text-[10px] uppercase tracking-widest gap-2"
                                                         onClick={() => {
@@ -399,7 +399,7 @@ const InvoicingPage = () => {
                                                 <Button 
                                                     variant="ghost" 
                                                     size="icon" 
-                                                    title="Télécharger PDF"
+                                                    title="Download PDF"
                                                     className="h-10 w-10 rounded-xl text-gray-400 hover:text-gray-900 hover:bg-white hover:shadow-lg"
                                                     onClick={() => {
                                                         setCurrentInvoice(inv);
@@ -536,7 +536,7 @@ const InvoicingPage = () => {
                                 <h3 className="text-3xl font-black text-gray-900 italic tracking-tight">Nouvel Avis de Paiement</h3>
                                 <p className="text-[10px] font-black text-purple-600 uppercase tracking-widest mt-1">Génération du Registre Comptable</p>
                             </div>
-                            <button onClick={() => setShowNewInvoice(false)} title="Fermer" className="p-3 hover:bg-gray-50 rounded-2xl transition-all">
+                            <button onClick={() => setShowNewInvoice(false)} title="Close" className="p-3 hover:bg-gray-50 rounded-2xl transition-all">
                                 <X className="h-7 w-7 text-gray-300" />
                             </button>
                         </div>
@@ -576,7 +576,7 @@ const InvoicingPage = () => {
                                         </Select>
                                     </div>
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">Valeur Nominale ($)</label>
+                                        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 ml-2">Valeur Last Nameinale ($)</label>
                                         <Input type="number" placeholder="0.00" className="h-14 bg-gray-50 border-none rounded-2xl font-black italic text-sm px-6" />
                                     </div>
                                 </div>

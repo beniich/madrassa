@@ -170,7 +170,7 @@ const EventModal = ({
       <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <div className="p-6 border-b border-gray-200 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">
-            {event ? 'Modifier l\'événement' : 'Nouvel événement'}
+            {event ? 'Edit l\'événement' : 'Nouvel événement'}
           </h2>
           <button
             onClick={onClose}
@@ -307,7 +307,7 @@ const EventModal = ({
                 <button
                   type="button"
                   onClick={() => {
-                    if (confirm('Supprimer cet événement ?')) {
+                    if (confirm('Delete cet événement ?')) {
                       onDelete(event.id);
                       onClose();
                     }
@@ -315,7 +315,7 @@ const EventModal = ({
                   className="flex items-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
-                  Supprimer
+                  Delete
                 </button>
               )}
             </div>
@@ -325,13 +325,13 @@ const EventModal = ({
                 onClick={onClose}
                 className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               >
-                Annuler
+                Cancel
               </button>
               <button
                 type="submit"
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
               >
-                {event ? 'Modifier' : 'Créer'}
+                {event ? 'Edit' : 'Create'}
               </button>
             </div>
           </div>
@@ -378,7 +378,7 @@ export const Calendar = () => {
     );
   };
 
-  // Sauvegarder un événement
+  // Save un événement
   const handleSaveEvent = (event: CalendarEvent) => {
     if (selectedEvent) {
       setEvents(events.map((e) => (e.id === event.id ? event : e)));
@@ -387,7 +387,7 @@ export const Calendar = () => {
     }
   };
 
-  // Supprimer un événement
+  // Delete un événement
   const handleDeleteEvent = (id: string) => {
     setEvents(events.filter((e) => e.id !== id));
   };

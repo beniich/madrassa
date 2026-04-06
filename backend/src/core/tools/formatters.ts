@@ -1,8 +1,9 @@
+// @ts-nocheck
 // ============================================================
 // formatters.js — Formatage et structuration des réponses agents
 // ============================================================
 
-function formatStudentList(students) {
+export function formatStudentList(students: any[]) {
   if (!students || students.length === 0) return 'Aucun élève trouvé.';
   return students
     .map(
@@ -14,7 +15,7 @@ function formatStudentList(students) {
     .join('\n');
 }
 
-function formatGrades(grades) {
+export function formatGrades(grades: any[]) {
   if (!grades || grades.length === 0) return 'Aucune note disponible.';
   const bySubject = grades.reduce((acc, g) => {
     const subj = g.subject_name || 'Matière inconnue';
@@ -33,7 +34,7 @@ function formatGrades(grades) {
     .join('\n');
 }
 
-function formatAttendance(absences) {
+export function formatAttendance(absences: any[]) {
   if (!absences || absences.length === 0) return 'Aucune absence enregistrée.';
   return absences
     .map((a) => {
@@ -44,7 +45,7 @@ function formatAttendance(absences) {
     .join('\n');
 }
 
-function formatSchoolStats(stats) {
+export function formatSchoolStats(stats: any) {
   return `
 📊 Statistiques du jour:
 • Élèves total: ${stats.totalStudents}
@@ -54,14 +55,14 @@ function formatSchoolStats(stats) {
   `.trim();
 }
 
-function formatClassAverages(averages) {
+export function formatClassAverages(averages: any[]) {
   if (!averages || averages.length === 0) return 'Aucune donnée de moyennes.';
   return averages
     .map((a) => `• ${a.subject || 'Matière'}: ${a.average}/20`)
     .join('\n');
 }
 
-function formatSchedule(schedule) {
+export function formatSchedule(schedule: any[]) {
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
   if (!schedule || schedule.length === 0) return 'Aucun créneau planifié.';
 
@@ -82,7 +83,7 @@ function formatSchedule(schedule) {
     .join('\n\n');
 }
 
-function buildReportCardTemplate({ student, grades, attendance, classAverages, period }) {
+export function buildReportCardTemplate({ student, grades, attendance, classAverages, period }: any) {
   const absenceCount = attendance ? attendance.length : 0;
   const justified = attendance ? attendance.filter((a) => a.justified).length : 0;
 
@@ -150,7 +151,7 @@ _À compléter par l'équipe pédagogique_
 `.trim();
 }
 
-function buildParentLetterTemplate({ student, reason, details, schoolName }) {
+export function buildParentLetterTemplate({ student, reason, details, schoolName }: any) {
   return `
 **${schoolName || 'School Genius'}**  
 ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
@@ -174,7 +175,7 @@ ${schoolName || 'School Genius'}
 `.trim();
 }
 
-module.exports = {
+export default {
   formatStudentList,
   formatGrades,
   formatAttendance,
@@ -184,3 +185,4 @@ module.exports = {
   buildReportCardTemplate,
   buildParentLetterTemplate,
 };
+

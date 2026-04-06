@@ -57,7 +57,7 @@ const FinanceModule = () => {
               </div>
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="h-8 rounded-lg text-[10px] font-black uppercase tracking-widest border-gray-100">
-                  <Filter className="w-3 h-3 mr-2" /> Filtrer
+                  <Filter className="w-3 h-3 mr-2" /> Filter
                 </Button>
                 <Button size="sm" className="h-8 rounded-lg text-[10px] font-black uppercase tracking-widest bg-gray-900 text-white hover:bg-black">
                   Excl. Excel

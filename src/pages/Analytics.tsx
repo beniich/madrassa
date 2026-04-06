@@ -135,7 +135,7 @@ export const Analytics = () => {
       {
         loading: 'Génération du rapport PDF...',
         success: 'Rapport exporté avec succès !',
-        error: 'Erreur lors de l\'exportation',
+        error: 'Error lors de l\'exportation',
       }
     );
   };
@@ -347,7 +347,7 @@ export const Analytics = () => {
             <div className="space-y-5 relative z-10">
               {[
                 { type: 'danger', msg: 'Baisse critique en 3ème A', detail: 'Indice Math : -2.3 pts' },
-                { type: 'warning', msg: 'Absences prolongées', detail: '5 anomalies non traitées' },
+                { type: 'warning', msg: 'Attendance prolongées', detail: '5 anomalies non traitées' },
                 { type: 'success', msg: 'Record atteint 5ème A', detail: 'Taux Optimal : 99.2%' },
               ].map((alert, i) => (
                 <div key={i} className="p-5 bg-white/5 backdrop-blur-3xl rounded-[1.8rem] border border-white/5 hover:bg-white/10 transition-all cursor-pointer group/alert hover:translate-y-[-5px]">

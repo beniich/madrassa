@@ -136,7 +136,7 @@ export const Settings = () => {
 
     const [permissions, setPermissions] = useState([
         { id: 'p1', name: 'Voir les élèves', description: 'Accès en lecture seule à la liste des élèves', category: 'students', enabled: true },
-        { id: 'p2', name: 'Modifier les élèves', description: 'Créer, modifier et supprimer des fiches élèves', category: 'students', enabled: false },
+        { id: 'p2', name: 'Edit les élèves', description: 'Create, modifier et supprimer des fiches élèves', category: 'students', enabled: false },
         { id: 'p3', name: 'Gérer les notes', description: 'Saisir et modifier les notes des examens', category: 'grades', enabled: true },
         { id: 'p4', name: 'Accès financier', description: 'Voir les paiements et factures', category: 'finance', enabled: false },
         { id: 'p5', name: 'Configuration système', description: 'Accès complet aux paramètres', category: 'administration', enabled: false },
@@ -244,7 +244,7 @@ export const Settings = () => {
             setIsDirty(true);
             toast({ title: t('settings.success'), description: 'Configuration importée avec succès' });
         } catch (error) {
-            toast({ title: t('settings.error'), description: 'Erreur lors de l\'importation', variant: 'destructive' });
+            toast({ title: t('settings.error'), description: 'Error lors de l\'importation', variant: 'destructive' });
         }
         if (importInputRef.current) importInputRef.current.value = '';
     };
@@ -434,7 +434,7 @@ export const Settings = () => {
                                         </Button>
                                         {logoPreview && (
                                             <Button variant="ghost" size="sm" onClick={() => removeLogo().then(() => { setLogoPreview(''); refreshConfig(); })} className="text-red-600 hover:text-red-700 hover:bg-red-50">
-                                                <X className="w-4 h-4 mr-2" /> Supprimer
+                                                <X className="w-4 h-4 mr-2" /> Delete
                                             </Button>
                                         )}
                                     </div>
@@ -535,7 +535,7 @@ export const Settings = () => {
                                                     <div className="flex gap-1.5" aria-hidden="true">
                                                         <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.primary } as React.CSSProperties} title="Primaire" />
                                                         <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.sidebar } as React.CSSProperties} title="Sidebar" />
-                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.success } as React.CSSProperties} title="Succès" />
+                                                        <div className="w-6 h-6 rounded-md shadow-sm bg-[var(--bg-color)]" style={{ '--bg-color': t.success } as React.CSSProperties} title="Success" />
                                                     </div>
                                                 </button>
                                             ))}
@@ -820,9 +820,9 @@ export const Settings = () => {
                         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {[
                                 { name: 'Slack', icon: Slack, status: 'Connecté', desc: 'Alertes automatiques dans vos canaux' },
-                                { name: 'GitHub', icon: Github, status: 'Non connecté', desc: 'Liez vos dépôts de code pédagogiques' },
+                                { name: 'GitHub', icon: Github, status: 'No connecté', desc: 'Liez vos dépôts de code pédagogiques' },
                                 { name: 'Google Drive', icon: Database, status: 'Connecté', desc: 'Stockage Cloud pour vos documents' },
-                                { name: 'Microsoft Teams', icon: Network, status: 'Non connecté', desc: 'Vidéoconférences pour vos classes' },
+                                { name: 'Microsoft Teams', icon: Network, status: 'No connecté', desc: 'Vidéoconférences pour vos classes' },
                             ].map((integration) => (
                                 <div key={integration.name} className="p-4 border rounded-xl hover:border-indigo-200 hover:shadow-md transition-all group">
                                     <div className="flex items-start justify-between mb-3">
@@ -925,7 +925,7 @@ export const Settings = () => {
                 <TabsContent value="advanced" className="space-y-6">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Paramètres Avancés</CardTitle>
+                            <CardTitle>Settings Avancés</CardTitle>
                             <CardDescription>Outils d'administration et de maintenance</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
@@ -968,7 +968,7 @@ export const Settings = () => {
                                     <Trash2 className="w-6 h-6 text-slate-400 group-hover:text-red-600" />
                                     <div className="text-center">
                                         <p className="font-bold text-sm">Réinitialisation d'usine</p>
-                                        <p className="text-xs text-slate-500 text-red-400">Attention: Action irréversible</p>
+                                        <p className="text-xs text-slate-500 text-red-400">Warning: Action irréversible</p>
                                     </div>
                                 </Button>
                             </div>

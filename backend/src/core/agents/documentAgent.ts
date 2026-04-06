@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // documentAgent.js — Agent Génération de Documents
 // ============================================================
@@ -74,7 +75,7 @@ async function enrichMessage(userMessage, schoolId) {
   return enrichedContext;
 }
 
-module.exports = {
+export default {
   id: AGENT_ID,
   name: 'Générateur Documents',
   description: 'Bulletins, lettres aux parents, comptes rendus officiels',
@@ -83,3 +84,4 @@ module.exports = {
   buildSystemPrompt,
   enrichMessage,
 };
+

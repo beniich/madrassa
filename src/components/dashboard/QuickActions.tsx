@@ -15,13 +15,13 @@ const QuickActions = () => {
     },
     {
       icon: FileText,
-      label: "Ajouter Note",
+      label: "Add Note",
       color: "bg-green-500/10 text-green-600 hover:bg-green-500 hover:text-white",
       onClick: () => navigate("/analytics")
     },
     {
       icon: Calendar,
-      label: "Créer Séance",
+      label: "Create Séance",
       color: "bg-blue-500/10 text-blue-600 hover:bg-blue-500 hover:text-white",
       onClick: () => navigate("/schedule")
     },

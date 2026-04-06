@@ -1,19 +1,19 @@
+// @ts-nocheck
 // ============================================================
-// aiGateway.js — Middleware d'API Gateway (Rate limit & Guardrails)
+// aiGateway.ts — Middleware d'API Gateway (Rate limit & Guardrails)
 // ============================================================
-const { validateInput } = require('./guardrails');
+import { Request, Response, NextFunction } from 'express';
+import { validateInput } from './guardrails';
 
-// Simple Rate Limiter en mémoire (Démonstration/Sprint 2)
-// Idéalement à brancher sur Redis avec 'express-rate-limit' en Sprint 5+
-const RATE_LIMITS = new Map();
+const RATE_LIMITS = new Map<string, { count: number, resetAt: number }>();
 const MAX_REQUESTS_PER_MIN = parseInt(process.env.AI_RATE_LIMIT_PER_MIN || '20', 10);
 const GUARDRAILS_ENABLED = process.env.AI_GUARDRAILS_ENABLED !== 'false';
 
 /**
  * Middleware: Rate Limiter
  */
-function aiRateLimiter(req, res, next) {
-  const userId = req.user?.id || req.ip;
+export function aiRateLimiter(req: Request, res: Response, next: NextFunction) {
+  const userId = (req.user as any)?.id || req.ip || 'unknown';
   const now = Date.now();
   
   if (!RATE_LIMITS.has(userId)) {
@@ -21,7 +21,7 @@ function aiRateLimiter(req, res, next) {
     return next();
   }
 
-  const record = RATE_LIMITS.get(userId);
+  const record = RATE_LIMITS.get(userId)!;
 
   if (now > record.resetAt) {
     RATE_LIMITS.set(userId, { count: 1, resetAt: now + 60000 });
@@ -42,14 +42,13 @@ function aiRateLimiter(req, res, next) {
 /**
  * Middleware: Input Guardrails
  */
-function enforceGuardrails(req, res, next) {
+export function enforceGuardrails(req: Request, res: Response, next: NextFunction) {
   if (!GUARDRAILS_ENABLED) return next();
   
-  // Si l'utilisateur a explicitement désactivé le mode strict dans sa requête
+  // Si l'utilisateur a explicitement désactivé le mode strict
   if (req.body.isStrict === false) return next();
 
-  // On s'attend à recevoir 'message' dans le body (pour chat ou agent)
-  const userMessage = req.body.message;
+  const userMessage = req.body.message as string | undefined;
   
   if (userMessage) {
     const check = validateInput(userMessage);
@@ -75,7 +74,3 @@ setInterval(() => {
   }
 }, 300000);
 
-module.exports = {
-  aiRateLimiter,
-  enforceGuardrails
-};

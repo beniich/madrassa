@@ -7,14 +7,14 @@ import {
 const features = [
   {
     icon: Users,
-    title: "Gestion des Élèves",
+    title: "Gestion des Students",
     description: "Dossiers complets, historique académique, suivi comportemental. Tout en un clic !",
     emoji: "👨‍🎓",
     color: "primary",
   },
   {
     icon: BookOpen,
-    title: "Examens & Notes",
+    title: "Examens & Grades",
     description: "Création d'évaluations, calcul auto des moyennes, bulletins générés par l'IA.",
     emoji: "📝",
     color: "secondary",

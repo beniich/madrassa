@@ -1,14 +1,14 @@
 // ============================================================
-// memoryManager.js — Gestion de la mémoire des conversations
+// memoryManager.ts — Gestion de la mémoire des conversations
 // ============================================================
-const Database = require('better-sqlite3');
-const path = require('path');
+import Database from 'better-sqlite3';
+import path from 'path';
 
 const MAX_TURNS = parseInt(process.env.AI_MEMORY_MAX_TURNS || '20', 10);
 
-let db;
+let db: Database.Database | null = null;
 
-function getDB() {
+export function getDB(): Database.Database {
   if (!db) {
     db = new Database(path.join(__dirname, '../../school_genius.db'));
     initTables();
@@ -16,8 +16,9 @@ function getDB() {
   return db;
 }
 
-function initTables() {
-  getDB().exec(`
+export function initTables() {
+  const database = getDB();
+  database.exec(`
     CREATE TABLE IF NOT EXISTS ai_conversations (
       id          INTEGER PRIMARY KEY AUTOINCREMENT,
       session_id  TEXT NOT NULL,
@@ -56,19 +57,22 @@ function initTables() {
   `);
 }
 
-/**
- * Récupère l'historique de la session (limité à MAX_TURNS derniers messages)
- */
-function getHistory(sessionId) {
-  const db = getDB();
-  const rows = db
+export interface ConversationMessage {
+  role: string;
+  content: string;
+  agent?: string;
+}
+
+export function getHistory(sessionId: string): ConversationMessage[] {
+  const database = getDB();
+  const rows = database
     .prepare(
       `SELECT role, content, agent FROM ai_conversations
        WHERE session_id = ?
        ORDER BY created_at DESC
        LIMIT ?`
     )
-    .all(sessionId, MAX_TURNS * 2);
+    .all(sessionId, MAX_TURNS * 2) as any[];
 
   return rows.reverse().map((r) => ({
     role: r.role,
@@ -77,65 +81,64 @@ function getHistory(sessionId) {
   }));
 }
 
-/**
- * Sauvegarde un message dans l'historique
- */
-function saveMessage(sessionId, schoolId, userId, role, content, agent = null) {
-  const db = getDB();
-  db.prepare(
+export function saveMessage(sessionId: string, schoolId: string, userId: string, role: string, content: string, agent: string | null = null) {
+  const database = getDB();
+  database.prepare(
     `INSERT INTO ai_conversations (session_id, school_id, user_id, role, content, agent)
      VALUES (?, ?, ?, ?, ?, ?)`
   ).run(sessionId, schoolId, userId, role, content, agent);
 }
 
-/**
- * Efface l'historique d'une session
- */
-function clearHistory(sessionId) {
-  const db = getDB();
-  const info = db
+export function clearHistory(sessionId: string) {
+  const database = getDB();
+  const info = database
     .prepare('DELETE FROM ai_conversations WHERE session_id = ?')
     .run(sessionId);
   return { deleted: info.changes };
 }
 
-/**
- * Sauvegarde un insight généré par un agent
- */
-function saveInsight({ schoolId, type, agent, title, content }) {
-  const db = getDB();
-  db.prepare(
-    `INSERT INTO ai_insights (school_id, type, agent, title, content)
-     VALUES (?, ?, ?, ?, ?)`
-  ).run(schoolId, type, agent, title, content);
+export interface InsightInput {
+  schoolId: string;
+  type: string;
+  agent?: string;
+  title: string;
+  content: string;
 }
 
-/**
- * Récupère les insights non lus pour une école
- */
-function getInsights(schoolId, limit = 10) {
-  const db = getDB();
-  return db
+export function saveInsight({ schoolId, type, agent, title, content }: InsightInput) {
+  const database = getDB();
+  database.prepare(
+    `INSERT INTO ai_insights (school_id, type, agent, title, content)
+     VALUES (?, ?, ?, ?, ?)`
+  ).run(schoolId, type, agent || null, title, content);
+}
+
+export function getInsights(schoolId: string, limit = 10): any[] {
+  const database = getDB();
+  return database
     .prepare(
       `SELECT * FROM ai_insights WHERE school_id = ? ORDER BY created_at DESC LIMIT ?`
     )
-    .all(schoolId, limit);
+    .all(schoolId, limit) as any[];
 }
 
-/**
- * Marque les insights comme lus
- */
-function markInsightsRead(schoolId) {
-  const db = getDB();
-  db.prepare('UPDATE ai_insights SET is_read = 1 WHERE school_id = ?').run(schoolId);
+export function markInsightsRead(schoolId: string) {
+  const database = getDB();
+  database.prepare('UPDATE ai_insights SET is_read = 1 WHERE school_id = ?').run(schoolId);
 }
 
-/**
- * Sauvegarde un artefact généré (bulletin, lettre…)
- */
-function saveArtifact({ schoolId, type, title, content, studentId, classId }) {
-  const db = getDB();
-  const result = db
+export interface ArtifactInput {
+  schoolId: string;
+  type: string;
+  title: string;
+  content: string;
+  studentId?: string | null;
+  classId?: string | null;
+}
+
+export function saveArtifact({ schoolId, type, title, content, studentId, classId }: ArtifactInput): number | bigint {
+  const database = getDB();
+  const result = database
     .prepare(
       `INSERT INTO ai_artifacts (school_id, type, title, content, student_id, class_id)
        VALUES (?, ?, ?, ?, ?, ?)`
@@ -143,14 +146,3 @@ function saveArtifact({ schoolId, type, title, content, studentId, classId }) {
     .run(schoolId, type, title, content, studentId || null, classId || null);
   return result.lastInsertRowid;
 }
-
-module.exports = {
-  initTables,
-  getHistory,
-  saveMessage,
-  clearHistory,
-  saveInsight,
-  getInsights,
-  markInsightsRead,
-  saveArtifact,
-};

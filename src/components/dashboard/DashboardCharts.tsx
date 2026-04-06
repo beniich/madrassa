@@ -122,7 +122,7 @@ const DashboardCharts = () => {
       {/* Grade Distribution */}
       <Card className="lg:col-span-2 xl:col-span-1">
         <CardHeader>
-          <CardTitle className="text-lg">Répartition des Notes</CardTitle>
+          <CardTitle className="text-lg">Répartition des Grades</CardTitle>
         </CardHeader>
         <CardContent>
           {isMounted && (

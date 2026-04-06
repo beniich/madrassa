@@ -147,7 +147,7 @@ export const APIConfigPanel = () => {
                     {/* Actions */}
                     <div className="flex gap-3 pt-4">
                         <Button onClick={saveConfig} className="flex-1 gap-2">
-                            <Save className="w-4 h-4" /> Sauvegarder
+                            <Save className="w-4 h-4" /> Save
                         </Button>
                         <Button onClick={testConnection} variant="outline" className="gap-2">
                             <CheckCircle className="w-4 h-4" /> Tester

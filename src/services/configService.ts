@@ -22,7 +22,7 @@ export const getSchoolProfile = async (): Promise<SchoolProfile> => {
     const profiles = await db.schoolProfile.toArray();
     if (profiles.length === 0) {
         // ... (rest of the local logic)
-        // Créer un profil par défaut
+        // Create un profil par défaut
         const defaultProfile: SchoolProfile = {
             localId: DEFAULT_SCHOOL_ID,
             name: 'SchoolGenius',

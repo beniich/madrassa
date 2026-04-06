@@ -1,8 +1,8 @@
 // ============================================================
-// guardrails.js — Filtres stricts de sécurité pour l'IA
+// guardrails.ts — Filtres stricts de sécurité pour l'IA
 // ============================================================
 
-const GUARDRAIL_RULES = {
+export const GUARDRAIL_RULES = {
   maxInputLength: 2000,
   blockedTopics: [
     'politique', 'religion', 'violence', 'sexe', 'adulte', 
@@ -12,12 +12,17 @@ const GUARDRAIL_RULES = {
   promptInjectionWords: ['ignore all previous', 'forget all', 'system prompt', 'you are now', 'bypassing']
 };
 
+export interface ValidationResult {
+  pass: boolean;
+  reason?: string;
+  modifiedText?: string;
+}
+
 /**
  * Valide le message utilisateur entrant (Input Guardrails)
- * @param {string} text - Message de l'utilisateur
- * @returns {object} { pass: boolean, reason?: string, modifiedText?: string }
+ * @param text - Message de l'utilisateur
  */
-function validateInput(text) {
+export function validateInput(text: string): ValidationResult {
   if (!text) return { pass: false, reason: "Message vide." };
 
   const lower = text.toLowerCase();
@@ -41,20 +46,13 @@ function validateInput(text) {
     }
   }
 
-  // 4. (Optionnel) Exiger un contexte scolaire minimum (Commenté pour éviter des faux positifs sur du chat léger)
-  // const hasSchoolContext = GUARDRAIL_RULES.contextRequired.some(kw => lower.includes(kw));
-  // if (!hasSchoolContext) {
-  //   return { pass: false, reason: "La question ne semble pas liée au contexte scolaire." };
-  // }
-
   return { pass: true, modifiedText: text };
 }
 
 /**
  * Filtre les PII (Personnal Identifiable Information) basique dans la sortie (Output Guardrails)
- * Optionnel si on utilise déjà le stream
  */
-function redactPII(text) {
+export function redactPII(text: string): string {
   // Remplacer les emails basiques
   let redacted = text.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi, '[EMAIL MASQUÉ]');
   
@@ -63,9 +61,3 @@ function redactPII(text) {
 
   return redacted;
 }
-
-module.exports = {
-  validateInput,
-  redactPII,
-  GUARDRAIL_RULES
-};

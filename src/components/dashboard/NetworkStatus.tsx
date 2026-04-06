@@ -71,7 +71,7 @@ const NetworkStatus = () => {
     const getStatusText = () => {
         if (syncStatus === 'syncing') return 'Synchronisation...';
         if (syncStatus === 'success') return 'Synchronisé !';
-        if (syncStatus === 'error') return 'Erreur de sync';
+        if (syncStatus === 'error') return 'Error de sync';
         return isOnline ? 'En ligne' : 'Hors ligne';
     };
 

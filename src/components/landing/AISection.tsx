@@ -19,7 +19,7 @@ const aiFeatures = [
   },
   {
     icon: FileText,
-    title: "Bulletins Automatiques",
+    title: "Report Cards Automatiques",
     description: "Fini les heures à rédiger des appréciations ! L'IA génère des commentaires personnalisés et pertinents.",
     demo: "« Marie fait preuve d'une excellente progression en français... »",
   },

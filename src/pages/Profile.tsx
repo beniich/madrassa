@@ -104,14 +104,14 @@ const Profile = () => {
                             </div>
                             Identité Académique
                         </CardTitle>
-                        <CardDescription className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mt-3 ml-16 italic">Paramètres de compte et registre personnel</CardDescription>
+                        <CardDescription className="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mt-3 ml-16 italic">Settings de compte et registre personnel</CardDescription>
                     </CardHeader>
                     <Separator className="mx-8 md:mx-12 bg-gray-100/50" />
                     <CardContent className="p-8 md:p-12 pt-10">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
                             {[
-                                { label: 'Prénom', val: user.firstName, icon: User },
-                                { label: 'Nom de famille', val: user.lastName, icon: User },
+                                { label: 'First Name', val: user.firstName, icon: User },
+                                { label: 'Last Name de famille', val: user.lastName, icon: User },
                                 { label: 'Adresse de contact', val: user.email, icon: Mail },
                                 { label: 'Matricule Système', val: `#${user.schoolId}`, icon: Shield },
                             ].map((item, i) => (

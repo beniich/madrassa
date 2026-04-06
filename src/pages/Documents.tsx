@@ -204,7 +204,7 @@ const DocumentCard = ({
                     VOIR
                 </Button>
                 <Button 
-                    title="Télécharger"
+                    title="Download"
                     className="flex-1 h-10 rounded-xl bg-gray-900 hover:bg-black text-white font-black text-[10px] uppercase tracking-widest p-0"
                     onClick={() => onDownload(doc.id)}
                 >
@@ -353,11 +353,11 @@ export const Documents = () => {
             ))}
             
             <button 
-                title="Nouveau Dossier"
+                title="New Dossier"
                 className="rounded-[2.2rem] border-2 border-dashed border-gray-100 p-6 flex flex-col items-center justify-center gap-2 hover:bg-gray-50/50 hover:border-purple-200 transition-all text-gray-300 hover:text-purple-500"
             >
                 <Plus className="h-8 w-8" />
-                <span className="text-[10px] font-black uppercase tracking-widest">Créer</span>
+                <span className="text-[10px] font-black uppercase tracking-widest">Create</span>
             </button>
           </div>
       </div>
@@ -367,7 +367,7 @@ export const Documents = () => {
           <div className="relative flex-1 w-full group">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-purple-500 transition-colors" />
             <Input 
-                placeholder="Filtrer les documents par nom ou type..." 
+                placeholder="Filter les documents par nom ou type..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-14 h-14 bg-gray-50/50 border-none rounded-[1.5rem] font-bold placeholder:text-gray-400 focus:ring-2 focus:ring-purple-200"
@@ -429,7 +429,7 @@ export const Documents = () => {
                             <h3 className="text-3xl font-black text-gray-900 italic tracking-tight">Déposer un fichier</h3>
                             <p className="text-[10px] font-black text-purple-600 uppercase tracking-[0.2em] mt-2">Cloud Synchro Enabled</p>
                         </div>
-                        <button onClick={() => setShowUpload(false)} title="Fermer" className="p-3 hover:bg-gray-50 rounded-2xl transition-all">
+                        <button onClick={() => setShowUpload(false)} title="Close" className="p-3 hover:bg-gray-50 rounded-2xl transition-all">
                             <X className="h-6 w-6 text-gray-400" />
                         </button>
                     </div>
@@ -443,7 +443,7 @@ export const Documents = () => {
                         </div>
                         <p className="text-gray-900 font-black italic text-lg mb-2">Glissez & Déposez</p>
                         <p className="text-gray-400 text-xs font-medium leading-relaxed max-w-[200px] mx-auto">
-                            OU cliquez pour parcourir vos fichiers (Max 250MB par unité)
+                            OU cliquez pour parcourir vos files (Max 250MB par unité)
                         </p>
                     </div>
 
@@ -452,7 +452,7 @@ export const Documents = () => {
                             <Zap className="h-4 w-4" />
                         </div>
                         <p className="text-[10px] font-black text-blue-700 uppercase tracking-widest leading-relaxed">
-                            L'IA trie automatiquement vos fichiers importés dans les dossiers correspondants.
+                            L'IA trie automatiquement vos files importés dans les dossiers correspondants.
                         </p>
                     </div>
                 </div>

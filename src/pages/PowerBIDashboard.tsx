@@ -20,7 +20,7 @@ const PowerBIDashboard: React.FC = () => {
 
     return (
         <div className="p-6 space-y-6">
-            <h1 className="text-3xl font-bold tracking-tight">Tableau de bord Power BI</h1>
+            <h1 className="text-3xl font-bold tracking-tight">Dashboard Power BI</h1>
 
             {!showReport ? (
                 <div className="max-w-md space-y-4 p-4 border rounded-lg bg-card text-card-foreground">

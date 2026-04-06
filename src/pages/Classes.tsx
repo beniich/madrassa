@@ -92,7 +92,7 @@ const ClassesPage = () => {
                             </DialogHeader>
                             <form onSubmit={handleAddClass} className="space-y-6 pt-4">
                                 <div className="space-y-2">
-                                    <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Nom de la classe</Label>
+                                    <Label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Last Name de la classe</Label>
                                     <Input
                                         value={newClass.name}
                                         onChange={e => setNewClass({ ...newClass, name: e.target.value })}
@@ -169,7 +169,7 @@ const ClassesPage = () => {
                         {classes === undefined ? (
                             <div className="col-span-full h-64 flex flex-col items-center justify-center gap-4">
                                 <Loader2 className="h-12 w-12 animate-spin text-purple-600" />
-                                <p className="font-black text-gray-400 uppercase tracking-widest text-[10px]">Chargement des sections...</p>
+                                <p className="font-black text-gray-400 uppercase tracking-widest text-[10px]">Loading...s sections...</p>
                             </div>
                         ) : filteredClasses?.length === 0 ? (
                             <div className="col-span-full text-center py-24 bg-white rounded-[3rem] border border-dashed border-gray-200 shadow-inner">

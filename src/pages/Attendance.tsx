@@ -42,7 +42,7 @@ const AttendancePage = () => {
                 icon: status === 'present' ? <CheckCircle2 className="h-4 w-4 text-green-500" /> : <Clock className="h-4 w-4 text-yellow-500" />
             });
         } catch (error) {
-            toast.error("Erreur de mise à jour");
+            toast.error("Error de mise à jour");
         }
     };
 
@@ -52,7 +52,7 @@ const AttendancePage = () => {
             {
                 loading: 'Marquage collectif en cours...',
                 success: 'Tous les élèves non marqués ont été déclarés PRÉSENTS.',
-                error: 'Erreur lors du traitement groupé',
+                error: 'Error lors du traitement groupé',
             }
         );
     };
@@ -119,7 +119,7 @@ const AttendancePage = () => {
                         <Users className="h-6 w-6" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-tighter">Total Élèves</p>
+                        <p className="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-tighter">Total Students</p>
                         <p className="text-2xl font-black text-gray-900">{stats.total}</p>
                     </div>
                 </Card>
@@ -186,7 +186,7 @@ const AttendancePage = () => {
                 {attendance === undefined ? (
                     <div className="col-span-full h-64 flex flex-col items-center justify-center gap-4">
                         <Loader2 className="h-12 w-12 animate-spin text-purple-600" />
-                        <p className="font-black text-gray-400 uppercase tracking-widest text-[10px]">Chargement du registre...</p>
+                        <p className="font-black text-gray-400 uppercase tracking-widest text-[10px]">Loading... registre...</p>
                     </div>
                 ) : filteredAttendance?.length === 0 ? (
                     <div className="col-span-full text-center py-24 bg-white rounded-[3rem] border border-dashed border-gray-200 shadow-inner">

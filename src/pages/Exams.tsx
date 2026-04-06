@@ -48,7 +48,7 @@ const ReportCardModal = ({ student, onClose }: { student: any; onClose: () => vo
                         <div className="flex justify-center">
                             <GraduationCap className="h-16 w-16 text-amber-500" />
                         </div>
-                        <h2 className="text-4xl font-serif text-gray-900 tracking-tighter uppercase italic">Bulletin de Notes Officiel</h2>
+                        <h2 className="text-4xl font-serif text-gray-900 tracking-tighter uppercase italic">Bulletin de Grades Officiel</h2>
                         <div className="flex items-center justify-center gap-4 text-gray-500 font-bold uppercase tracking-[0.2em] text-xs">
                             <span className="h-px w-10 bg-amber-200"></span>
                             Année Académique 2025 - 2026
@@ -118,7 +118,7 @@ const ReportCardModal = ({ student, onClose }: { student: any; onClose: () => vo
                 </div>
 
                 <div className="p-6 bg-gray-50 border-t flex gap-4 print:hidden">
-                    <Button variant="outline" className="flex-1 border-gray-300" onClick={onClose}>Annuler</Button>
+                    <Button variant="outline" className="flex-1 border-gray-300" onClick={onClose}>Cancel</Button>
                     <Button className="flex-1 bg-amber-600 hover:bg-amber-700 shadow-xl shadow-amber-100 gap-2" onClick={() => window.print()}>
                         <Printer className="h-4 w-4" /> IMPRIMER LE BULLETIN
                     </Button>
@@ -132,7 +132,7 @@ const ReportCardModal = ({ student, onClose }: { student: any; onClose: () => vo
 // COMPOSANT : SAISIE DE NOTES (QUICK GRID)
 // ============================================================================
 
-const NotesEntryModal = ({ exam, onClose }: { exam: any; onClose: () => void }) => {
+const GradesEntryModal = ({ exam, onClose }: { exam: any; onClose: () => void }) => {
     const students = Array.from({ length: 10 }).map((_, i) => ({ id: `S${i}`, name: `Élève #${i + 1}` }));
     const [scores, setScores] = useState<Record<string, string>>({});
 
@@ -146,7 +146,7 @@ const NotesEntryModal = ({ exam, onClose }: { exam: any; onClose: () => void }) 
             <Card className="max-w-2xl w-full p-8 animate-in slide-in-from-bottom-5 duration-300 overflow-hidden flex flex-col max-h-[90vh]">
                 <div className="flex justify-between items-start mb-6 shrink-0">
                     <div>
-                        <h3 className="text-2xl font-black text-gray-900 tracking-tight">Saisie de Notes : <span className="text-purple-600">{exam.name}</span></h3>
+                        <h3 className="text-2xl font-black text-gray-900 tracking-tight">Saisie de Grades : <span className="text-purple-600">{exam.name}</span></h3>
                         <p className="text-gray-400 font-bold uppercase tracking-widest text-[10px] mt-1 italic">Mode rapide - Validation instantanée</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
@@ -195,7 +195,7 @@ const NotesEntryModal = ({ exam, onClose }: { exam: any; onClose: () => void }) 
                 </div>
 
                 <div className="flex gap-4 pt-8 shrink-0">
-                    <Button variant="outline" className="flex-1 h-12 font-bold" onClick={onClose}>Annuler</Button>
+                    <Button variant="outline" className="flex-1 h-12 font-bold" onClick={onClose}>Cancel</Button>
                     <Button className="flex-1 h-12 font-black bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-100" onClick={handleSave}>
                         VALIDER LES NOTES
                     </Button>
@@ -211,7 +211,7 @@ const NotesEntryModal = ({ exam, onClose }: { exam: any; onClose: () => void }) 
 
 const ExamsPage = () => {
     const [selectedClass, setSelectedClass] = useState<string>("all");
-    const [showNotesEntry, setShowNotesEntry] = useState(false);
+    const [showGradesEntry, setShowGradesEntry] = useState(false);
     const [showReportCard, setShowReportCard] = useState(false);
     const [showNewExam, setShowNewExam] = useState(false);
     const [currentExam, setCurrentExam] = useState<any>(null);
@@ -240,7 +240,7 @@ const ExamsPage = () => {
                         onClick={() => setShowReportCard(true)}
                     >
                         <FileText className="h-4 w-4" />
-                        Bulletins
+                        Report Cards
                     </Button>
                     <Button 
                         className="gap-2 bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-200 transition-all hover:scale-105"
@@ -324,7 +324,7 @@ const ExamsPage = () => {
                         <h3 className="text-xl font-black text-gray-500 uppercase tracking-tighter">Aucun examen trouvé</h3>
                         <p className="text-gray-400 mt-2 font-medium">Planifiez votre première évaluation pour commencer le suivi.</p>
                         <Button className="mt-8 bg-purple-600 hover:bg-purple-700" onClick={() => setShowNewExam(true)}>
-                            Ajouter un Examen
+                            Add un Examen
                         </Button>
                     </Card>
                 ) : (
@@ -370,7 +370,7 @@ const ExamsPage = () => {
                                     className="w-full h-11 bg-white border-2 border-purple-100 text-purple-600 hover:bg-purple-50 font-black tracking-tight"
                                     onClick={() => {
                                         setCurrentExam(exam);
-                                        setShowNotesEntry(true);
+                                        setShowGradesEntry(true);
                                     }}
                                 >
                                     SAISIR NOTES
@@ -385,8 +385,8 @@ const ExamsPage = () => {
             </div>
 
             {/* MODAL : SAISIE DE NOTES */}
-            {showNotesEntry && currentExam && (
-                <NotesEntryModal exam={currentExam} onClose={() => setShowNotesEntry(false)} />
+            {showGradesEntry && currentExam && (
+                <GradesEntryModal exam={currentExam} onClose={() => setShowGradesEntry(false)} />
             )}
 
             {/* MODAL : BULLETIN */}
@@ -411,7 +411,7 @@ const ExamsPage = () => {
                         <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Nom de l'évaluation</label>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-gray-400">Last Name de l'évaluation</label>
                                     <Input placeholder="ex: Contrôle continu 1" className="h-12 bg-gray-50 border-none font-bold" />
                                 </div>
                                 <div className="space-y-2">
@@ -448,7 +448,7 @@ const ExamsPage = () => {
 
                             <div className="flex gap-4 pt-4">
                                 <Button variant="outline" className="flex-1 h-12 font-bold" onClick={() => setShowNewExam(false)}>
-                                    Annuler
+                                    Cancel
                                 </Button>
                                 <Button className="flex-1 h-12 font-black bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-100" onClick={() => {
                                     toast.success("Examen planifié avec succès !");

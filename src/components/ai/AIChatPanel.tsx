@@ -8,9 +8,9 @@ import { AIAgentCard } from './AIAgentCard';
 import { getAgents, type AgentType, type AgentInfo } from '../../services/ollamaService';
 
 const QUICK_PROMPTS: { label: string; prompt: string; agent: AgentType }[] = [
-  { label: '📉 Élèves en difficulté', prompt: 'Quels élèves sont actuellement en difficulté ?', agent: 'school_advisor' },
+  { label: '📉 Students en difficulté', prompt: 'Quels élèves sont actuellement en difficulté ?', agent: 'school_advisor' },
   { label: '📊 Résumé du jour', prompt: 'Génère un résumé statistique de la journée', agent: 'analytics' },
-  { label: '📅 Absences aujourd\'hui', prompt: 'Combien d\'absences avons-nous aujourd\'hui ?', agent: 'analytics' },
+  { label: '📅 Attendance aujourd\'hui', prompt: 'Combien d\'absences avons-nous aujourd\'hui ?', agent: 'analytics' },
   { label: '📄 Rédiger une lettre', prompt: 'Rédige une lettre de convocation pour un parent', agent: 'document' },
 ];
 

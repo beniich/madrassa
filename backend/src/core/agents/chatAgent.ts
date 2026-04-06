@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // chatAgent.js — Agent Conversation Générale
 // ============================================================
@@ -35,7 +36,7 @@ async function enrichMessage(userMessage, schoolId) {
   return `\n\n[STATS RAPIDES: ${stats.totalStudents} élèves, ${stats.absencesToday} absences aujourd'hui]`;
 }
 
-module.exports = {
+export default {
   id: AGENT_ID,
   name: 'Assistant Général',
   description: 'Questions générales, règlement, orientation',
@@ -44,3 +45,4 @@ module.exports = {
   buildSystemPrompt,
   enrichMessage,
 };
+

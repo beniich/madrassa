@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // dbTools.js — Outils de requêtes DB structurées pour les agents
 // ============================================================
@@ -261,7 +262,7 @@ function getGradeTrends(schoolId, days = 30) {
     .all(schoolId, `-${days} days`);
 }
 
-module.exports = {
+export default {
   getSchoolContext,
   getStudentById,
   searchStudents,
@@ -278,3 +279,4 @@ module.exports = {
   getSchoolStats,
   getGradeTrends,
 };
+

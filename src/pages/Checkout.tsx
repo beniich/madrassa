@@ -22,9 +22,9 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
 
   const getPlanDetails = () => {
     switch (plan) {
-      case 'pro': return { id: 'price_pro', name: 'Pro', price: '499 $', features: ['Élèves illimités', 'IA avancée', 'Support prioritaire'] };
+      case 'pro': return { id: 'price_pro', name: 'Pro', price: '499 $', features: ['Students illimités', 'IA avancée', 'Support prioritaire'] };
       case 'enterprise': return { id: 'price_enterprise', name: 'Institution', price: 'Sur devis', features: ['Multi-établissements', 'Dev sur-mesure', 'Support 24/7'] };
-      default: return { id: 'price_free', name: 'Starter', price: '0 $', features: ['Jusqu\'à 100 élèves', 'Gestion des absences', 'Notes et bulletins'] };
+      default: return { id: 'price_free', name: 'Starter', price: '0 $', features: ['Jusqu\'à 100 élèves', 'Gestion des absences', 'Grades et bulletins'] };
     }
   };
 
@@ -107,7 +107,7 @@ const CheckoutForm: React.FC<{ plan: string }> = ({ plan }) => {
         <CardContent className="p-8 space-y-6 text-gray-900">
           <form onSubmit={handlePayment} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="schoolName" className="font-black text-xs uppercase tracking-widest text-gray-400">Nom de l'établissement</Label>
+              <Label htmlFor="schoolName" className="font-black text-xs uppercase tracking-widest text-gray-400">Last Name de l'établissement</Label>
               <Input 
                 id="schoolName" 
                 required 

@@ -93,7 +93,7 @@ const TeachersModule = () => {
         searchPlaceholder="Rechercher un enseignant..."
         onSearch={setSearchQuery}
         onAdd={() => {}}
-        addLabel="Nouveau"
+        addLabel="New"
       >
         {filteredTeachers.map((teacher) => (
           <ListItem

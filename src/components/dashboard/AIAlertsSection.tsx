@@ -25,7 +25,7 @@ const AIAlertsSection = () => {
     {
       id: "1",
       type: "danger",
-      title: "Absences répétées",
+      title: "Attendance répétées",
       description: "3 absences non justifiées cette semaine",
       student: "Ahmed K. (4B)",
       action: "Contacter parents",
@@ -90,7 +90,7 @@ const AIAlertsSection = () => {
             <div className="p-2 rounded-lg bg-destructive/10">
               <AlertTriangle className="h-5 w-5 text-destructive" />
             </div>
-            Élèves à Risque
+            Students à Risque
             <Badge variant="destructive" className="ml-auto">
               {alerts.length} alertes
             </Badge>
@@ -131,7 +131,7 @@ const AIAlertsSection = () => {
             </div>
           ))}
           <Button variant="ghost" className="w-full mt-2">
-            Voir toutes les alertes <ChevronRight className="ml-2 h-4 w-4" />
+            See alles les alertes <ChevronRight className="ml-2 h-4 w-4" />
           </Button>
         </CardContent>
       </Card>

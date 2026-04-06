@@ -203,7 +203,7 @@ Merci de votre attention !`;
                 {/* Toolbar */}
                 <div className="flex flex-wrap gap-2">
                     <Button onClick={savePresentation} variant="outline" className="gap-2">
-                        <Save className="w-4 h-4" /> Sauvegarder
+                        <Save className="w-4 h-4" /> Save
                     </Button>
                     <Button onClick={updateSlides} variant="outline" className="gap-2">
                         <RefreshCw className="w-4 h-4" /> Actualiser

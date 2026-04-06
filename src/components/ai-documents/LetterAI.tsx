@@ -194,7 +194,7 @@ export const LetterAI = () => {
                 {/* Toolbar */}
                 <div className="flex flex-wrap gap-2">
                     <Button onClick={saveLetter} variant="outline" className="gap-2">
-                        <Save className="w-4 h-4" /> Sauvegarder
+                        <Save className="w-4 h-4" /> Save
                     </Button>
                     <Button onClick={exportPDF} variant="outline" className="gap-2">
                         <Download className="w-4 h-4" /> Export PDF

@@ -43,7 +43,7 @@ export const LeaveManagement: React.FC = () => {
             const data = await hrService.getLeaveRequests();
             setRequests(data);
         } catch (error) {
-            toast.error("Erreur lors du chargement des demandes");
+            toast.error("Error lors du chargement des demandes");
         } finally {
             setIsLoading(false);
         }
@@ -55,7 +55,7 @@ export const LeaveManagement: React.FC = () => {
             toast.success(`Demande ${status === 'approved' ? 'approuvée' : 'refusée'}`);
             loadRequests();
         } catch (error) {
-            toast.error("Erreur lors de la mise à jour");
+            toast.error("Error lors de la mise à jour");
         }
     };
 
@@ -87,7 +87,7 @@ export const LeaveManagement: React.FC = () => {
                 </div>
                 <div className="flex gap-3 w-full sm:w-auto">
                     <Button variant="outline" className="flex-1 sm:flex-none h-12 rounded-xl font-black text-[10px] uppercase tracking-widest border-gray-200 text-gray-600 hover:bg-gray-50">
-                        Calendrier Absences
+                        Calendrier Attendance
                     </Button>
                     <Button className="flex-1 sm:flex-none h-12 bg-primary hover:bg-primary/90 text-[#222222] rounded-xl font-black text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20">
                         <Plus className="w-4 h-4 mr-2" /> Saisir Congé
@@ -97,7 +97,7 @@ export const LeaveManagement: React.FC = () => {
 
             {/* Dashboard Visuals */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Evolution Absences */}
+                {/* Evolution Attendance */}
                 <Card className="lg:col-span-2 border-none shadow-sm rounded-3xl p-8 bg-white relative overflow-hidden">
                     <div className="absolute top-0 right-0 p-8 opacity-[0.03]">
                         <BarChart2 className="w-24 h-24 text-gray-900 -rotate-12" />
@@ -253,7 +253,7 @@ export const LeaveManagement: React.FC = () => {
                 </div>
                 <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
                     <button className="text-[10px] font-black text-gray-500 hover:text-primary transition-colors uppercase tracking-widest">
-                        Voir tout l'historique
+                        See all l'historique
                     </button>
                 </div>
             </Card>

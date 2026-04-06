@@ -76,7 +76,7 @@ const TasksModule = () => {
                         <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                         <input
                             type="text"
-                            placeholder="Filtrer les tâches..."
+                            placeholder="Filter les tâches..."
                             className="pl-9 pr-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs outline-none focus:ring-2 focus:ring-blue-500/20 transition-all w-48"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -84,7 +84,7 @@ const TasksModule = () => {
                     </div>
                     <Button size="sm" className="bg-blue-600 hover:bg-blue-700 text-white gap-2 font-bold shadow-md">
                         <Plus size={16} />
-                        Ajouter une tâche
+                        Add une tâche
                     </Button>
                 </div>
             </div>
@@ -145,7 +145,7 @@ const TasksModule = () => {
                                     ))}
                                     <button className="w-full py-2 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl text-slate-400 text-xs font-bold hover:bg-slate-100 dark:hover:bg-slate-900 transition-all flex items-center justify-center gap-2">
                                         <Plus size={14} />
-                                        Ajouter
+                                        Add
                                     </button>
                                 </div>
                             </div>

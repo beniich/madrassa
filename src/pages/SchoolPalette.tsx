@@ -19,7 +19,7 @@ const palette = {
   },
   secondary: {
     label: "Secondaire — Vert Réussite",
-    description: "Succès, présences, notes positives, validations",
+    description: "Success, présences, notes positives, validations",
     shades: [
       { name: "50",  hex: "#F0FDF4", tw: "bg-emerald-50" },
       { name: "100", hex: "#DCFCE7", tw: "bg-emerald-100" },
@@ -51,7 +51,7 @@ const palette = {
   },
   danger: {
     label: "Danger — Rouge Alerte",
-    description: "Erreurs, absences, échecs, suppressions",
+    description: "Errors, absences, échecs, suppressions",
     shades: [
       { name: "50",  hex: "#FFF1F2", tw: "bg-rose-50" },
       { name: "100", hex: "#FFE4E6", tw: "bg-rose-100" },

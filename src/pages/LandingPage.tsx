@@ -13,43 +13,43 @@ import {
 const FEATURES = [
   {
     icon: GraduationCap,
-    title: 'Gestion des Élèves',
-    desc: 'Fiches élèves complètes, historique scolaire, suivi des absences. Tout centralisé en un clic.',
+    title: 'Student Management',
+    desc: 'Comprehensive student profiles, academic history, attendance tracking. Everything centralized in one click.',
     color: 'from-amber-500 to-orange-500',
-    stats: '150+ champs personnalisables',
+    stats: '150+ custom fields',
   },
   {
     icon: BookOpen,
-    title: 'Classes & Emplois du Temps',
-    desc: 'Créez vos classes de Coran, d\'Arabe ou de Fiqh. Gérez les horaires avec drag & drop.',
+    title: 'Classes & Schedules',
+    desc: 'Create your Quran, Arabic, or Fiqh classes. Manage schedules with drag & drop.',
     color: 'from-blue-500 to-indigo-500',
-    stats: 'Jusqu\'à 10 classes incluses',
+    stats: 'Up to 10 classes included',
   },
   {
     icon: BarChart3,
-    title: 'Analytics & Rapports',
-    desc: 'Tableaux de bord visuels, taux de présence, progression par élève. Données temps réel.',
+    title: 'Analytics & Reports',
+    desc: 'Visual dashboards, attendance rates, student progress. Real-time data.',
     color: 'from-emerald-500 to-teal-500',
-    stats: '20+ types de rapports',
+    stats: '20+ report types',
   },
   {
     icon: CreditCard,
-    title: 'Facturation Automatique',
-    desc: 'Générez et envoyez les factures. Suivi des paiements. Rappels automatiques.',
+    title: 'Automated Billing',
+    desc: 'Generate and send invoices. Payment tracking. Automatic reminders.',
     color: 'from-purple-500 to-pink-500',
-    stats: '100% automatisé',
+    stats: '100% automated',
   },
   {
     icon: Bell,
-    title: 'Communication Parents',
-    desc: 'Notifications push, SMS, email. Tenez les familles informées en temps réel.',
+    title: 'Parent Communication',
+    desc: 'Push notifications, SMS, email. Keep families informed in real time.',
     color: 'from-rose-500 to-red-500',
-    stats: '3 canaux de communication',
+    stats: '3 communication channels',
   },
   {
     icon: Sparkles,
-    title: 'Assistant IA Intégré',
-    desc: 'Un copilote IA pour rédiger des rapports, analyser les tendances et vous conseiller.',
+    title: 'Integrated AI Assistant',
+    desc: 'An AI copilot to draft reports, analyze trends, and advise you.',
     color: 'from-cyan-500 to-blue-500',
     stats: 'Powered by Ollama',
   },
@@ -58,51 +58,51 @@ const FEATURES = [
 const TESTIMONIALS = [
   {
     name: 'Sheikh Abdallah Benali',
-    role: 'Directeur — Institut Al-Nour, Lyon',
-    content: 'Depuis que nous utilisons Madrassa, nous avons économisé 8h par semaine sur l\'administration. Les parents sont ravis de recevoir les bulletins instantanément.',
+    role: 'Director — Al-Nour Institute, Lyon',
+    content: 'Since we started using Madrassa, we\'ve saved 8 hours a week on administration. Parents are thrilled to receive report cards instantly.',
     rating: 5,
-    students: '180 élèves',
+    students: '180 students',
   },
   {
     name: 'Fatima Ez-Zahra Ouali',
-    role: 'Responsable Pédagogique — Al-Firdaws, Marseille',
-    content: 'L\'outil de gestion des absences est révolutionnaire. On voit tout en temps réel et on peut contacter les parents directement depuis la plateforme.',
+    role: 'Head of Education — Al-Firdaws, Marseille',
+    content: 'The attendance management tool is revolutionary. We see everything in real time and can contact parents directly from the platform.',
     rating: 5,
-    students: '95 élèves',
+    students: '95 students',
   },
   {
     name: 'Rachid Hammoudi',
-    role: 'Fondateur — École Coranique Sabil, Paris',
-    content: 'La facturation automatique a changé notre quotidien. Plus de tableurs Excel, plus de relances manuelles. Tout est géré proprement.',
+    role: 'Founder — Sabil Quranic School, Paris',
+    content: 'Automated billing has changed our daily lives. No more Excel spreadsheets, no more manual reminders. Everything is managed cleanly.',
     rating: 5,
-    students: '220 élèves',
+    students: '220 students',
   },
 ];
 
 const FAQS = [
   {
-    q: 'Peut-on importer nos données existantes ?',
-    a: 'Oui, nous proposons un import CSV/Excel de vos listes d\'élèves et enseignants. Notre équipe vous accompagne dans la migration de vos données gratuitement.',
+    q: 'Can we import our existing data?',
+    a: 'Yes, we offer CSV/Excel imports for your student and teacher lists. Our team helps you migrate your data for free.',
   },
   {
-    q: 'Mes données sont-elles sécurisées ?',
-    a: 'Absolument. Vos données sont hébergées en Europe (RGPD compliant), chiffrées en transit et au repos. Chaque école a ses données complètement isolées des autres (architecture multitenant).',
+    q: 'Is my data secure?',
+    a: 'Absolutely. Your data is hosted in Europe (GDPR compliant), encrypted in transit and at rest. Each school has its data completely isolated (multitenant architecture).',
   },
   {
-    q: 'Que se passe-t-il si j\'ai plus de 10 classes ?',
-    a: 'Avec le plan Pro, vous démarrez avec 10 classes incluses. Chaque classe supplémentaire est facturée 15€/mois. Vous ne payez que ce que vous utilisez réellement.',
+    q: 'What happens if I have more than 10 classes?',
+    a: 'With the Pro plan, you start with 10 classes included. Each additional class is billed at €15/month. You only pay for what you actually use.',
   },
   {
-    q: 'Est-ce disponible en arabe ?',
-    a: 'L\'interface est disponible en français et une version arabe est en cours de développement (Q3 2026). Les données (noms, notes) peuvent être saisies en arabe dès maintenant.',
+    q: 'Is this available in Arabic?',
+    a: 'The interface is available in English and French, and an Arabic version is under development. Data (names, grades) can be entered in Arabic right now.',
   },
   {
-    q: 'Y a-t-il un engagement de durée ?',
-    a: 'Non, aucun engagement. L\'abonnement est mensuel, résiliable à tout moment. Vous pouvez exporter vos données à tout moment.',
+    q: 'Is there a long-term commitment?',
+    a: 'No, there is no commitment. The subscription is monthly and can be canceled at any time. You can export your data at any time.',
   },
   {
-    q: 'L\'essai gratuit dure combien de temps ?',
-    a: '30 jours d\'essai complet, sans carte bancaire requise. Toutes les fonctionnalités Pro sont disponibles pendant la période d\'essai.',
+    q: 'How long is the free trial?',
+    a: '30-day full trial, no credit card required. All Pro features are available during the trial period.',
   },
 ];
 
@@ -110,66 +110,66 @@ const PLANS = [
   {
     id: 'starter',
     name: 'Starter',
-    desc: 'Pour débuter sans risque',
+    desc: 'To get started risk-free',
     monthly: 0,
     yearly: 0,
     highlight: false,
     badge: null,
     features: [
-      'Jusqu\'à 10 classes',
-      '150 élèves maximum',
-      'Gestion des absences',
-      'Notes & bulletins basiques',
-      'Support par email',
+      'Up to 10 classes',
+      '150 students maximum',
+      'Attendance management',
+      'Basic grades & reports',
+      'Email support',
     ],
-    missing: ['Facturation automatique', 'Assistant IA', 'Analytics avancés'],
-    cta: 'Démarrer gratuitement',
+    missing: ['Automated billing', 'AI Assistant', 'Advanced analytics'],
+    cta: 'Start for free',
     ctaStyle: 'border border-white/20 text-white hover:bg-white/5',
     planKey: 'starter',
   },
   {
     id: 'pro',
     name: 'Pro',
-    desc: 'Le plus populaire pour les écoles actives',
+    desc: 'Most popular for active schools',
     monthly: 49,
     yearly: 39,
     highlight: true,
-    badge: '🔥 Populaire',
-    billingNote: '+ 8€/classe supplémentaire',
+    badge: '🔥 Popular',
+    billingNote: '+ €8/additional class',
     features: [
-      '10 classes incluses',
-      'Élèves illimités',
-      'Facturation automatique',
-      'Assistant IA intégré',
-      'Analytics complets',
-      'Notifications parents',
-      'Support prioritaire',
+      '10 classes included',
+      'Unlimited students',
+      'Automated billing',
+      'Integrated AI Assistant',
+      'Comprehensive analytics',
+      'Parent notifications',
+      'Priority support',
     ],
     missing: [],
-    cta: 'Essayer 30 jours gratuit',
+    cta: 'Try 30 days for free',
     ctaStyle: 'bg-gradient-to-r from-amber-500 to-orange-500 text-black hover:from-amber-400 hover:to-orange-400',
     planKey: 'pro',
   },
   {
     id: 'institution',
     name: 'Institution',
-    desc: 'Pour les réseaux multi-établissements',
+    desc: 'For multi-campus networks',
     monthly: 199,
     yearly: 159,
     highlight: false,
-    badge: '✦ Entreprise',
+    badge: '✦ Enterprise',
     features: [
-      'Classes illimitées',
-      'Multi-établissements',
-      'Marque blanche complète',
-      'Domaine personnalisé',
-      'API & intégrations',
-      'Serveur dédié',
-      'Support 24/7',
-      'Formation incluse',
+      'Unlimited classes',
+      'Multi-campus',
+      'Full white label',
+      'Custom domain',
+      'API & integrations',
+      'Dedicated server',
+      '24/7 support',
+      'Training included',
     ],
     missing: [],
-    cta: 'Contacter l\'équipe',
+    cta: 'Contact sales',
     ctaStyle: 'border border-purple-500/50 text-purple-300 hover:bg-purple-500/10',
     planKey: 'institution',
   },
@@ -194,7 +194,7 @@ function ROICalculator() {
         <div className="space-y-6">
           <div>
             <label className="text-sm font-medium text-slate-300 block mb-2">
-              Nombre d'élèves: <span className="text-amber-400 font-bold">{students}</span>
+              Number of students: <span className="text-amber-400 font-bold">{students}</span>
             </label>
             <input type="range" min="20" max="500" value={students}
               onChange={e => setStudents(Number(e.target.value))}
@@ -202,7 +202,7 @@ function ROICalculator() {
           </div>
           <div>
             <label className="text-sm font-medium text-slate-300 block mb-2">
-              Nombre de classes: <span className="text-amber-400 font-bold">{classes}</span>
+              Number of classes: <span className="text-amber-400 font-bold">{classes}</span>
             </label>
             <input type="range" min="1" max="30" value={classes}
               onChange={e => setClasses(Number(e.target.value))}
@@ -210,7 +210,7 @@ function ROICalculator() {
           </div>
           <div>
             <label className="text-sm font-medium text-slate-300 block mb-2">
-              Heures admin/semaine: <span className="text-amber-400 font-bold">{adminHours}h</span>
+              Admin hours/week: <span className="text-amber-400 font-bold">{adminHours}h</span>
             </label>
             <input type="range" min="2" max="30" value={adminHours}
               onChange={e => setAdminHours(Number(e.target.value))}
@@ -220,25 +220,25 @@ function ROICalculator() {
 
         <div className="space-y-4">
           <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-2xl p-6 text-center">
-            <p className="text-slate-400 text-sm mb-1">Heures économisées/semaine</p>
+            <p className="text-slate-400 text-sm mb-1">Hours saved/week</p>
             <p className="text-4xl font-black text-amber-400">{savedHours}h</p>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 text-center">
-              <p className="text-xs text-slate-400 mb-1">Économies/mois</p>
+              <p className="text-xs text-slate-400 mb-1">Savings/month</p>
               <p className="text-xl font-black text-emerald-400">{savedMoney}€</p>
             </div>
             <div className="bg-purple-500/10 border border-purple-500/20 rounded-xl p-4 text-center">
-              <p className="text-xs text-slate-400 mb-1">Coût plan</p>
+              <p className="text-xs text-slate-400 mb-1">Plan cost</p>
               <p className="text-xl font-black text-purple-300">{plan}€</p>
             </div>
           </div>
           <div className="bg-white/10 border border-white/20 rounded-xl p-4 text-center">
-            <p className="text-sm text-slate-300">Retour sur investissement</p>
+            <p className="text-sm text-slate-300">Return on Investment</p>
             <p className="text-3xl font-black text-white mt-1">
               {roi > 0 ? `+${roi}%` : `${roi}%`}
             </p>
-            <p className="text-xs text-slate-500 mt-1">ROI mensuel estimé</p>
+            <p className="text-xs text-slate-500 mt-1">Estimated monthly ROI</p>
           </div>
         </div>
       </div>
@@ -288,7 +288,7 @@ export default function LandingPage() {
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            {[['Fonctionnalités', 'features'], ['ROI', 'roi'], ['Tarifs', 'pricing'], ['FAQ', 'faq']].map(([label, id]) => (
+            {[['Features', 'features'], ['ROI', 'roi'], ['Pricing', 'pricing'], ['FAQ', 'faq']].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)}
                 className="text-sm text-slate-400 hover:text-white transition-colors">
                 {label}
@@ -299,11 +299,11 @@ export default function LandingPage() {
           <div className="hidden md:flex items-center gap-3">
             <button onClick={() => navigate('/login')}
               className="text-sm text-slate-400 hover:text-white transition-colors px-4 py-2">
-              Connexion
+              Login
             </button>
             <button onClick={() => navigate('/register')}
               className="px-5 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold rounded-xl text-sm hover:from-amber-400 hover:to-orange-400 transition-all shadow-lg shadow-amber-500/25">
-              Essai gratuit →
+              Free Trial →
             </button>
           </div>
 
@@ -314,7 +314,7 @@ export default function LandingPage() {
 
         {mobileMenu && (
           <div className="md:hidden bg-black/95 border-t border-white/10 px-6 py-4 space-y-3">
-            {[['Fonctionnalités', 'features'], ['ROI', 'roi'], ['Tarifs', 'pricing'], ['FAQ', 'faq']].map(([label, id]) => (
+            {[['Features', 'features'], ['ROI', 'roi'], ['Pricing', 'pricing'], ['FAQ', 'faq']].map(([label, id]) => (
               <button key={id} onClick={() => scrollTo(id)}
                 className="block w-full text-left text-slate-300 py-2 text-sm">
                 {label}
@@ -322,7 +322,7 @@ export default function LandingPage() {
             ))}
             <button onClick={() => navigate('/register')}
               className="w-full mt-2 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-black font-bold rounded-xl text-sm">
-              Essai gratuit 30 jours
+              Start 30-Day Free Trial
             </button>
           </div>
         )}
@@ -340,20 +340,20 @@ export default function LandingPage() {
         <div className="relative max-w-7xl mx-auto px-6 py-24 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-400 text-sm font-medium mb-8">
             <Sparkles className="w-4 h-4" />
-            Plateforme de gestion pour écoles islamiques
+            Management Platform for Islamic Schools
           </div>
 
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-6">
-            Gérez votre école<br />
+            Manage your<br />
             <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-              coranique
+              Quranic School
             </span>
-            {' '}sans stress
+            {' '}without stress
           </h1>
 
           <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            De la gestion des élèves à la facturation, en passant par les absences et les bulletins —
-            tout ce dont votre école a besoin, dans une plateforme pensée pour l'enseignement islamique.
+            From student management to billing, absences, and report cards—
+            everything your school needs, built in a platform designed for Islamic education.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -377,7 +377,7 @@ export default function LandingPage() {
           {/* Stats bar */}
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 text-center">
             {[
-              { value: '500+', label: 'Élèves gérés' },
+              { value: '500+', label: 'Students gérés' },
               { value: '30+', label: 'Établissements' },
               { value: '8h', label: 'Économisées/semaine' },
               { value: '99.9%', label: 'Disponibilité' },
@@ -395,7 +395,7 @@ export default function LandingPage() {
       <section className="py-12 border-y border-white/5 bg-white/2">
         <div className="max-w-5xl mx-auto px-6">
           <p className="text-center text-slate-600 text-sm uppercase tracking-widest mb-8">
-            Ils nous font confiance
+            Trusted by schools worldwide
           </p>
           <div className="flex flex-wrap items-center justify-center gap-12">
             {['Institut Al-Nour', 'École Al-Firdaws', 'Madrassa Sabil', 'Centre Ibn Rushd', 'Al-Houda Lyon'].map(name => (
@@ -445,12 +445,12 @@ export default function LandingPage() {
       <section id="roi" className="py-24 px-6 bg-gradient-to-b from-transparent to-white/2">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-3">Calculateur ROI</p>
+            <p className="text-amber-400 text-sm font-bold uppercase tracking-widest mb-3">ROI Calculator</p>
             <h2 className="text-4xl font-black tracking-tighter">
-              Combien allez-vous économiser ?
+              How much will you save?
             </h2>
             <p className="text-slate-400 mt-4">
-              Les directeurs d'école économisent en moyenne 65% de leur temps administratif.
+              School directors save on average 65% of their administrative time.
             </p>
           </div>
           <ROICalculator />

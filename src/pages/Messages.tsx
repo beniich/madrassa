@@ -83,7 +83,7 @@ const DEMO_CONVERSATIONS: Conversation[] = [
     id: '3',
     name: 'Équipe Pédagogique',
     avatar: 'EP',
-    lastMessage: 'Marie: Nouveau planning disponible',
+    lastMessage: 'Marie: New planning disponible',
     lastMessageTime: '15:45',
     unreadCount: 5,
     online: true,
@@ -129,7 +129,7 @@ const DEMO_MESSAGES: Message[] = [
     conversationId: '1',
     from: 'Me',
     to: 'Sophie Laurent',
-    content: 'Oui, je les ai bien reçus. Tout est en ordre !',
+    content: 'Yes, je les ai bien reçus. Tout est en ordre !',
     timestamp: '2026-01-06T10:25:00',
     read: true,
     type: 'text',
@@ -326,12 +326,12 @@ export const Messages = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Filtrer conversations
+  // Filter conversations
   const filteredConversations = conversations.filter((conv) =>
     conv.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Filtrer messages par conversation
+  // Filter messages par conversation
   const conversationMessages = selectedConversation
     ? messages.filter((m) => m.conversationId === selectedConversation.id)
     : [];
@@ -576,8 +576,8 @@ export const Messages = () => {
                   type="button"
                   onClick={() => toast.info("Sélecteur d'emojis (Simulation)")}
                   className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors"
-                  aria-label="Ajouter un emoji"
-                  title="Ajouter un emoji"
+                  aria-label="Add un emoji"
+                  title="Add un emoji"
                 >
                   <Smile className="w-5 h-5 text-gray-600" />
                 </button>

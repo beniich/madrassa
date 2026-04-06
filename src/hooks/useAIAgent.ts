@@ -128,14 +128,14 @@ export function useAIAgent(options: UseAIAgentOptions = {}): UseAIAgentReturn {
             );
           },
           onError: (error) => {
-            console.error('[useAIAgent] Erreur:', error);
+            console.error('[useAIAgent] Error:', error);
             setStreaming(false);
             setMessages((prev) =>
               prev.map((m) =>
                 m.id === assistantId
                   ? {
                       ...m,
-                      content: `❌ Erreur: ${error}. Vérifiez qu'Ollama est démarré.`,
+                      content: `❌ Error: ${error}. Vérifiez qu'Ollama est démarré.`,
                       streaming: false,
                     }
                   : m

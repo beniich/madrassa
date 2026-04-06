@@ -220,7 +220,7 @@ export interface AppConfig {
     updatedAt: string;
 }
 
-// Profil de l'établissement local
+// Profile de l'établissement local
 export interface SchoolProfile {
     id?: number;
     localId: string;

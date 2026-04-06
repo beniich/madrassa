@@ -41,16 +41,16 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
     try {
       await signOut();
       toast({
-        title: 'Déconnexion réussie',
-        description: 'À bientôt !',
+        title: 'Successfully logged out',
+        description: 'See you soon!',
       });
       setShowProfile(false);
       navigate('/login');
     } catch (error) {
       toast({
         variant: 'destructive',
-        title: 'Erreur',
-        description: 'Erreur lors de la déconnexion',
+        title: 'Error',
+        description: 'Error during logout',
       });
     }
   };
@@ -60,7 +60,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
     {
       id: 1,
       type: 'alert',
-      title: 'Nouvelle absence',
+      title: 'New absence',
       message: 'Jean Dupont - Classe 5A',
       time: 'Il y a 5 min',
       unread: true,
@@ -68,7 +68,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
     {
       id: 2,
       type: 'info',
-      title: 'Note ajoutée',
+      title: 'Grade added',
       message: 'Mathématiques - Classe 4B',
       time: 'Il y a 1h',
       unread: true,
@@ -76,7 +76,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
     {
       id: 3,
       type: 'success',
-      title: 'Rapport généré',
+      title: 'Report generated',
       message: 'Rapport mensuel disponible',
       time: 'Il y a 2h',
       unread: false,
@@ -151,7 +151,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
           <div className="relative ml-2">
             <button
               onClick={() => setShowProfile(!showProfile)}
-              title="Menu profil"
+              title="Profile menu"
               className="flex items-center gap-2 p-1 pr-3 rounded-xl bg-white border border-border hover:border-primary/50 transition-all group"
             >
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center shadow-lg shadow-primary/20 group-hover:scale-105 transition-transform">
@@ -209,7 +209,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
                       className="text-sm text-purple-600 hover:text-purple-700 font-medium"
                       onClick={() => setShowNotifications(false)}
                     >
-                      Voir toutes les notifications →
+                      See all notifications →
                     </Link>
                   </div>
                 </div>
@@ -221,7 +221,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
           <div className="relative">
             <button
               onClick={() => setShowProfile(!showProfile)}
-              title="Menu Profil"
+              title="Menu Profile"
               className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
@@ -239,7 +239,7 @@ export const Header = ({ sidebarCollapsed, className = '' }: HeaderProps) => {
                 />
                 <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
                   <div className="p-4 border-b border-gray-200">
-                    <p className="font-semibold text-gray-900">{user?.displayName || 'Utilisateur'}</p>
+                    <p className="font-semibold text-gray-900">{user?.displayName || 'User'}</p>
                     <p className="text-sm text-gray-600 truncate">{user?.email}</p>
                   </div>
                   <div className="py-2">

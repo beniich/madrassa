@@ -43,18 +43,18 @@ const Register: React.FC = () => {
                         <form onSubmit={handleRegister} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="firstName" className="font-black text-xs uppercase tracking-widest text-gray-400">Prénom</Label>
+                                    <Label htmlFor="firstName" className="font-black text-xs uppercase tracking-widest text-gray-400">First Name</Label>
                                     <Input id="firstName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Ahmed" />
                                 </div>
                                 <div className="space-y-2">
-                                    <Label htmlFor="lastName" className="font-black text-xs uppercase tracking-widest text-gray-400">Nom</Label>
+                                    <Label htmlFor="lastName" className="font-black text-xs uppercase tracking-widest text-gray-400">Last Name</Label>
                                     <Input id="lastName" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Benali" />
                                 </div>
                             </div>
                             
                             <div className="space-y-2">
                                 <Label htmlFor="school" className="font-black text-xs uppercase tracking-widest text-gray-400">Établissement</Label>
-                                <Input id="school" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Nom de votre école" />
+                                <Input id="school" required className="bg-gray-50 border-gray-200 focus:border-primary focus:ring-primary rounded-xl" placeholder="Last Name de votre école" />
                             </div>
 
                             <div className="space-y-2">
@@ -72,7 +72,7 @@ const Register: React.FC = () => {
                                 disabled={isLoading}
                                 className="w-full h-14 bg-[#222222] hover:bg-[#333333] text-white rounded-xl font-black uppercase tracking-widest shadow-lg transition-transform hover:-translate-y-1"
                             >
-                                {isLoading ? 'Création en cours...' : 'Créer mon compte'}
+                                {isLoading ? 'Création en cours...' : 'Create mon compte'}
                                 {!isLoading && <ArrowRight className="ml-2 w-5 h-5 text-primary" />}
                             </Button>
                         </form>

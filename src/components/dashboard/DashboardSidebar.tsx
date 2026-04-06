@@ -25,11 +25,11 @@ import { Badge } from "@/components/ui/badge";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
-  { icon: Users, label: "Élèves", href: "/dashboard/students", badge: null, roles: ['direction', 'admin', 'teacher'] },
+  { icon: Users, label: "Students", href: "/dashboard/students", badge: null, roles: ['direction', 'admin', 'teacher'] },
   { icon: GraduationCap, label: "Enseignants", href: "/dashboard/teachers", badge: null, roles: ['direction', 'admin'] },
   { icon: School, label: "Classes & Matières", href: "/dashboard/classes", badge: null, roles: ['direction', 'admin', 'teacher'] },
   { icon: Calendar, label: "Emploi du Temps", href: "/dashboard/timetable", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
-  { icon: FileText, label: "Examens & Notes", href: "/dashboard/exams", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
+  { icon: FileText, label: "Examens & Grades", href: "/dashboard/exams", badge: null, roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: Clock, label: "Présence", href: "/dashboard/attendance", badge: "3", roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: MessageSquare, label: "Communication", href: "/dashboard/communication", badge: "5", roles: ['direction', 'admin', 'teacher', 'parent'] },
   { icon: CreditCard, label: "Facturation", href: "/dashboard/finance", badge: null, roles: ['direction', 'admin'] },

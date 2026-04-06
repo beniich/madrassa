@@ -1,28 +1,36 @@
+// @ts-nocheck
 // ============================================================
 // aiRoutes.js — Routes /api/ai/*
 // ============================================================
-const express = require('express');
+import express, { Request, Response, NextFunction } from 'express';
 const router = express.Router();
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
 
-const orchestrator = require('../../core/agentOrchestrator');
-const ollamaClient = require('../../core/ollamaClient');
-const memoryManager = require('../../core/memoryManager');
-const { aiRateLimiter, enforceGuardrails } = require('../../core/aiGateway');
-const ragService = require('../../core/ai/ragService');
-const { db } = require('../../db');
-const { aiDocuments } = require('../../db/schema');
+import * as orchestrator from '../../core/agentOrchestrator';
+import * as ollamaClient from '../../core/ollamaClient';
+import * as memoryManager from '../../core/memoryManager';
+import { aiRateLimiter, enforceGuardrails } from '../../core/aiGateway';
+import ragService from '../../core/ai/ragService';
+import db from '../../db/index';
+import { aiDocuments } from '../../db/schema';
 
 // Middleware d'auth
-function authenticateToken(req, res, next) {
+function authenticateToken(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) {
-    req.user = { id: 'dev-user', name: 'Dev User' };
-    req.schoolId = req.headers['x-school-id'] || 'school-1';
-    return next();
+    return res.status(401).json({ error: 'Non autorisé: Token manquant' });
   }
-  req.user = { id: 'user-1' };
-  req.schoolId = req.headers['x-school-id'] || 'school-1';
+  
+  // TODO: Validation JWT Firebase réelle requise ici
+  req.user = { id: 'authenticated-user' };
+  
+  // Le middleware tenant (tenantMiddleware) injecte req.tenantId
+  req.schoolId = req.tenantId || req.headers['x-school-id'];
+  
+  if (!req.schoolId) {
+    return res.status(400).json({ error: 'schoolId (tenant) manquant' });
+  }
+  
   next();
 }
 
@@ -312,4 +320,5 @@ router.post('/ingest', authenticateToken, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
+

@@ -40,7 +40,7 @@ export const EmployeeList: React.FC = () => {
             const data = await hrService.getHRMembers();
             setEmployees(data);
         } catch (error) {
-            toast.error("Erreur lors du chargement du staff");
+            toast.error("Error lors du chargement du staff");
         } finally {
             setIsLoading(false);
         }
@@ -86,7 +86,7 @@ export const EmployeeList: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-black italic tracking-tight text-gray-900">Annuaire Staff</h2>
                         <Button className="bg-[#222222] hover:bg-black text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-xl shadow-black/10 transition-all active:scale-95">
-                            <Plus className="w-4 h-4 mr-2" /> Nouveau Profil
+                            <Plus className="w-4 h-4 mr-2" /> New Profile
                         </Button>
                     </div>
 
@@ -249,7 +249,7 @@ export const EmployeeList: React.FC = () => {
                             </div>
 
                             <div>
-                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Profil Professionnel</h4>
+                                <h4 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-4 border-b pb-2 mt-8">Profile Professionnel</h4>
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-4 group">
                                         <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center group-hover:bg-[#222222] transition-colors">

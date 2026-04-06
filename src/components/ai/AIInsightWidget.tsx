@@ -79,7 +79,7 @@ export const AIInsightWidget: React.FC = () => {
         {loading && (
           <div className="insight-empty">
             <div className="insight-spinner" />
-            <span>Chargement des insights...</span>
+            <span>Loading...s insights...</span>
           </div>
         )}
 

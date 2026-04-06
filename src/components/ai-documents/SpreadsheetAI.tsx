@@ -34,8 +34,8 @@ export const SpreadsheetAI = () => {
     const [loading, setLoading] = useState(false);
     const [columnDefs, setColumnDefs] = useState<ColDef[]>([
         { field: 'id', headerName: 'ID', editable: false, width: 80 },
-        { field: 'nom', headerName: 'Nom', editable: true },
-        { field: 'prenom', headerName: 'Prénom', editable: true },
+        { field: 'nom', headerName: 'Last Name', editable: true },
+        { field: 'prenom', headerName: 'First Name', editable: true },
         { field: 'mat1', headerName: 'Matière 1', editable: true },
         { field: 'mat2', headerName: 'Matière 2', editable: true },
         { field: 'mat3', headerName: 'Matière 3', editable: true },
@@ -169,10 +169,10 @@ export const SpreadsheetAI = () => {
                 {/* Toolbar */}
                 <div className="flex flex-wrap gap-2">
                     <Button onClick={addRow} variant="outline" className="gap-2">
-                        <Plus className="w-4 h-4" /> Ajouter ligne
+                        <Plus className="w-4 h-4" /> Add ligne
                     </Button>
                     <Button onClick={saveSpreadsheet} variant="outline" className="gap-2">
-                        <Save className="w-4 h-4" /> Sauvegarder
+                        <Save className="w-4 h-4" /> Save
                     </Button>
                     <Button onClick={exportCSV} variant="outline" className="gap-2">
                         <Download className="w-4 h-4" /> Export CSV

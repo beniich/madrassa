@@ -20,7 +20,7 @@ const CenterPane = ({
   searchPlaceholder = "Rechercher...",
   onSearch,
   onAdd,
-  addLabel = "Ajouter",
+  addLabel = "Add",
   children,
   className,
 }: CenterPaneProps) => {

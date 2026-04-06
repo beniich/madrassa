@@ -345,8 +345,8 @@ export const Sidebar = ({ className, onCollapsedChange }: SidebarProps) => {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        title={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
-        aria-label={mobileOpen ? "Fermer le menu" : "Ouvrir le menu"}
+        title={mobileOpen ? "Close le menu" : "Ouvrir le menu"}
+        aria-label={mobileOpen ? "Close le menu" : "Ouvrir le menu"}
         className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg bg-white shadow-lg border border-gray-200"
       >
         <Menu className="w-6 h-6 text-gray-700" />

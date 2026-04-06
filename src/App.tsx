@@ -47,6 +47,7 @@ const Documentation = lazy(() => import('@/pages/Documentation'));
 const AIAssistant = lazy(() => import('@/pages/AIAssistant'));
 const LandingPage = lazy(() => import('@/pages/LandingPage'));
 const SuperAdmin = lazy(() => import('@/pages/SuperAdmin'));
+const SlideEditor = lazy(() => import('@/pages/SlideEditor'));
 
 const PageLoader = () => (
   <div className="flex h-screen w-full items-center justify-center bg-background/50 backdrop-blur-sm fixed inset-0 z-50">
@@ -107,6 +108,7 @@ function App() {
                         <Route path="/db-admin" element={<DbDashboard />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/ai-assistant" element={<AIAssistant />} />
+                        <Route path="/slide-editor" element={<SlideEditor />} />
                         <Route path="*" element={<NotFound />} />
                       </Routes>
                       <AIChatPanel />

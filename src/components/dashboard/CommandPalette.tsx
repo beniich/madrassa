@@ -26,15 +26,15 @@ import { usePaneContext } from "./OutlookLayout";
 
 const navigationItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
-  { icon: Users, label: "Élèves", href: "/dashboard/students" },
+  { icon: Users, label: "Students", href: "/dashboard/students" },
   { icon: GraduationCap, label: "Enseignants", href: "/dashboard/teachers" },
   { icon: School, label: "Classes", href: "/dashboard/classes" },
   { icon: Calendar, label: "Planning", href: "/dashboard/timetable" },
-  { icon: FileText, label: "Notes", href: "/dashboard/exams" },
+  { icon: FileText, label: "Grades", href: "/dashboard/exams" },
   { icon: Clock, label: "Présence", href: "/dashboard/attendance" },
   { icon: MessageSquare, label: "Messages", href: "/dashboard/communication" },
   { icon: FolderOpen, label: "Documents", href: "/dashboard/documents" },
-  { icon: Settings, label: "Paramètres", href: "/dashboard/settings" },
+  { icon: Settings, label: "Settings", href: "/dashboard/settings" },
 ];
 
 const recentSearches = [

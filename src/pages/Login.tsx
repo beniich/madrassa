@@ -41,13 +41,13 @@ const Login: React.FC = () => {
             if (error.code === 'auth/popup-closed-by-user') {
                 errorMessage = 'La fenêtre de connexion a été fermée.';
             } else if (error.code === 'auth/network-request-failed') {
-                errorMessage = 'Erreur réseau. Vérifiez votre connexion internet.';
+                errorMessage = 'Error réseau. Vérifiez votre connexion internet.';
             }
 
             setError(errorMessage);
             toast({
                 variant: 'destructive',
-                title: 'Erreur de connexion',
+                title: 'Error de connexion',
                 description: errorMessage,
             });
         } finally {

@@ -74,7 +74,7 @@ const UserProfile: React.FC = () => {
     const handleSaveAbout = (data: Partial<typeof profileData>) => {
         setProfileData({ ...profileData, ...data });
         toast({
-            title: 'Profil enregistré',
+            title: 'Profile enregistré',
             description: 'Vos informations ont été mises à jour avec succès.',
         });
     };
@@ -119,7 +119,7 @@ const UserProfile: React.FC = () => {
                     </TabsTrigger>
                     <TabsTrigger value="settings" className="flex items-center gap-2">
                         <SettingsIcon className="w-4 h-4" />
-                        Paramètres
+                        Settings
                     </TabsTrigger>
                 </TabsList>
 
@@ -148,8 +148,8 @@ const UserProfile: React.FC = () => {
                             {[
                                 { icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50', title: 'Connexion réussie', time: 'Il y a 2 heures', desc: 'Connexion depuis un nouvel appareil à Casablanca.' },
                                 { icon: FileText, color: 'text-emerald-500', bg: 'bg-emerald-50', title: 'Document envoyé', time: 'Hier à 14:30', desc: 'Vous avez partagé le relevé de notes "Classe 3A" avec la direction.' },
-                                { icon: MessageSquare, color: 'text-amber-500', bg: 'bg-amber-50', title: 'Nouveau message', time: '10 Mars 2026', desc: 'Message envoyé à Mme. Laila concernant la prochaine réunion.' },
-                                { icon: Activity, color: 'text-purple-500', bg: 'bg-purple-50', title: 'Profil mis à jour', time: '08 Mars 2026', desc: 'Modification de la bio et des informations de contact.' },
+                                { icon: MessageSquare, color: 'text-amber-500', bg: 'bg-amber-50', title: 'New message', time: '10 Mars 2026', desc: 'Message envoyé à Mme. Laila concernant la prochaine réunion.' },
+                                { icon: Activity, color: 'text-purple-500', bg: 'bg-purple-50', title: 'Profile mis à jour', time: '08 Mars 2026', desc: 'Modification de la bio et des informations de contact.' },
                                 { icon: LogOut, color: 'text-red-500', bg: 'bg-red-50', title: 'Déconnexion', time: '05 Mars 2026', desc: 'Session terminée sur PC-DESKTOP-01.' },
                             ].map((item, idx) => (
                                 <div key={idx} className="flex gap-4 relative last:after:hidden after:absolute after:left-5 after:top-10 after:bottom-0 after:w-px after:bg-gray-100">
@@ -165,7 +165,7 @@ const UserProfile: React.FC = () => {
                                     </div>
                                 </div>
                             ))}
-                            <Button variant="ghost" className="w-full text-xs text-slate-400 hover:text-indigo-600">Voir tout l'historique</Button>
+                            <Button variant="ghost" className="w-full text-xs text-slate-400 hover:text-indigo-600">See all l'historique</Button>
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -190,7 +190,7 @@ const UserProfile: React.FC = () => {
                                     </div>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                         <div className="space-y-2">
-                                            <Label htmlFor="new-pass">Nouveau mot de passe</Label>
+                                            <Label htmlFor="new-pass">New mot de passe</Label>
                                             <Input id="new-pass" type="password" />
                                         </div>
                                         <div className="space-y-2">
@@ -234,13 +234,13 @@ const UserProfile: React.FC = () => {
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <Globe className="w-4 h-4 text-slate-400" />
-                                            <span className="text-sm font-medium">Profil Public</span>
+                                            <span className="text-sm font-medium">Profile Public</span>
                                         </div>
                                         <Badge className="bg-slate-100 text-slate-600 hover:bg-slate-100 border-none">Privé</Badge>
                                     </div>
                                     <Separator />
                                     <Button variant="outline" className="w-full text-red-600 hover:text-red-700 hover:bg-red-50 border-red-100">
-                                        Supprimer le compte
+                                        Delete le compte
                                     </Button>
                                 </CardContent>
                             </Card>

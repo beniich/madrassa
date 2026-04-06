@@ -71,7 +71,7 @@ const KPICards = () => {
 
   const kpis: KPICardProps[] = [
     {
-      title: "Total Élèves",
+      title: "Total Students",
       value: studentCount ?? "1,248",
       subtext: "Classes actives",
       icon: Users,
@@ -80,7 +80,7 @@ const KPICards = () => {
       loading: studentCount === undefined,
     },
     {
-      title: "Taux de Présence",
+      title: "Attendance Rate",
       value: attendanceRate !== undefined ? `${attendanceRate}%` : "92%",
       subtext: "Aujourd'hui",
       icon: UserCheck,

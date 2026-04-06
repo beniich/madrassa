@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // analyticsAgent.js — Agent Analytics & KPIs
 // ============================================================
@@ -108,7 +109,7 @@ async function generateAutoInsights(schoolId, context) {
   return insights;
 }
 
-module.exports = {
+export default {
   id: AGENT_ID,
   name: 'Analyste Données',
   description: 'KPIs, tendances, alertes et statistiques de l\'école',
@@ -118,3 +119,4 @@ module.exports = {
   enrichMessage,
   generateAutoInsights,
 };
+

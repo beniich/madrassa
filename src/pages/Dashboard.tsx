@@ -105,7 +105,7 @@ export const Dashboard = () => {
     { label: 'Assistant', icon: Bot, color: 'text-primary bg-primary/10', path: '/dashboard' },
     { label: 'Analytique', icon: BarChart3, color: 'text-gray-700 bg-gray-100', path: '/analytics' },
     { label: 'Documents', icon: FileText, color: 'text-primary bg-primary/10', path: '/documents' },
-    { label: 'Paramètres', icon: GraduationCap, color: 'text-gray-700 bg-gray-100 text-xs', path: '/settings' },
+    { label: 'Settings', icon: GraduationCap, color: 'text-gray-700 bg-gray-100 text-xs', path: '/settings' },
   ];
 
   return (

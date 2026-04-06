@@ -17,7 +17,7 @@ const RecentActivity = () => {
     {
       id: "1",
       type: "grade",
-      title: "Notes ajoutées",
+      title: "Grades ajoutées",
       description: "Devoir de mathématiques - Classe 4A",
       time: "Il y a 10 min",
       user: "M. Benali",
@@ -50,7 +50,7 @@ const RecentActivity = () => {
       id: "5",
       type: "grade",
       title: "Bulletin généré",
-      description: "Bulletins T1 - Classe 3A prêts",
+      description: "Report Cards T1 - Classe 3A prêts",
       time: "Il y a 3h",
       user: "Système IA",
     },

@@ -32,7 +32,7 @@ const GoogleSheetEmbed: React.FC<GoogleSheetEmbedProps> = ({ sheetUrl }) => {
 
             return null;
         } catch (err) {
-            console.error('Erreur lors de la conversion de l\'URL:', err);
+            console.error('Error lors de la conversion de l\'URL:', err);
             return null;
         }
     };

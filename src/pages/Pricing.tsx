@@ -34,7 +34,7 @@ export const Pricing: React.FC = () => {
             </CardHeader>
             <CardContent className="p-8 space-y-6">
               <ul className="space-y-4">
-                {['Jusqu\'à 100 élèves', 'Gestion des absences', 'Notes et bulletins', 'Support par email'].map((feature, i) => (
+                {['Jusqu\'à 100 élèves', 'Gestion des absences', 'Grades et bulletins', 'Support par email'].map((feature, i) => (
                   <li key={i} className="flex items-center text-gray-700 font-medium">
                     <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mr-3 shrink-0">
                       <Check className="w-3 h-3 text-green-600 font-black" />
@@ -68,7 +68,7 @@ export const Pricing: React.FC = () => {
             </CardHeader>
             <CardContent className="p-8 space-y-6 text-gray-300">
               <ul className="space-y-4">
-                {['Élèves illimités', 'Fonctionnalités IA avancées', 'Gestion de facturation', 'Application parent/élève', 'Support prioritaire'].map((feature, i) => (
+                {['Students illimités', 'Fonctionnalités IA avancées', 'Gestion de facturation', 'Application parent/élève', 'Support prioritaire'].map((feature, i) => (
                   <li key={i} className="flex items-center font-medium">
                     <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center mr-3 shrink-0">
                       <Check className="w-3 h-3 text-primary font-black" />

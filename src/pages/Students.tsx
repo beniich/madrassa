@@ -61,8 +61,8 @@ const StudentStats = ({ students }: { students: DBStudent[] }) => {
   const avgAttendance = 92; // Placeholder
 
   const STATS = [
-    { label: 'Total Élèves', val: totalStudents, icon: Users, color: 'from-[#222222] to-gray-700', iconColor: 'text-primary' },
-    { label: 'Élèves Actifs', val: activeStudents, icon: GraduationCap, color: 'from-primary to-orange-400', iconColor: 'text-white' },
+    { label: 'Total Students', val: totalStudents, icon: Users, color: 'from-[#222222] to-gray-700', iconColor: 'text-primary' },
+    { label: 'Students Actifs', val: activeStudents, icon: GraduationCap, color: 'from-primary to-orange-400', iconColor: 'text-white' },
     { label: 'Réussite Globale', val: `${avgGrade}/20`, icon: Award, color: 'from-[#222222] to-gray-700', iconColor: 'text-primary' },
     { label: 'Taux Présence', val: `${avgAttendance}%`, icon: TrendingUp, color: 'from-primary to-orange-400', iconColor: 'text-white' },
   ];
@@ -122,7 +122,7 @@ export const Students = () => {
   const handleView = (localId: string) => {
     const student = students.find(s => s.localId === localId);
     if (student) {
-        toast.info(`Profil de ${student.firstName} activé`, { icon: <Eye className="h-4 w-4" /> });
+        toast.info(`Profile de ${student.firstName} activé`, { icon: <Eye className="h-4 w-4" /> });
     }
   };
 
@@ -175,7 +175,7 @@ export const Students = () => {
         setShowCelebration(true);
         setTimeout(() => setShowCelebration(false), 3000);
     } catch (err) {
-        toast.error("Erreur d'enregistrement");
+        toast.error("Error d'enregistrement");
     }
   };
 
@@ -217,7 +217,7 @@ export const Students = () => {
               </div>
               <button 
                 onClick={() => setShowAddModal(false)} 
-                title="Fermer"
+                title="Close"
                 className="h-12 w-12 bg-secondary/50 hover:bg-secondary rounded-2xl flex items-center justify-center text-gray-900 transition-all"
               >
                 <X className="w-5 h-5" />
@@ -226,7 +226,7 @@ export const Students = () => {
             <form onSubmit={handleAddStudent} className="space-y-6 relative z-10">
               <div className="grid grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="firstName">Prénom</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="firstName">First Name</label>
                     <Input 
                       id="firstName"
                       required
@@ -237,7 +237,7 @@ export const Students = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="lastName">Nom</label>
+                    <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1" htmlFor="lastName">Last Name</label>
                     <Input 
                       id="lastName"
                       required
@@ -266,7 +266,7 @@ export const Students = () => {
                   id="class-select"
                   value={newStudentData.classId}
                   onChange={(e) => setNewStudentData({...newStudentData, classId: e.target.value})}
-                  title="Sélectionner une classe"
+                  title="Select une classe"
                   className="w-full px-5 h-12 rounded-2xl border-none bg-secondary/30 font-bold outline-none appearance-none italic focus:ring-2 focus:ring-primary/20"
                 >
                   <option value="5A">CLASSE 5A</option>
@@ -295,7 +295,7 @@ export const Students = () => {
             <Badge className="bg-primary/20 text-primary border-primary/30 font-black text-[10px] uppercase tracking-[0.4em] px-5 py-1.5 rounded-full">
                 SOUVERAINETÉ ACADÉMIQUE
             </Badge>
-            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic leading-none">Registres <span className="text-primary italic">des Élèves</span></h1>
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter italic leading-none">Registres <span className="text-primary italic">des Students</span></h1>
             <p className="text-gray-400 font-medium text-sm max-w-md leading-relaxed">
                 Pilotage centralisé des profils académiques et suivi analytique de la performance globale.
             </p>
@@ -311,7 +311,7 @@ export const Students = () => {
             </Button>
             <Button
                 onClick={() => setShowAddModal(true)}
-                title="Ajouter"
+                title="Add"
                 className="h-16 px-10 bg-primary hover:bg-primary/90 text-white rounded-[2rem] font-black shadow-2xl shadow-primary/20 gap-4 group transition-all active:scale-95"
             >
                 <UserPlus className="w-6 h-6 group-hover:rotate-12 transition-transform" /> NOUVEL ÉLÈVE
@@ -327,7 +327,7 @@ export const Students = () => {
           <div className="relative flex-1 w-full group">
             <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-5 w-5 text-primary group-focus-within:rotate-12 transition-transform" />
             <Input 
-                placeholder="Filtrer l'effectif par nom, spécialité ou email institutionnel..." 
+                placeholder="Filter l'effectif par nom, spécialité ou email institutionnel..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-16 h-16 bg-secondary/30 border-none rounded-[2rem] font-black text-sm placeholder:text-gray-400 focus:ring-primary/10"
@@ -358,7 +358,7 @@ export const Students = () => {
           <table className="w-full text-left">
             <thead>
               <tr className="bg-secondary/20 border-b border-gray-100">
-                <th className="px-10 py-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-500">Profil Académique</th>
+                <th className="px-10 py-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-500">Profile Académique</th>
                 <th className="px-10 py-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-500">Assignation</th>
                 <th className="px-10 py-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-500 text-center">Score Médian</th>
                 <th className="px-10 py-8 text-[11px] font-black uppercase tracking-[0.2em] text-gray-500">Assiduité</th>
@@ -444,7 +444,7 @@ export const Students = () => {
                              <Button 
                                 variant="ghost" 
                                 size="icon" 
-                                title="Supprimer"
+                                title="Delete"
                                 onClick={() => handleDeleteStudent(student.localId)}
                                 className="h-10 w-10 text-gray-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
                              >

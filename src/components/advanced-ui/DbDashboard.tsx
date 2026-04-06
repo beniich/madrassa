@@ -29,7 +29,7 @@ export default function DbDashboard() {
       await runCron.mutateAsync(jobName);
       toast.success(`Job ${jobName} exécuté avec succès`);
     } catch (e) {
-      toast.error(`Erreur lors de l'exécution du job ${jobName}`);
+      toast.error(`Error lors de l'exécution du job ${jobName}`);
     }
   };
 
@@ -119,14 +119,14 @@ export default function DbDashboard() {
                 <div className="flex justify-center p-8"><Loader2 className="h-8 w-8 animate-spin" /></div>
               ) : errorLogs ? (
                 <div className="text-red-500 p-4 border border-red-200 bg-red-50 rounded-md">
-                  Erreur lors de la récupération des logs. Le serveur backend est-il lancé ?
+                  Error lors de la récupération des logs. Le serveur backend est-il lancé ?
                 </div>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
                       <TableHead>Date</TableHead>
-                      <TableHead>Utilisateur</TableHead>
+                      <TableHead>User</TableHead>
                       <TableHead>Action</TableHead>
                       <TableHead>Table</TableHead>
                       <TableHead>ID Ligne</TableHead>

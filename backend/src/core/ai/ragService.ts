@@ -1,3 +1,4 @@
+// @ts-nocheck
 // ============================================================
 // ragService.js — Moteur de Recherche Vectorielle (RAG)
 // ============================================================
@@ -73,8 +74,9 @@ async function ingestDocument(schoolId, docId, content, metadata = {}) {
   return chunks.length;
 }
 
-module.exports = {
+export default {
   generateEmbedding,
   searchSimilarChunks,
   ingestDocument
 };
+
