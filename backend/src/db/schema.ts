@@ -16,6 +16,38 @@ import {
   customType,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
+import crypto from 'crypto';
+
+const ENCRYPTION_KEY = process.env.ENCRYPTION_KEY || 'default_32_byte_key_for_dev_mode_only!';
+const AES_KEY = crypto.scryptSync(ENCRYPTION_KEY, 'salt', 32);
+
+export const encryptedText = customType<{ data: string; driverData: string }>({
+  dataType: () => 'text',
+  toDriver(val: string): string {
+    if (!val) return val;
+    const iv = crypto.randomBytes(12);
+    const cipher = crypto.createCipheriv('aes-256-gcm', AES_KEY, iv);
+    let encrypted = cipher.update(val, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    const authTag = cipher.getAuthTag().toString('hex');
+    return `${iv.toString('hex')}:${authTag}:${encrypted}`;
+  },
+  fromDriver(val: string): string {
+    if (!val || typeof val !== 'string' || !val.includes(':')) return val;
+    const parts = val.split(':');
+    if (parts.length !== 3) return val;
+    const [ivHex, authTagHex, encryptedHex] = parts;
+    try {
+      const decipher = crypto.createDecipheriv('aes-256-gcm', AES_KEY, Buffer.from(ivHex, 'hex'));
+      decipher.setAuthTag(Buffer.from(authTagHex, 'hex'));
+      let decrypted = decipher.update(encryptedHex, 'hex', 'utf8');
+      decrypted += decipher.final('utf8');
+      return decrypted;
+    } catch {
+      return val;
+    }
+  },
+});
 
 // ─── Enums ─────────────────────────────────────────────────────────────────
 
@@ -89,7 +121,7 @@ export const users = pgTable('users', {
   displayName: text('display_name'),
   role: userRoleEnum('role').default('teacher'),
   avatarUrl: text('avatar_url'),
-  phone: text('phone'),
+  phone: encryptedText('phone'),
   isActive: boolean('is_active').default(true),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
@@ -126,10 +158,10 @@ export const students = pgTable('students', {
   dateOfBirth: text('date_of_birth'),
   gender: genderEnum('gender'),
   email: text('email'),
-  phone: text('phone'),
+  phone: encryptedText('phone'),
   parentName: text('parent_name'),
-  parentPhone: text('parent_phone'),
-  parentEmail: text('parent_email'),
+  parentPhone: encryptedText('parent_phone'),
+  parentEmail: encryptedText('parent_email'),
   enrollmentDate: timestamp('enrollment_date').defaultNow(),
   isActive: boolean('is_active').default(true),
   metadata: jsonb('metadata'),
@@ -149,9 +181,9 @@ export const teachers = pgTable('teachers', {
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
   email: text('email'),
-  phone: text('phone'),
+  phone: encryptedText('phone'),
   speciality: text('speciality'),        // "Coran", "Arabe", "Fiqh"
-  salary: decimal('salary', { precision: 10, scale: 2 }),
+  salary: encryptedText('salary'),
   isActive: boolean('is_active').default(true),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
@@ -285,3 +317,45 @@ export type Student = typeof students.$inferSelect;
 export type Teacher = typeof teachers.$inferSelect;
 export type AttendanceRecord = typeof attendance.$inferSelect;
 export type Invoice = typeof invoices.$inferSelect;
+
+// ─── AI Memory Migrated from SQLite ─────────────────────────────────────────
+
+export const aiConversations = pgTable('ai_conversations', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  sessionId: text('session_id').notNull(),
+  tenantId: uuid('tenant_id').notNull().references(() => tenants.id, { onDelete: 'cascade' }),
+  userId: text('user_id').notNull(),
+  role: text('role').notNull(), // 'user', 'assistant', 'system'
+  agent: text('agent'),
+  content: text('content').notNull(),
+  createdAt: timestamp('created_at').defaultNow(),
+}, (table) => [
+  index('ai_convs_tenant_idx').on(table.tenantId),
+  index('ai_convs_session_idx').on(table.sessionId),
+]);
+
+export const aiInsights = pgTable('ai_insights', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull().references(() => tenants.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(),
+  agent: text('agent'),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  isRead: boolean('is_read').default(false),
+  createdAt: timestamp('created_at').defaultNow(),
+}, (table) => [
+  index('ai_insights_tenant_idx').on(table.tenantId),
+]);
+
+export const aiArtifacts = pgTable('ai_artifacts', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  tenantId: uuid('tenant_id').notNull().references(() => tenants.id, { onDelete: 'cascade' }),
+  type: text('type').notNull(),
+  title: text('title').notNull(),
+  content: text('content').notNull(),
+  studentId: text('student_id'),
+  classId: text('class_id'),
+  createdAt: timestamp('created_at').defaultNow(),
+}, (table) => [
+  index('ai_artifacts_tenant_idx').on(table.tenantId),
+]);

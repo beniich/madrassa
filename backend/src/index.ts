@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import auditRoutes from './api/routes/audit';
 import flashbackRoutes from './api/routes/flashback';
 import cronRoutes from './api/routes/cron';
@@ -20,11 +21,12 @@ const PORT = process.env.PORT || 4000;
 
 // ─── Middlewares globaux ─────────────────────────────────────────────────────
 
+app.use(helmet());
+
 app.use(cors({
-  origin: [
-    process.env.FRONTEND_URL || 'http://localhost:5173',
-    'http://localhost:3006'
-  ],
+  origin: process.env.EXTRA_ALLOWED_ORIGINS 
+    ? process.env.EXTRA_ALLOWED_ORIGINS.split(',') 
+    : [process.env.FRONTEND_URL || 'http://localhost:5173'],
   credentials: true,
 }));
 

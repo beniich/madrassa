@@ -1,60 +1,14 @@
 // ============================================================
-// memoryManager.ts — Gestion de la mémoire des conversations
+// memoryManager.ts — Gestion de la mémoire des conversations (Migrated to PostgreSQL via Drizzle)
 // ============================================================
-import Database from 'better-sqlite3';
-import path from 'path';
+import db from '../db/index';
+import { aiConversations, aiInsights, aiArtifacts } from '../db/schema';
+import { eq, desc } from 'drizzle-orm';
 
 const MAX_TURNS = parseInt(process.env.AI_MEMORY_MAX_TURNS || '20', 10);
 
-let db: Database.Database | null = null;
-
-export function getDB(): Database.Database {
-  if (!db) {
-    db = new Database(path.join(__dirname, '../../school_genius.db'));
-    initTables();
-  }
-  return db;
-}
-
 export function initTables() {
-  const database = getDB();
-  database.exec(`
-    CREATE TABLE IF NOT EXISTS ai_conversations (
-      id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      session_id  TEXT NOT NULL,
-      school_id   TEXT NOT NULL,
-      user_id     TEXT NOT NULL,
-      role        TEXT NOT NULL CHECK(role IN ('user','assistant','system')),
-      agent       TEXT,
-      content     TEXT NOT NULL,
-      created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-
-    CREATE INDEX IF NOT EXISTS idx_conv_session ON ai_conversations(session_id);
-    CREATE INDEX IF NOT EXISTS idx_conv_school  ON ai_conversations(school_id);
-
-    CREATE TABLE IF NOT EXISTS ai_insights (
-      id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      school_id   TEXT NOT NULL,
-      type        TEXT NOT NULL,
-      agent       TEXT,
-      title       TEXT NOT NULL,
-      content     TEXT NOT NULL,
-      is_read     BOOLEAN DEFAULT 0,
-      created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-
-    CREATE TABLE IF NOT EXISTS ai_artifacts (
-      id          INTEGER PRIMARY KEY AUTOINCREMENT,
-      school_id   TEXT NOT NULL,
-      type        TEXT NOT NULL,
-      title       TEXT NOT NULL,
-      content     TEXT NOT NULL,
-      student_id  TEXT,
-      class_id    TEXT,
-      created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
-    );
-  `);
+  // SQLite table init function - now obsolete because of Drizzle migrations
 }
 
 export interface ConversationMessage {
@@ -63,16 +17,13 @@ export interface ConversationMessage {
   agent?: string;
 }
 
-export function getHistory(sessionId: string): ConversationMessage[] {
-  const database = getDB();
-  const rows = database
-    .prepare(
-      `SELECT role, content, agent FROM ai_conversations
-       WHERE session_id = ?
-       ORDER BY created_at DESC
-       LIMIT ?`
-    )
-    .all(sessionId, MAX_TURNS * 2) as any[];
+export async function getHistory(sessionId: string): Promise<ConversationMessage[]> {
+  const rows = await db
+    .select({ role: aiConversations.role, content: aiConversations.content, agent: aiConversations.agent })
+    .from(aiConversations)
+    .where(eq(aiConversations.sessionId, sessionId))
+    .orderBy(desc(aiConversations.createdAt))
+    .limit(MAX_TURNS * 2);
 
   return rows.reverse().map((r) => ({
     role: r.role,
@@ -81,20 +32,24 @@ export function getHistory(sessionId: string): ConversationMessage[] {
   }));
 }
 
-export function saveMessage(sessionId: string, schoolId: string, userId: string, role: string, content: string, agent: string | null = null) {
-  const database = getDB();
-  database.prepare(
-    `INSERT INTO ai_conversations (session_id, school_id, user_id, role, content, agent)
-     VALUES (?, ?, ?, ?, ?, ?)`
-  ).run(sessionId, schoolId, userId, role, content, agent);
+export async function saveMessage(sessionId: string, schoolId: string, userId: string, role: string, content: string, agent: string | null = null) {
+  if (!schoolId) {
+    console.warn('[memoryManager] saveMessage skipped: schoolId is undefined', { sessionId });
+    return;
+  }
+  await db.insert(aiConversations).values({
+    sessionId,
+    tenantId: schoolId,
+    userId,
+    role,
+    content,
+    agent: agent || undefined,
+  });
 }
 
-export function clearHistory(sessionId: string) {
-  const database = getDB();
-  const info = database
-    .prepare('DELETE FROM ai_conversations WHERE session_id = ?')
-    .run(sessionId);
-  return { deleted: info.changes };
+export async function clearHistory(sessionId: string) {
+  const result = await db.delete(aiConversations).where(eq(aiConversations.sessionId, sessionId));
+  return { deleted: result.rowCount || 0 };
 }
 
 export interface InsightInput {
@@ -105,26 +60,30 @@ export interface InsightInput {
   content: string;
 }
 
-export function saveInsight({ schoolId, type, agent, title, content }: InsightInput) {
-  const database = getDB();
-  database.prepare(
-    `INSERT INTO ai_insights (school_id, type, agent, title, content)
-     VALUES (?, ?, ?, ?, ?)`
-  ).run(schoolId, type, agent || null, title, content);
+export async function saveInsight({ schoolId, type, agent, title, content }: InsightInput) {
+  await db.insert(aiInsights).values({
+    tenantId: schoolId,
+    type,
+    agent: agent || undefined,
+    title,
+    content,
+  });
 }
 
-export function getInsights(schoolId: string, limit = 10): any[] {
-  const database = getDB();
-  return database
-    .prepare(
-      `SELECT * FROM ai_insights WHERE school_id = ? ORDER BY created_at DESC LIMIT ?`
-    )
-    .all(schoolId, limit) as any[];
+export async function getInsights(schoolId: string, limit = 10) {
+  return await db
+    .select()
+    .from(aiInsights)
+    .where(eq(aiInsights.tenantId, schoolId))
+    .orderBy(desc(aiInsights.createdAt))
+    .limit(limit);
 }
 
-export function markInsightsRead(schoolId: string) {
-  const database = getDB();
-  database.prepare('UPDATE ai_insights SET is_read = 1 WHERE school_id = ?').run(schoolId);
+export async function markInsightsRead(schoolId: string) {
+  await db
+    .update(aiInsights)
+    .set({ isRead: true })
+    .where(eq(aiInsights.tenantId, schoolId));
 }
 
 export interface ArtifactInput {
@@ -136,13 +95,17 @@ export interface ArtifactInput {
   classId?: string | null;
 }
 
-export function saveArtifact({ schoolId, type, title, content, studentId, classId }: ArtifactInput): number | bigint {
-  const database = getDB();
-  const result = database
-    .prepare(
-      `INSERT INTO ai_artifacts (school_id, type, title, content, student_id, class_id)
-       VALUES (?, ?, ?, ?, ?, ?)`
-    )
-    .run(schoolId, type, title, content, studentId || null, classId || null);
-  return result.lastInsertRowid;
+export async function saveArtifact({ schoolId, type, title, content, studentId, classId }: ArtifactInput) {
+  const result = await db
+    .insert(aiArtifacts)
+    .values({
+      tenantId: schoolId,
+      type,
+      title,
+      content,
+      studentId: studentId || undefined,
+      classId: classId || undefined,
+    })
+    .returning({ id: aiArtifacts.id });
+  return result[0].id;
 }

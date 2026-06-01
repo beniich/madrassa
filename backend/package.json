@@ -28,6 +28,8 @@
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
+    "firebase-admin": "^13.10.0",
+    "helmet": "^8.2.0",
     "ioredis": "^5.10.0",
     "node-pg-migrate": "^8.0.4",
     "pg": "^8.20.0",

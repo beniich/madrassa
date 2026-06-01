@@ -2,7 +2,9 @@ import Redis from 'ioredis';
 
 // Use connection string from env, fallback to localhost for development
 const redisUrl = process.env.REDIS_URL || 'redis://localhost:6379';
-const redis = new Redis(redisUrl);
+const redis = new Redis(redisUrl, {
+  tls: redisUrl.startsWith('rediss://') ? { rejectUnauthorized: true } : undefined,
+});
 
 redis.on('error', (err) => {
   console.error('[Redis Cache] Error:', err);

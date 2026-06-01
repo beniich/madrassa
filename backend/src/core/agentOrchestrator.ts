@@ -79,7 +79,7 @@ export function detectIntent(message: string): string {
 // ─── Dispatch Principal ──────────────────────────────────────
 
 export async function dispatch({ userMessage, schoolId, userId, sessionId, agentHint, modelOverride, isStrict = true }: any) {
-  const history = memoryManager.getHistory(sessionId);
+  const history = await memoryManager.getHistory(sessionId);
 
   const agentId = agentHint && AGENTS[agentHint] ? agentHint : detectIntent(userMessage);
   const agent = AGENTS[agentId];
@@ -115,7 +115,7 @@ export async function dispatch({ userMessage, schoolId, userId, sessionId, agent
     { role: 'user', content: enrichedUserMessage },
   ];
 
-  memoryManager.saveMessage(sessionId, schoolId, userId, 'user', userMessage, agentId);
+  await memoryManager.saveMessage(sessionId, schoolId, userId, 'user', userMessage, agentId);
 
   const stream = await ollamaClient.chat({
     model: modelOverride || agent.model,
@@ -131,8 +131,8 @@ export async function dispatch({ userMessage, schoolId, userId, sessionId, agent
   };
 }
 
-export function saveAssistantResponse(sessionId: string, schoolId: string, userId: string, content: string, agentId: string) {
-  memoryManager.saveMessage(sessionId, schoolId, userId, 'assistant', content, agentId);
+export async function saveAssistantResponse(sessionId: string, schoolId: string, userId: string, content: string, agentId: string) {
+  await memoryManager.saveMessage(sessionId, schoolId, userId, 'assistant', content, agentId);
 }
 
 export async function generateAutoInsights(schoolId: string) {
@@ -142,7 +142,7 @@ export async function generateAutoInsights(schoolId: string) {
   if (analyticsAgent.generateAutoInsights) {
     const insights = await analyticsAgent.generateAutoInsights(schoolId, context);
     for (const insight of insights) {
-      memoryManager.saveInsight({ schoolId, agent: 'analytics', ...insight });
+      await memoryManager.saveInsight({ schoolId, agent: 'analytics', ...insight });
     }
     return insights;
   }

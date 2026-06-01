@@ -1,9 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { getAuditLogs } from '../../core/audit';
+import { authenticateToken, restrictToRole } from '../../core/authMiddleware';
 
 const router = Router();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', authenticateToken, restrictToRole(['admin', 'superadmin']), async (req: Request, res: Response) => {
   try {
     const table = req.query.table as string;
     const limit = parseInt(req.query.limit as string) || 50;

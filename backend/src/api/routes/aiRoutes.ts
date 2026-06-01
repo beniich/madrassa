@@ -13,24 +13,11 @@ import { aiRateLimiter, enforceGuardrails } from '../../core/aiGateway';
 import ragService from '../../core/ai/ragService';
 import db from '../../db/index';
 import { aiDocuments } from '../../db/schema';
+import { authenticateToken, restrictToRole } from '../../core/authMiddleware';
 
-// Middleware d'auth
-function authenticateToken(req: Request, res: Response, next: NextFunction) {
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Non autorisé: Token manquant' });
-  }
-  
-  // TODO: Validation JWT Firebase réelle requise ici
-  req.user = { id: 'authenticated-user' };
-  
-  // Le middleware tenant (tenantMiddleware) injecte req.tenantId
-  req.schoolId = req.tenantId || req.headers['x-school-id'];
-  
-  if (!req.schoolId) {
-    return res.status(400).json({ error: 'schoolId (tenant) manquant' });
-  }
-  
+// Middleware vérifiant le tenant (pour AI)
+function requireSchoolId(req: Request, res: Response, next: NextFunction) {
+  if (!req.schoolId) return res.status(400).json({ error: 'schoolId (tenant) manquant' });
   next();
 }
 
@@ -45,7 +32,7 @@ router.get('/status', async (req, res) => {
 });
 
 // ─── GET /api/ai/models ─────────────────────────────────────
-router.get('/models', authenticateToken, async (req, res) => {
+router.get('/models', authenticateToken, requireSchoolId, async (req, res) => {
   try {
     const data = await ollamaClient.listModels();
     res.json(data);
@@ -55,12 +42,12 @@ router.get('/models', authenticateToken, async (req, res) => {
 });
 
 // ─── GET /api/ai/agents ─────────────────────────────────────
-router.get('/agents', authenticateToken, (req, res) => {
+router.get('/agents', authenticateToken, requireSchoolId, (req, res) => {
   res.json({ agents: orchestrator.getAgentList() });
 });
 
 // ─── POST /api/ai/chat — Chat Streaming SSE ─────────────────
-router.post('/chat', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
+router.post('/chat', authenticateToken, requireSchoolId, restrictToRole(['teacher', 'admin']), aiRateLimiter, enforceGuardrails, async (req, res) => {
   const { message, sessionId, agentHint, model, isStrict } = req.body;
 
   if (!message || message.trim() === '') {
@@ -117,7 +104,7 @@ router.post('/chat', authenticateToken, aiRateLimiter, enforceGuardrails, async 
       }
     }
 
-    orchestrator.saveAssistantResponse(sid, req.schoolId, req.user.id, fullResponse, agentId);
+    await orchestrator.saveAssistantResponse(sid, req.schoolId, req.user.id, fullResponse, agentId);
     res.write(`event: done\ndata: ${JSON.stringify({ sessionId: sid })}\n\n`);
   } catch (err) {
     console.error('[AI Chat] Erreur:', err);
@@ -128,7 +115,7 @@ router.post('/chat', authenticateToken, aiRateLimiter, enforceGuardrails, async 
 });
 
 // ─── POST /api/ai/agent/:agentId ────────────────────────────
-router.post('/agent/:agentId', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
+router.post('/agent/:agentId', authenticateToken, requireSchoolId, restrictToRole(['teacher', 'admin']), aiRateLimiter, enforceGuardrails, async (req, res) => {
   const { agentId } = req.params;
   const { message, sessionId } = req.body;
 
@@ -168,7 +155,7 @@ router.post('/agent/:agentId', authenticateToken, aiRateLimiter, enforceGuardrai
       } catch {}
     }
 
-    orchestrator.saveAssistantResponse(sid, req.schoolId, req.user.id, fullResponse, agentId);
+    await orchestrator.saveAssistantResponse(sid, req.schoolId, req.user.id, fullResponse, agentId);
     res.write(`event: done\ndata: ${JSON.stringify({ sessionId: sid })}\n\n`);
   } catch (err) {
     res.write(`event: error\ndata: ${JSON.stringify({ error: err.message })}\n\n`);
@@ -178,9 +165,9 @@ router.post('/agent/:agentId', authenticateToken, aiRateLimiter, enforceGuardrai
 });
 
 // ─── GET /api/ai/history/:sessionId ─────────────────────────
-router.get('/history/:sessionId', authenticateToken, (req, res) => {
+router.get('/history/:sessionId', authenticateToken, requireSchoolId, async (req, res) => {
   try {
-    const history = memoryManager.getHistory(req.params.sessionId);
+    const history = await memoryManager.getHistory(req.params.sessionId);
     res.json({ history, sessionId: req.params.sessionId });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -188,9 +175,9 @@ router.get('/history/:sessionId', authenticateToken, (req, res) => {
 });
 
 // ─── DELETE /api/ai/history/:sessionId ──────────────────────
-router.delete('/history/:sessionId', authenticateToken, (req, res) => {
+router.delete('/history/:sessionId', authenticateToken, requireSchoolId, restrictToRole(['admin']), async (req, res) => {
   try {
-    const result = memoryManager.clearHistory(req.params.sessionId);
+    const result = await memoryManager.clearHistory(req.params.sessionId);
     res.json({ success: true, ...result });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -198,9 +185,9 @@ router.delete('/history/:sessionId', authenticateToken, (req, res) => {
 });
 
 // ─── GET /api/ai/insights ───────────────────────────────────
-router.get('/insights', authenticateToken, (req, res) => {
+router.get('/insights', authenticateToken, requireSchoolId, restrictToRole(['admin', 'direction']), async (req, res) => {
   try {
-    const insights = memoryManager.getInsights(req.schoolId);
+    const insights = await memoryManager.getInsights(req.schoolId);
     res.json({ insights });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -208,7 +195,7 @@ router.get('/insights', authenticateToken, (req, res) => {
 });
 
 // ─── POST /api/ai/insights ──────────────────────────────────
-router.post('/insights', authenticateToken, async (req, res) => {
+router.post('/insights', authenticateToken, requireSchoolId, restrictToRole(['admin']), async (req, res) => {
   try {
     const insights = await orchestrator.generateAutoInsights(req.schoolId);
     res.json({ success: true, insights });
@@ -218,9 +205,9 @@ router.post('/insights', authenticateToken, async (req, res) => {
 });
 
 // ─── PATCH /api/ai/insights/read ────────────────────────────
-router.patch('/insights/read', authenticateToken, (req, res) => {
+router.patch('/insights/read', authenticateToken, requireSchoolId, restrictToRole(['admin']), async (req, res) => {
   try {
-    memoryManager.markInsightsRead(req.schoolId);
+    await memoryManager.markInsightsRead(req.schoolId);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -228,7 +215,7 @@ router.patch('/insights/read', authenticateToken, (req, res) => {
 });
 
 // ─── POST /api/ai/document ──────────────────────────────────
-router.post('/document', authenticateToken, aiRateLimiter, enforceGuardrails, async (req, res) => {
+router.post('/document', authenticateToken, requireSchoolId, restrictToRole(['teacher', 'admin']), aiRateLimiter, enforceGuardrails, async (req, res) => {
   const { type, studentId, classId, period, extra } = req.body;
 
   const promptMap = {
@@ -270,7 +257,7 @@ router.post('/document', authenticateToken, aiRateLimiter, enforceGuardrails, as
       } catch {}
     }
 
-    const artifactId = memoryManager.saveArtifact({
+    const artifactId = await memoryManager.saveArtifact({
       schoolId: req.schoolId,
       type: type || 'document',
       title: `Document généré — ${new Date().toLocaleDateString('fr-FR')}`,
@@ -288,7 +275,7 @@ router.post('/document', authenticateToken, aiRateLimiter, enforceGuardrails, as
 });
 
 // ─── POST /api/ai/ingest — Ingestion de document pour RAG ──
-router.post('/ingest', authenticateToken, async (req, res) => {
+router.post('/ingest', authenticateToken, requireSchoolId, restrictToRole(['admin']), async (req, res) => {
   const { title, content, fileType, metadata } = req.body;
 
   if (!title || !content) {
